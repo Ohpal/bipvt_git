@@ -9,18 +9,40 @@ import ui.control_Activity
 import comd.var
 import datetime
 
+
 def now_time():
     now = datetime.datetime.now()
-    now = now.strftime("%Y-%m-%d %H:%M:%S")
-    return now
+    getDay = now.today().weekday()
+    now = now.now()
+    return now, getDay
 
 
 def main_timer():
-    timer = now_time()
+    timer, getDay = now_time()
+    ampm = timer.strftime('%p')
+    ampm = '오전' if ampm == 'am' else '오후'
+    timer = timer.strftime("%Y-%m-%d %I:%M:%S")
+
+    weekDay = '-'
+    if getDay == 0:
+        weekDay = '월'
+    elif getDay == 1:
+        weekDay = '화'
+    elif getDay == 2:
+        weekDay = '수'
+    elif getDay == 3:
+        weekDay = '목'
+    elif getDay == 4:
+        weekDay = '금'
+    elif getDay == 5:
+        weekDay = '토'
+    elif getDay == 6:
+        weekDay = '일'
+
     timer = timer.split(' ')
 
-    ui.main_Activity.main_Activity.time_label1.config(text=timer[0])
-    ui.main_Activity.main_Activity.time_label2.config(text=timer[1])
+    ui.main_Activity.main_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
+    ui.main_Activity.main_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
 
 
 

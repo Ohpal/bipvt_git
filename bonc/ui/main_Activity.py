@@ -27,37 +27,70 @@ class main_Activity(tk.Frame):
 
         # 상단 메뉴바
         menu_frame = Frame(self, bg='#111111')
-        menu_frame.pack(fill=X, ipady=10)
+        menu_frame.pack(fill=X, ipady=20)
 
         self.logo_image = tk.PhotoImage(file="images/bonc.png")
         logo_label = Label(menu_frame, image=self.logo_image, highlightbackground="#111111", activebackground='#111111', bd=0, bg='#111111')
         logo_label.pack(side=LEFT, padx=20)
 
-        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.gif')
-        setting_label = Button(menu_frame, image=self.setting_image, highlightbackground="#111111", activebackground='#111111',bd=0, bg='#111111', command=lambda: controller.show_frame("setting_Activity"))
-        setting_label.pack(side=RIGHT, padx=(20, 40))
-
-        self.control_image = tk.PhotoImage(file='images/control_btn_off.gif')
-        control_label = Button(menu_frame, image=self.control_image, highlightbackground="#111111", activebackground='#111111',bd=0, bg='#111111', command=lambda: controller.show_frame("control_Activity"))
-        control_label.pack(side=RIGHT, padx=20)
+        # left frame
+        left_frame = Frame(self, bg='#111111')
+        left_frame.pack(fill=Y, side=LEFT, ipadx=15)
 
         self.main_image = tk.PhotoImage(file='images/main_btn.gif')
-        main_label = Button(menu_frame, image=self.main_image, highlightbackground="#111111", activebackground='#111111',bd=0, bg='#111111', command=lambda: controller.show_frame("main_Activity"))
-        main_label.pack(side=RIGHT, padx=20)
+        self.control_image = tk.PhotoImage(file='images/control_btn_off.gif')
+        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.gif')
 
-        # left frame
+        main_menu = Button(left_frame, image=self.main_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', command=lambda: controller.show_frame('main_Activity'))
+        main_menu.pack(pady=(40, 20))
+
+        control_menu = Button(left_frame, image=self.control_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', command=lambda: controller.show_frame('control_Activity'))
+        control_menu.pack(pady=20)
+
+        detail_menu = Button(left_frame, image=self.main_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', command=lambda: controller.show_frame('control_Activity'))
+        detail_menu.pack(pady=20)
+
+        setting_menu = Button(left_frame, image=self.setting_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', command=lambda: controller.show_frame('setting_Activity'))
+        setting_menu.pack(pady=20)
+
+        self.gps_image = tk.PhotoImage(file='images/gps.png')
+        gps_menu = Label(left_frame, image=self.gps_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111')
+        gps_menu.pack(pady=(950, 15))
+
+        weather_frame = Frame(left_frame, bg='#111111')
+        weather_frame.pack(pady=(0, 10))
+
+        weather_menu = Label(weather_frame, text='날 씨', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
+        weather_menu.pack(side=LEFT, padx=(0, 10))
+
+        main_Activity.weather_label = Label(weather_frame, text='맑 음', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+        main_Activity.weather_label.pack(side=LEFT)
+
+        temperature_frame = Frame(left_frame, bg='#111111')
+        temperature_frame.pack()
+
+        temperature_menu = Label(temperature_frame, text='기 온', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
+        temperature_menu.pack(side=LEFT, padx=(0, 10))
+
+        main_Activity.temperature_label = Label(temperature_frame, text='32', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+        main_Activity.temperature_label.pack(side=LEFT)
+
+        temperature_unit = Label(temperature_frame, text=' ℃', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
+        temperature_unit.pack(side=LEFT)
+
+        main_Activity.time_label1 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
+        main_Activity.time_label1.pack(pady=(150, 10))
+
+        main_Activity.time_label2 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='#96c63e')
+        main_Activity.time_label2.pack()
+
+        # center top frame
         center_frame = Frame(self, bg='#2f323b')
         center_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 라인선 그리기
         main_Activity.liner = Canvas(center_frame, bg='#2f323b', highlightbackground='#2f323b', width=1280, height=670)
         main_Activity.liner.pack()
-
-        main_Activity.time_label1 = Label(main_Activity.liner, text='-', font=('arial', 20), bg='#2f323b', fg='white')
-        main_Activity.time_label1.place(x=1000, y=10)
-
-        main_Activity.time_label2 = Label(main_Activity.liner, text='-', font=('arial', 20), bg='#2f323b', fg='#96c63e')
-        main_Activity.time_label2.place(x=1150, y=10)
 
         # 설비 연결선 라벨
         main_Activity.line1 = main_Activity.liner.create_line(235, 219, 368, 138, fill='white', width=5, arrow=LAST)    # PVT-팬
@@ -116,7 +149,7 @@ class main_Activity(tk.Frame):
 
         main_Activity.heatpump_connect_value = Label(main_Activity.liner, text='●', font=('arial', 25, 'bold'), fg='red', bg='#2f323b')
         main_Activity.heatpump_connect_value.place(x=250, y=0)
-        
+
         control_label = Label(main_Activity.liner, text='운전상태', font=('arial', 13, 'bold'), fg='white', bg='#2f323b')
         control_label.place(x=20, y=45)
 
