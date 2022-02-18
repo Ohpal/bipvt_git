@@ -1,15 +1,16 @@
 import os, sys
-
-if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-    os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
-
+import random
 from tkinter import *
 import tkinter as tk
 import tkinter.simpledialog
 import tkinter.messagebox
 from time import sleep
-import notification.insert_keypad
 
+
+if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+    os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
+
+import notification.insert_keypad
 import comd.var
 
 # Graph Library
@@ -17,7 +18,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import numpy as np
-import random
 
 
 class main_Activity(tk.Frame):
@@ -29,7 +29,7 @@ class main_Activity(tk.Frame):
         menu_frame = Frame(self, bg='#111111')
         menu_frame.pack(fill=X, ipady=20)
 
-        self.logo_image = tk.PhotoImage(file="images/bonc.png")
+        self.logo_image = tk.PhotoImage(file="images/bonc_white.png")
         logo_label = Label(menu_frame, image=self.logo_image, highlightbackground="#111111", activebackground='#111111', bd=0, bg='#111111')
         logo_label.pack(side=LEFT, padx=20)
 
@@ -78,10 +78,10 @@ class main_Activity(tk.Frame):
         temperature_unit = Label(temperature_frame, text=' ℃', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
         temperature_unit.pack(side=LEFT)
 
-        main_Activity.time_label1 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
+        main_Activity.time_label1 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 18, 'bold'), fg='white')
         main_Activity.time_label1.pack(pady=(150, 10))
 
-        main_Activity.time_label2 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='#96c63e')
+        main_Activity.time_label2 = Label(left_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 18, 'bold'), fg='#96c63e')
         main_Activity.time_label2.pack()
 
         # center top frame
@@ -89,26 +89,27 @@ class main_Activity(tk.Frame):
         center_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 라인선 그리기
-        main_Activity.liner = Canvas(center_frame, bg='#2f323b', highlightbackground='#2f323b', width=1280, height=670)
-        main_Activity.liner.pack()
+        main_Activity.main_canvas = Canvas(center_frame, bg='#2f323b', highlightbackground='#2f323b', width=900, height=1800)
+        main_Activity.main_canvas.pack()
 
         # 설비 연결선 라벨
-        main_Activity.line1 = main_Activity.liner.create_line(235, 219, 368, 138, fill='white', width=5, arrow=LAST)    # PVT-팬
-        main_Activity.line2 = main_Activity.liner.create_line(393, 180, 307, 232, 392, 296, fill='white', width=5, arrow=LAST)  # 팬-열교환기
-        main_Activity.line3 = main_Activity.liner.create_line(368, 398, 241, 473, fill='white', width=5, arrow=LAST)    # 열교환기-댐퍼
-        main_Activity.line4 = main_Activity.liner.create_line(293, 542, 233, 500, fill='#96c63e', width=5, arrow=LAST)    # 외기-댐퍼
-        main_Activity.line5 = main_Activity.liner.create_line(136, 429, 18, 348, 148, 272, fill='white', width=5, arrow=LAST)   # 댐퍼-PVT
-        main_Activity.line6 = main_Activity.liner.create_line(490, 414, 615, 502, fill='white', width=5, arrow=LAST)    # 열교환기-버퍼탱크
-        main_Activity.line7 = main_Activity.liner.create_line(598, 541, 457, 444, fill='white', width=5, arrow=LAST)    # 버퍼탱크-열교환기
-        main_Activity.line8 = main_Activity.liner.create_line(636, 404, 636, 298, fill='white', width=5, arrow=LAST)    # 버퍼탱크-이중코일
-        main_Activity.line9 = main_Activity.liner.create_line(683, 298, 683, 404, fill='white', width=5, arrow=LAST)    # 이중코일-버퍼탱크
-        main_Activity.line10 = main_Activity.liner.create_line(828, 157, 710, 227,  fill='white', width=5, arrow=LAST)  # 외기-이중코일
-        main_Activity.line11 = main_Activity.liner.create_line(721, 256, 837, 334, fill='white', width=5, arrow=LAST)   # 이중코일-히트펌프
-        main_Activity.line12 = main_Activity.liner.create_line(852, 396, 694, 291, fill='white', width=5, arrow=LAST)   # 히트펌프-이중코일
-        main_Activity.line13 = main_Activity.liner.create_line(942, 386, 1095, 293, fill='white', width=5, arrow=LAST)  # 히트펌프-저장탱크
-        main_Activity.line14 = main_Activity.liner.create_line(1069, 276, 939, 355, fill='white', width=5, arrow=LAST)  # 저장탱크-히트펌프
-        main_Activity.line15 = main_Activity.liner.create_line(950, 405, 1093, 498, fill='white', width=5, arrow=LAST)  # 히트펌프-온수탱크
-        main_Activity.line16 = main_Activity.liner.create_line(1068, 536, 924, 442, fill='white', width=5, arrow=LAST)  # 온수탱크-히트펌프
+        main_Activity.line1 = main_Activity.main_canvas.create_line(465, 190, 685, 190, fill='white', width=5, arrow=LAST)    # PVT-팬
+        main_Activity.line2 = main_Activity.main_canvas.create_line(732, 242, 641, 365, fill='white', width=5, arrow=LAST)  # 팬-열교환기
+        main_Activity.line3 = main_Activity.main_canvas.create_line(538, 400, 363, 400, fill='white', width=5, arrow=LAST)    # 열교환기-댐퍼
+        main_Activity.line4 = main_Activity.main_canvas.create_line(186, 556, 270, 436, fill='#96c63e', width=5, arrow=LAST)    # 외기-댐퍼
+        main_Activity.line5 = main_Activity.main_canvas.create_line(342, 338, 417, 235, fill='white', width=5, arrow=LAST)   # 댐퍼-PVT
+        main_Activity.line6 = main_Activity.main_canvas.create_line(583, 443, 490, 570, fill='white', width=5, arrow=LAST)    # 열교환기-버퍼탱크
+        main_Activity.line7 = main_Activity.main_canvas.create_line(484, 518, 552, 425, fill='white', width=5, arrow=LAST)    # 버퍼탱크-열교환기
+        main_Activity.line8 = main_Activity.main_canvas.create_line(513, 590, 688, 590, fill='white', width=5, arrow=LAST)    # 버퍼탱크-이중코일
+        main_Activity.line9 = main_Activity.main_canvas.create_line(692, 615, 513, 615, fill='white', width=5, arrow=LAST)    # 이중코일-버퍼탱크
+        main_Activity.line11 = main_Activity.main_canvas.create_line(701, 625, 647, 697, fill='white', width=5, arrow=LAST)   # 이중코일-히트펌프
+        main_Activity.line12 = main_Activity.main_canvas.create_line(654, 744, 729, 642, fill='white', width=5, arrow=LAST)   # 히트펌프-이중코일
+        main_Activity.line13 = main_Activity.main_canvas.create_line(551, 825, 485, 916, fill='white', width=5, arrow=LAST)  # 히트펌프-저장탱크
+        main_Activity.line14 = main_Activity.main_canvas.create_line(489, 967, 582, 843, fill='white', width=5, arrow=LAST)  # 저장탱크-히트펌프
+        main_Activity.line15 = main_Activity.main_canvas.create_line(538, 788, 363, 788, fill='white', width=5, arrow=LAST)  # 히트펌프-온수탱크
+        main_Activity.line16 = main_Activity.main_canvas.create_line(363, 813, 538, 813, fill='white', width=5, arrow=LAST)  # 온수탱크-히트펌프
+        main_Activity.line17 = main_Activity.main_canvas.create_line(513, 987, 688, 987, fill='white', width=5, arrow=LAST)  # 저장탱크-FCU
+        main_Activity.line18 = main_Activity.main_canvas.create_line(688, 1017, 513, 1017, fill='white', width=5, arrow=LAST)  # FCU-저장탱크
 
         x = 80
         y = 50
@@ -125,169 +126,170 @@ class main_Activity(tk.Frame):
         self.heatpump_image = tk.PhotoImage(file='images/heatpump.png')
         self.dhw_image = tk.PhotoImage(file='images/dhw.png')
 
-        main_Activity.liner.create_image(350 + x, 50 + y, image=self.fan_image)
-        main_Activity.liner.create_image(100 + x, 140 + y, image=self.bipvt_image)
-        main_Activity.liner.create_image(100 + x, 380 + y, image=self.damper_image)
-        main_Activity.liner.create_image(350 + x, 310 + y, image=self.exchanger_image)
-        main_Activity.liner.create_image(250 + x, 500 + y, image=self.outair_image)
-        main_Activity.liner.create_image(810 + x, 60 + y, image=self.outair_image)
-        main_Activity.liner.create_image(580 + x, 430 + y, image=self.buffer_image)
-        main_Activity.liner.create_image(580 + x, 160 + y, image=self.doublecoil_image)
-        main_Activity.liner.create_image(1050 + x, 160 + y, image=self.storage_image)
-        main_Activity.liner.create_image(810 + x, 310 + y, image=self.heatpump_image)
-        main_Activity.liner.create_image(1050 + x, 430 + y, image=self.dhw_image)
+        main_Activity.main_canvas.create_image(450, 150, image=self.bipvt_image)
+        main_Activity.main_canvas.create_image(750, 150, image=self.fan_image)
+        main_Activity.main_canvas.create_image(300, 350, image=self.damper_image)
+        main_Activity.main_canvas.create_image(600, 350, image=self.exchanger_image)
+        main_Activity.main_canvas.create_image(150, 550, image=self.outair_image)
+        # main_Activity.main_canvas.create_image(810, 60, image=self.outair_image)
+        main_Activity.main_canvas.create_image(450, 550, image=self.buffer_image)
+        main_Activity.main_canvas.create_image(750, 550, image=self.doublecoil_image)
+        main_Activity.main_canvas.create_image(600, 750, image=self.heatpump_image)
+        main_Activity.main_canvas.create_image(450, 950, image=self.storage_image)
+        main_Activity.main_canvas.create_image(300, 750, image=self.dhw_image)
+        main_Activity.main_canvas.create_image(750, 950, image=self.dhw_image)
 
         #########
-        bipvt_connect_label = Label(main_Activity.liner, text='PVT통신', font=('arial', 13, 'bold'), fg='white', bg='#2f323b')
+        bipvt_connect_label = Label(main_Activity.main_canvas, text='PVT통신', font=('arial', 15, 'bold'), fg='white', bg='#2f323b')
         bipvt_connect_label.place(x=20, y=13)
 
-        main_Activity.bipvt_connect_value = Label(main_Activity.liner, text='●', font=('arial', 25, 'bold'), fg='red', bg='#2f323b')
+        main_Activity.bipvt_connect_value = Label(main_Activity.main_canvas, text='●', font=('arial', 25, 'bold'), fg='red', bg='#2f323b')
         main_Activity.bipvt_connect_value.place(x=100, y=0)
 
-        heatpump_connect_label = Label(main_Activity.liner, text='히트펌프통신', font=('arial', 13, 'bold'), fg='white', bg='#2f323b')
+        heatpump_connect_label = Label(main_Activity.main_canvas, text='히트펌프통신', font=('arial', 15, 'bold'), fg='white', bg='#2f323b')
         heatpump_connect_label.place(x=140, y=13)
 
-        main_Activity.heatpump_connect_value = Label(main_Activity.liner, text='●', font=('arial', 25, 'bold'), fg='red', bg='#2f323b')
+        main_Activity.heatpump_connect_value = Label(main_Activity.main_canvas, text='●', font=('arial', 25, 'bold'), fg='red', bg='#2f323b')
         main_Activity.heatpump_connect_value.place(x=250, y=0)
 
-        control_label = Label(main_Activity.liner, text='운전상태', font=('arial', 13, 'bold'), fg='white', bg='#2f323b')
+        control_label = Label(main_Activity.main_canvas, text='운전상태', font=('arial', 15, 'bold'), fg='white', bg='#2f323b')
         control_label.place(x=20, y=45)
 
-        main_Activity.control_now = Label(main_Activity.liner, text=' - ', font=('arial', 13, 'bold'), fg='white', bg='#2f323b')
+        main_Activity.control_now = Label(main_Activity.main_canvas, text=' - ', font=('arial', 15, 'bold'), fg='white', bg='#2f323b')
         main_Activity.control_now.place(x=100, y=45)
 
-        # bipvt 조도
-        bipvt_insolation_label = Label(main_Activity.liner, text='조도', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_insolation_label.place(x=25, y=110)
+        # bipvt 내부온도
+        bipvt_temp_label = Label(main_Activity.main_canvas, text='내부온도', fg='white', bg='#2f323b', font=('arial', 15))
+        bipvt_temp_label.place(x=230, y=110)
 
-        main_Activity.bipvt_insolation_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_insolation_value.place(x=70, y=110)
+        main_Activity.bipvt_temp_value = Label(main_Activity.main_canvas, text='-', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.bipvt_temp_value.place(x=320, y=110)
 
-        bipvt_insolation_unit = Label(main_Activity.liner, text='W/m²', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        bipvt_insolation_unit.place(x=125, y=110)
+        bipvt_temp_unit = Label(main_Activity.main_canvas, text='℃', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        bipvt_temp_unit.place(x=360, y=110)
 
-        bipvt_power_label = Label(main_Activity.liner, text='전력', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_power_label.place(x=25, y=130)
+        bipvt_power_label = Label(main_Activity.main_canvas, text='전      력', fg='white', bg='#2f323b', font=('arial', 15))
+        bipvt_power_label.place(x=230, y=140)
 
-        main_Activity.bipvt_power_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_power_value.place(x=70, y=130)
+        main_Activity.bipvt_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.bipvt_power_value.place(x=320, y=140)
 
-        bipvt_power_unit = Label(main_Activity.liner, text='kW', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        bipvt_power_unit.place(x=125, y=130)
+        bipvt_power_unit = Label(main_Activity.main_canvas, text='kW', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        bipvt_power_unit.place(x=360, y=140)
 
-        bipvt_voltage_label = Label(main_Activity.liner, text='전압', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_voltage_label.place(x=25, y=150)
+        bipvt_voltage_label = Label(main_Activity.main_canvas, text='전      압', fg='white', bg='#2f323b', font=('arial', 15))
+        bipvt_voltage_label.place(x=230, y=170)
 
-        main_Activity.bipvt_voltage_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_voltage_value.place(x=70, y=150)
+        main_Activity.bipvt_voltage_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.bipvt_voltage_value.place(x=320, y=170)
 
-        bipvt_voltage_unit = Label(main_Activity.liner, text='V', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        bipvt_voltage_unit.place(x=125, y=150)
+        bipvt_voltage_unit = Label(main_Activity.main_canvas, text='V', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        bipvt_voltage_unit.place(x=360, y=170)
 
-        bipvt_current_label = Label(main_Activity.liner, text='전류', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_current_label.place(x=25, y=170)
+        bipvt_current_label = Label(main_Activity.main_canvas, text='전      류', fg='white', bg='#2f323b', font=('arial', 15))
+        bipvt_current_label.place(x=230, y=200)
 
-        main_Activity.bipvt_current_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_current_value.place(x=70, y=170)
+        main_Activity.bipvt_current_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.bipvt_current_value.place(x=320, y=200)
 
-        bipvt_current_unit = Label(main_Activity.liner, text='A', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        bipvt_current_unit.place(x=125, y=170)
+        bipvt_current_unit = Label(main_Activity.main_canvas, text='A', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        bipvt_current_unit.place(x=360, y=200)
 
-        bipvt_inner_temp_label = Label(main_Activity.liner, text='입구온도', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_inner_temp_label.place(x=40, y=245)
+        # bipvt_inner_temp_label = Label(main_Activity.main_canvas, text='입구온도', fg='white', bg='#2f323b', font=('arial', 15))
+        # bipvt_inner_temp_label.place(x=40, y=245)
+        #
+        # main_Activity.bipvt_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        # main_Activity.bipvt_inner_temp_value.place(x=40, y=265)
+        #
+        # bipvt_outer_temp_label = Label(main_Activity.main_canvas, text='출구온도', fg='white', bg='#2f323b', font=('arial', 15))
+        # bipvt_outer_temp_label.place(x=245, y=245)
+        #
+        # main_Activity.bipvt_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        # main_Activity.bipvt_outer_temp_value.place(x=245, y=265)
+        #
+        fan_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        fan_status_label.place(x=775, y=240)
 
-        main_Activity.bipvt_inner_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_inner_temp_value.place(x=40, y=265)
+        main_Activity.fan_status_value = Label(main_Activity.main_canvas, text='ON', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.fan_status_value.place(x=775, y=270)
 
-        bipvt_outer_temp_label = Label(main_Activity.liner, text='출구온도', fg='white', bg='#2f323b', font=('arial', 13))
-        bipvt_outer_temp_label.place(x=245, y=245)
+        damper_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        damper_status_label.place(x=185, y=370)
 
-        main_Activity.bipvt_outer_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.bipvt_outer_temp_value.place(x=245, y=265)
+        main_Activity.damper_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.damper_status_value.place(x=185, y=400)
 
-        fan_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        fan_status_label.place(x=495, y=130)
+        out_temp_label = Label(main_Activity.main_canvas, text='외부온도', fg='white', bg='#2f323b', font=('arial', 15))
+        out_temp_label.place(x=110, y=655)
 
-        main_Activity.fan_status_value = Label(main_Activity.liner, text='ON', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.fan_status_value.place(x=495, y=150)
+        main_Activity.out_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.out_temp_value.place(x=110, y=685)
 
-        damper_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        damper_status_label.place(x=70, y=465)
+        exchanger_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        exchanger_status_label.place(x=670, y=370)
 
-        main_Activity.damper_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.damper_status_value.place(x=70, y=485)
+        main_Activity.exchanger_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.exchanger_status_value.place(x=670, y=400)
 
-        coil_out_temp_label = Label(main_Activity.liner, text='외기온도', fg='white', bg='#2f323b', font=('arial', 13))
-        coil_out_temp_label.place(x=960, y=140)
+        buffer_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        buffer_status_label.place(x=335, y=575)
 
-        main_Activity.coil_out_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.coil_out_temp_value.place(x=960, y=160)
+        main_Activity.buffer_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.buffer_status_value.place(x=335, y=605)
 
-        exchanger_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        exchanger_status_label.place(x=335, y=345)
+        buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼탱크온도', fg='white', bg='#2f323b', font=('arial', 15))
+        buffer_temp_label.place(x=390, y=655)
 
-        main_Activity.exchanger_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.exchanger_status_value.place(x=335, y=365)
+        main_Activity.buffer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.buffer_temp_value.place(x=390, y=685)
 
-        buffer_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        buffer_status_label.place(x=725, y=505)
+        dhw_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        dhw_status_label.place(x=185, y=780)
 
-        main_Activity.buffer_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.buffer_status_value.place(x=725, y=525)
+        main_Activity.dhw_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.dhw_status_value.place(x=185, y=810)
 
-        buffer_temp_label = Label(main_Activity.liner, text='버퍼탱크온도', fg='white', bg='#2f323b', font=('arial', 13))
-        buffer_temp_label.place(x=595, y=580)
+        dhw_temp_label = Label(main_Activity.main_canvas, text='온수탱크온도', fg='white', bg='#2f323b', font=('arial', 15))
+        dhw_temp_label.place(x=240, y=855)
 
-        main_Activity.buffer_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.buffer_temp_value.place(x=595, y=600)
+        main_Activity.dhw_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.dhw_temp_value.place(x=240, y=885)
 
-        dhw_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        dhw_status_label.place(x=1200, y=510)
+        heatpump_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        heatpump_status_label.place(x=600, y=850)
 
-        main_Activity.dhw_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.dhw_status_value.place(x=1200, y=530)
+        main_Activity.heatpump_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.heatpump_status_value.place(x=600, y=880)
 
-        dhw_temp_label = Label(main_Activity.liner, text='온수탱크온도', fg='white', bg='#2f323b', font=('arial', 13))
-        dhw_temp_label.place(x=1065, y=580)
+        heatpump_mode_label = Label(main_Activity.main_canvas, text='현재모드', fg='white', bg='#2f323b', font=('arial', 15))
+        heatpump_mode_label.place(x=670, y=770)
 
-        main_Activity.dhw_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.dhw_temp_value.place(x=1065, y=600)
+        main_Activity.heatpump_mode_value = Label(main_Activity.main_canvas, text='급탕', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.heatpump_mode_value.place(x=770, y=770)
 
-        heatpump_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        heatpump_status_label.place(x=780, y=390)
+        heatpump_activepower_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b', font=('arial', 15))
+        heatpump_activepower_label.place(x=670, y=800)
 
-        main_Activity.heatpump_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.heatpump_status_value.place(x=780, y=410)
+        main_Activity.heatpump_activepower_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.heatpump_activepower_value.place(x=770, y=800)
 
-        heatpump_activepower_label = Label(main_Activity.liner, text='전력사용량', fg='white', bg='#2f323b', font=('arial', 13))
-        heatpump_activepower_label.place(x=790,y=490)
+        storage_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        storage_status_label.place(x=335, y=980)
 
-        main_Activity.heatpump_activepower_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.heatpump_activepower_value.place(x=880, y=490)
+        main_Activity.storage_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.storage_status_value.place(x=335, y=1010)
 
-        heatpump_mode_label = Label(main_Activity.liner, text='현재모드', fg='white', bg='#2f323b', font=('arial', 13))
-        heatpump_mode_label.place(x=790, y=465)
+        storage_temp_label = Label(main_Activity.main_canvas, text='저장탱크온도', fg='white', bg='#2f323b', font=('arial', 15))
+        storage_temp_label.place(x=390, y=1055)
 
-        main_Activity.heatpump_mode_value = Label(main_Activity.liner, text='급탕', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.heatpump_mode_value.place(x=880, y=465)
+        main_Activity.storage_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.storage_temp_value.place(x=390, y=1085)
+        #
+        doublecoil_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
+        doublecoil_status_label.place(x=775, y=640)
 
-        storage_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        storage_status_label.place(x=1200, y=240)
-
-        main_Activity.storage_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.storage_status_value.place(x=1200, y=260)
-
-        storage_temp_label = Label(main_Activity.liner, text='저장탱크온도', fg='white', bg='#2f323b', font=('arial', 13))
-        storage_temp_label.place(x=1065, y=315)
-
-        main_Activity.storage_temp_value = Label(main_Activity.liner, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.storage_temp_value.place(x=1065, y=335)
-
-        doublecoil_status_label = Label(main_Activity.liner, text='상태', fg='white', bg='#2f323b', font=('arial', 13))
-        doublecoil_status_label.place(x=550, y=240)
-
-        main_Activity.doublecoil_status_value = Label(main_Activity.liner, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 13, 'bold'))
-        main_Activity.doublecoil_status_value.place(x=550, y=260)
+        main_Activity.doublecoil_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
+        main_Activity.doublecoil_status_value.place(x=775, y=670)
 
         #########
 

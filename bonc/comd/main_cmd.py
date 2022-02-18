@@ -74,42 +74,49 @@ def mainLoop():
             bipvt_outer_temp = '{0:0.1f}'.format(bipvt_outer_temp)
             buffer_tank_temp = '{0:0.1f}'.format(buffer_tank_temp)
 
+            # 태양광 전력 0~1000 사이 측정
             if not 0 <= float(pv_power) <= 1000:
                 db.sqlite_connect.error_insert('태양광전력', '데이터 측정범위 에러@'+pv_power, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '태양광전력', '데이터 측정범위 에러@'+pv_power))
                 raise Exception('Out of Range 전력 >> ', pv_power)
 
+            # 태양광 전압 0~1000 사이 측정
             if not 0 <= float(pv_voltage) <= 1000:
                 db.sqlite_connect.error_insert('태양광전압', '데이터 측정범위 에러@'+pv_voltage, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '태양광전압', '데이터 측정범위 에러@'+pv_voltage))
                 raise Exception('Out of Range 전압 >> ', pv_voltage)
 
-            if not 0 <= float(pv_current) <= 100:
+            # 태양광 전류 0~1000 사이 측정
+            if not 0 <= float(pv_current) <= 1000:
                 db.sqlite_connect.error_insert('태양광전류', '데이터 측정범위 에러@'+pv_current, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '태양광전류', '데이터 측정범위 에러@'+pv_current))
                 raise Exception('Out of Range 전류 >> ', pv_current)
 
+            # 일사량 0~9999 사이 측정
             if not 0 <= float(insolation) <= 9999:
                 db.sqlite_connect.error_insert('조도', '데이터 측정범위 에러@'+insolation, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '조도', '데이터 측정범위 에러@'+insolation))
                 raise Exception('Out of Range 조도 >> ', pv_current)
 
+            # BIPVT 입구온도 -200~200 사이 측정
             if not - 200 <= float(bipvt_inner_temp) <= 200:
                 db.sqlite_connect.error_insert('BIPVT 입구온도', '데이터 측정범위 에러@'+bipvt_inner_temp, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), 'BIPVT 입구온도', '데이터 측정범위 에러@'+bipvt_inner_temp))
                 raise Exception('Out of Range 입구온도 >> ', bipvt_inner_temp)
 
+            # BIPVT 출구온도 -200~200 사이 측정
             if not - 200 <= float(bipvt_outer_temp) <= 200:
                 db.sqlite_connect.error_insert('BIPVT 출구온도', '데이터 측정범위 에러@'+bipvt_outer_temp, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), 'BIPVT 출구온도', '데이터 측정범위 에러@'+bipvt_outer_temp))
                 raise Exception('Out of Range 출구온도 ', bipvt_outer_temp)
 
+            # 버퍼탱크 온도 -200~200 사이 측정
             if not - 200 <= float(buffer_tank_temp) <= 200:
                 db.sqlite_connect.error_insert('버퍼탱크 온도', '데이터 측정범위 에러@'+buffer_tank_temp, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
@@ -197,14 +204,12 @@ def mainLoop():
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '히트펌프 전력사용량', '데이터 측정범위 에러@'+heatpump_power))
                 raise Exception('Out of Range >> ', heatpump_power)
-            
 
             if not -200 <= float(dhw_temp) <= 200:
                 db.sqlite_connect.error_insert('온수탱크 온도', '데이터 측정범위 에러@'+dhw_temp, now_time())
                 ui.error_Activity.error_Activity.error_list.insert('', index=0, text=int(error_len()),
                                                                    values=(now_time(), '온수탱크 온도', '데이터 측정범위 에러@'+dhw_temp))
                 raise Exception('Out of Range >> ', dhw_temp)
-            
 
             if not -200 <= float(heatpump_out_temp) <= 200:
                 db.sqlite_connect.error_insert('외기온도', '데이터 측정범위 에러@'+heatpump_out_temp, now_time())
@@ -297,7 +302,6 @@ def mainLoop():
 
     except Exception as ex:
         print('TEMS Control ERROR >> ', ex)
-
 
     try:
         if comd.var.bipvt_read:

@@ -19,8 +19,8 @@ def now_time():
 
 def main_timer():
     timer, getDay = now_time()
-    ampm = timer.strftime('%p')
-    ampm = '오전' if ampm == 'am' else '오후'
+    ampm = timer.strftime('%p').upper()
+    ampm = '오전' if ampm == 'AM' else '오후'
     timer = timer.strftime("%Y-%m-%d %I:%M:%S")
 
     weekDay = '-'
@@ -45,21 +45,21 @@ def main_timer():
     ui.main_Activity.main_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
 
 
-
 def set_bipvt_data(pv_power, pv_voltage, pv_current, insolation, bipvt_inner_temp, bipvt_outer_temp,
                    buffer_tank_temp, bipvt_fault, damper_status, fan_status, exchanger_status, buffer_status):
-    ui.main_Activity.main_Activity.bipvt_insolation_value.config(text=insolation)
+    ui.main_Activity.main_Activity.bipvt_temp_value.config(text=insolation)
     ui.main_Activity.main_Activity.bipvt_power_value.config(text=pv_power)
     ui.main_Activity.main_Activity.bipvt_voltage_value.config(text=pv_voltage)
     ui.main_Activity.main_Activity.bipvt_current_value.config(text=pv_current)
-    ui.main_Activity.main_Activity.bipvt_inner_temp_value.config(text=bipvt_inner_temp+'℃')
-    ui.main_Activity.main_Activity.bipvt_outer_temp_value.config(text=bipvt_outer_temp+'℃')
+    # ui.main_Activity.main_Activity.bipvt_inner_temp_value.config(text=bipvt_inner_temp+'℃')
+    # ui.main_Activity.main_Activity.bipvt_outer_temp_value.config(text=bipvt_outer_temp+'℃')
     ui.main_Activity.main_Activity.fan_status_value.config(text=fan_status)
     ui.main_Activity.main_Activity.damper_status_value.config(text=damper_status)
     # ui.main_Activity.main_Activity.out_temp_value.config(text=bipvt_out_temp)
     ui.main_Activity.main_Activity.exchanger_status_value.config(text=exchanger_status)
     ui.main_Activity.main_Activity.buffer_status_value.config(text=buffer_status)
     ui.main_Activity.main_Activity.buffer_temp_value.config(text=buffer_tank_temp+'℃')
+
 
 def set_heatpump_data(heatpump_power, dhw_temp, heatpump_out_temp, storage_temp, heatpump_status,
                 heatpump_mode, heatpump_fault, doublecoil_status, dhw_status, storage_status):
@@ -71,7 +71,7 @@ def set_heatpump_data(heatpump_power, dhw_temp, heatpump_out_temp, storage_temp,
     ui.main_Activity.main_Activity.storage_status_value.config(text=storage_status)
     ui.main_Activity.main_Activity.storage_temp_value.config(text=storage_temp+'℃')
     ui.main_Activity.main_Activity.doublecoil_status_value.config(text=doublecoil_status)
-    ui.main_Activity.main_Activity.coil_out_temp_value.config(text=heatpump_out_temp+'℃')
+    ui.main_Activity.main_Activity.out_temp_value.config(text=heatpump_out_temp+'℃')
 
 
 def set_control_mode():
@@ -210,87 +210,87 @@ def set_connect_ui():
     else:
         ui.main_Activity.main_Activity.control_now.config(text='정  지', fg='red')
 
-# ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
-# ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
+# ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
+# ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
 
 def set_line_ui(damper_status, fan_status, exchanger_status, buffer_status, doublecoil_status, dhw_status, storage_status, heatpump_status, mode):
     if damper_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line4, fill='#96c63e')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line5, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line4, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line5, fill='#96c63e')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line4, fill='white')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line5, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line4, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line5, fill='white')
 
     if fan_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line1, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line1, fill='#96c63e')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line1, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line1, fill='white')
 
     if fan_status == 'ON' and exchanger_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line2, fill='red')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line2, fill='red')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line2, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line2, fill='white')
 
     if exchanger_status == 'ON' and damper_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line3, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line3, fill='#96c63e')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line3, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line3, fill='white')
 
     # if exchanger_status == 'ON' and buffer_status == 'ON':
-    #     ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line6, fill='red')
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line6, fill='red')
     # else:
-    #     ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line6, fill='white')
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line6, fill='white')
 
     # if exchanger_status == 'OFF' and buffer_status == 'ON':
-    #     ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line7, fill='#007ad1')
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line7, fill='#007ad1')
     # else:
-    #     ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line7, fill='white')
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line7, fill='white')
 
-    if doublecoil_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line10, fill='#96c63e')
-    else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line10, fill='white')
+    # if doublecoil_status == 'ON':
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line10, fill='#96c63e')
+    # else:
+    #     ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line10, fill='white')
 
     if buffer_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line6, fill='red')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line7, fill='white')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line8, fill='red')
-        # ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line6, fill='red')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line7, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line8, fill='red')
+        # ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line6, fill='white')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line7, fill='#007ad1')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line8, fill='white')
-        # ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line9, fill='#007ad1')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line6, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line7, fill='#007ad1')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line8, fill='white')
+        # ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='#007ad1')
 
     if dhw_status == 'ON':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line15, fill='red')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line16, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line15, fill='red')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line16, fill='white')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line15, fill='white')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line16, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line15, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line16, fill='#96c63e')
 
     if storage_status == 'ON':
         if mode == 0:
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line13, fill='#007ad1')
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line14, fill='red')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line13, fill='#007ad1')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line14, fill='red')
         elif mode == 1:
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line13, fill='red')
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line14, fill='#007ad1')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line13, fill='red')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line14, fill='#007ad1')
         else:
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
-            ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
+            ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line13, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line14, fill='white')
 
     if heatpump_status == 'OFF':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line12, fill='#96c63e')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line11, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line12, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line11, fill='white')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line11, fill='#96c63e')
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line12, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line11, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line12, fill='white')
 
     if heatpump_status == 'OFF' and buffer_status == 'OFF':
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line9, fill='#96c63e')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='#96c63e')
     else:
-        ui.main_Activity.main_Activity.liner.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
+        ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
