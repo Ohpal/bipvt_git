@@ -15,6 +15,7 @@ import comd.var
 
 # Graph Library
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import numpy as np
@@ -303,17 +304,17 @@ class main_Activity(tk.Frame):
         main_Activity.doublecoil_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
         main_Activity.doublecoil_status_value.place(x=775-x, y=670)
 
-        fcu_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('arial', 15))
-        fcu_status_label.place(x=775-x, y=1040)
+        fcu_status_label = Label(main_Activity.main_canvas, text='상      태', fg='white', bg='#2f323b', font=('arial', 15))
+        fcu_status_label.place(x=690-x, y=1055)
 
         main_Activity.fcu_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
-        main_Activity.fcu_status_value.place(x=775-x, y=1070)
+        main_Activity.fcu_status_value.place(x=775-x, y=1055)
 
         fcu_temp_label = Label(main_Activity.main_canvas, text='실내온도', fg='white', bg='#2f323b', font=('arial', 15))
-        fcu_temp_label.place(x=690-x, y=1055)
+        fcu_temp_label.place(x=690-x, y=1085)
 
         main_Activity.fcu_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('arial', 15, 'bold'))
-        main_Activity.fcu_temp_value.place(x=690-x, y=1085)
+        main_Activity.fcu_temp_value.place(x=775-x, y=1085)
 
         #########
         # 하단 그래프 프레임
@@ -321,12 +322,33 @@ class main_Activity(tk.Frame):
         bottom_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 그래프 캔버스 그리기
+        print('1')
         main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=450)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
 
-        figure = plt.Figure(figsize=(6,5), dpi=100)
-        ax = figure.add_subplot(111, xlim=(0, 24), ylim=(0, 1024))
-        chart_type = FigureCanvasTkAgg(figure, self)
+        print('2')
+        # fig = plt.Figure(figsize=(6, 5), dpi=100)
+        fig = Figure()
+        fig.patch.set_facecolor('#2f323b')
+        # plt.grid(color='w')
+
+        ax = fig.add_subplot(111)
+        # ax.set_xlabel('X axis')
+        # ax.set_ylabel('Y axis')
+        # ax.grid(color='w')
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+
+        graph_canvas = FigureCanvasTkAgg(fig, master=main_Activity.bottom_canvas)
+        # graph_canvas.set_facecolor('#2f323b')
+        # graph_canvas.show()
+        graph_canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
+
+
+        #
+
+        # ax = figure.add_subplot(111, xlim=(0, 24), ylim=(0, 1024))
+        # chart_type = FigureCanvasTkAgg(figure, self)
 
 
 
@@ -336,7 +358,7 @@ class main_Activity(tk.Frame):
 
 
     def sys_exit(self):
-        res_msg = tkinter.messagebox.askyesno('프로그램 종료', '프로그램을 종료하시겠습니까?')
+        res_msg = tkinter.messagebox.askyesno('프로그램 종료', '프로그램을 종료하시겠습니까?', icon='warning')
 
         if res_msg:
             sys.exit(0)
