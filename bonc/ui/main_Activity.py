@@ -27,12 +27,12 @@ class main_Activity(tk.Frame):
 
         # left frame
         left_frame = Frame(self, bg='#2F323B')
-        left_frame.pack(fill=Y, side=LEFT, ipadx=15)
+        left_frame.pack(fill=Y, side=LEFT, ipadx=10)
 
         self.logo_image = tk.PhotoImage(file="images/bonc_white.png")
         logo_label = Label(left_frame, image=self.logo_image, highlightbackground="#2F323B", activebackground='#2F323B',
                            bd=0, bg='#2F323B')
-        logo_label.pack(padx=20, ipady=20)
+        logo_label.pack(padx=10, ipady=30)
 
         self.main_image = tk.PhotoImage(file='images/main_btn.gif')
         self.control_image = tk.PhotoImage(file='images/control_btn_off.gif')
