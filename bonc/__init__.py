@@ -47,7 +47,7 @@ class start_app(tk.Tk):
         # self.attributes('-fullscreen', True)
 
         container = tk.Frame(self)
-        container.config(background='#2f323b')
+        container.config(background='#111111')
         container.pack(fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
