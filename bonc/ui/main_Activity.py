@@ -29,11 +29,13 @@ class main_Activity(tk.Frame):
         title_frame.pack(fill=X, side=TOP)
 
         self.logo_image = tk.PhotoImage(file="images/TEMS2.png")
-        logo_label = Label(title_frame, image=self.logo_image, highlightbackground="#111111", activebackground='#111111', bd=0, bg='#111111')
-        logo_label.pack(side=LEFT, padx=(30, 60), ipady=20)
+        logo_label = Label(title_frame, image=self.logo_image, highlightbackground="#111111",
+                           activebackground='#111111', bd=0, bg='#111111')
+        logo_label.pack(side=LEFT, padx=(30, 50), ipady=20)
 
         self.gps_image = tk.PhotoImage(file='images/gps.png')
-        gps_menu = Label(title_frame, image=self.gps_image, highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111')
+        gps_menu = Label(title_frame, image=self.gps_image, highlightbackground='#111111', activebackground='#111111',
+                         bd=0, bg='#111111')
         gps_menu.pack(side=LEFT, padx=(0, 10), pady=(8, 0))
 
         weather_menu = Label(title_frame, text='날씨', highlightbackground='#111111', activebackground='#111111', bd=0,
@@ -41,7 +43,8 @@ class main_Activity(tk.Frame):
         weather_menu.pack(side=LEFT, padx=10, pady=(8, 0))
 
         main_Activity.weather_value = Label(title_frame, text='맑음', highlightbackground='#111111',
-                                            activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+                                            activebackground='#111111', bd=0, bg='#111111', font=('arial', 16),
+                                            fg='white')
         main_Activity.weather_value.pack(side=LEFT, pady=(8, 0))
 
         temperature_menu = Label(title_frame, text='| 기온', highlightbackground='#111111',
@@ -57,16 +60,21 @@ class main_Activity(tk.Frame):
                                  activebackground='#111111', bd=0, bg='#111111', font=('arial', 16, 'bold'), fg='white')
         temperature_unit.pack(side=LEFT, pady=(8, 0))
 
-        humi_menu = Label(title_frame, text='| 습도', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+        humi_menu = Label(title_frame, text='| 습도', highlightbackground='#111111', activebackground='#111111', bd=0,
+                          bg='#111111', font=('arial', 16), fg='white')
         humi_menu.pack(side=LEFT, padx=10, pady=(8, 0))
 
-        main_Activity.humi_value = Label(title_frame, text='44.3', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+        main_Activity.humi_value = Label(title_frame, text='44.3', highlightbackground='#111111',
+                                         activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
         main_Activity.humi_value.pack(side=LEFT, pady=(8, 0))
 
-        humi_unit = Label(title_frame, text='%', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 16), fg='white')
+        humi_unit = Label(title_frame, text='%', highlightbackground='#111111', activebackground='#111111', bd=0,
+                          bg='#111111', font=('arial', 16), fg='white')
         humi_unit.pack(side=LEFT, pady=(8, 0))
 
-        main_Activity.time_label2 = Label(title_frame, text='-', highlightbackground='#111111', activebackground='#111111', bd=0, bg='#111111', font=('arial', 18, 'bold'), fg='#96c63e')
+        main_Activity.time_label2 = Label(title_frame, text='-', highlightbackground='#111111',
+                                          activebackground='#111111', bd=0, bg='#111111', font=('arial', 18, 'bold'),
+                                          fg='#96c63e')
         main_Activity.time_label2.pack(side=RIGHT, padx=(10, 30), pady=(8, 0))
 
         main_Activity.time_label1 = Label(title_frame, text='-', highlightbackground='#111111',
@@ -74,35 +82,36 @@ class main_Activity(tk.Frame):
                                           fg='white')
         main_Activity.time_label1.pack(side=RIGHT, pady=(8, 0))
 
-        # system_exit_btn = Button(title_frame, text='', highlightbackground='#2F323B', activebackground='#2F323B', bd=0,
-        #                          bg='red', command=lambda: self.sys_exit())
-        # system_exit_btn.pack()
+        self.date_image = tk.PhotoImage(file='images/date.png')
+        date_menu = Label(title_frame, image=self.date_image, highlightbackground='#111111', activebackground='#111111',
+                          bd=0, bg='#111111')
+        date_menu.pack(side=RIGHT, padx=(0, 5), pady=(8, 0))
 
-
-##################
+        ########################### 메뉴 버튼 ###############################
         menu_frame = Frame(self, bg='#111111')
         menu_frame.pack(fill=X, side=TOP, ipady=10)
 
-        self.main_image = tk.PhotoImage(file='images/main_btn.gif')
+        self.main_image = tk.PhotoImage(file='images/main_btn.png')
         self.control_image = tk.PhotoImage(file='images/control_btn_off.gif')
         self.setting_image = tk.PhotoImage(file='images/setting_btn_off.gif')
+        self.detail_image = tk.PhotoImage(file='images/detail_btn_off.png')
 
-        main_menu = Button(menu_frame, image=self.main_image, highlightbackground='#2F323B', activebackground='#2F323B',
-                           bd=0, bg='#2F323B', command=lambda: controller.show_frame('main_Activity'))
+        main_menu = Button(menu_frame, image=self.main_image, highlightbackground='#111111', activebackground='#111111',
+                           bd=0, bg='#111111', command=lambda: controller.show_frame('main_Activity'))
         main_menu.pack(side=LEFT, anchor=CENTER, expand=True)
 
-        control_menu = Button(menu_frame, image=self.control_image, highlightbackground='#2F323B',
-                              activebackground='#2F323B', bd=0, bg='#2F323B',
+        control_menu = Button(menu_frame, image=self.control_image, highlightbackground='#111111',
+                              activebackground='#111111', bd=0, bg='#111111',
                               command=lambda: controller.show_frame('control_Activity'))
         control_menu.pack(side=LEFT, anchor=CENTER, expand=True)
 
-        detail_menu = Button(menu_frame, image=self.main_image, highlightbackground='#2F323B',
-                             activebackground='#2F323B', bd=0, bg='#2F323B',
+        detail_menu = Button(menu_frame, image=self.detail_image, highlightbackground='#111111',
+                             activebackground='#111111', bd=0, bg='#111111',
                              command=lambda: controller.show_frame('control_Activity'))
         detail_menu.pack(side=LEFT, anchor=CENTER, expand=True)
 
-        setting_menu = Button(menu_frame, image=self.setting_image, highlightbackground='#2F323B',
-                              activebackground='#2F323B', bd=0, bg='#2F323B',
+        setting_menu = Button(menu_frame, image=self.setting_image, highlightbackground='#111111',
+                              activebackground='#111111', bd=0, bg='#111111',
                               command=lambda: controller.show_frame('setting_Activity'))
         setting_menu.pack(side=LEFT, anchor=CENTER, expand=True)
 
@@ -115,10 +124,11 @@ class main_Activity(tk.Frame):
         main_Activity.top_canvas = Canvas(top_frame, bg='#111111', highlightbackground='#111111', width=870, height=200)
         main_Activity.top_canvas.pack(padx=15, fill=X, pady=(15, 0))
 
-        above1_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180)
+        above1_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
         above1_frame.pack(side=LEFT, fill=BOTH, expand=True, )
 
-        above1_title = Label(above1_frame, text='일일 태양광 발전량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'), anchor='w')
+        above1_title = Label(above1_frame, text='일일 태양광 발전량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'),
+                             anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         above1_value = Label(above1_frame, text=' 79514.3 ', fg='#CFDD8E', bg='#2f323b', font=('arial', 25, 'bold'))
@@ -127,10 +137,11 @@ class main_Activity(tk.Frame):
         above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('arial', 20, 'bold'), anchor='e')
         above1_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
-        above2_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180)
+        above2_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
         above2_frame.pack(side=LEFT, fill=BOTH, expand=True, padx=(15, 0))
 
-        above2_title = Label(above2_frame, text='누적 태양광 발전량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'), anchor='w')
+        above2_title = Label(above2_frame, text='누적 태양광 발전량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'),
+                             anchor='w')
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         above2_value = Label(above2_frame, text=' 7979842.7 ', fg='#6ECEDA', bg='#2f323b', font=('arial', 25, 'bold'))
@@ -139,10 +150,11 @@ class main_Activity(tk.Frame):
         above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('arial', 20, 'bold'), anchor='e')
         above2_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
-        above3_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180)
+        above3_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
         above3_frame.pack(side=LEFT, fill=BOTH, expand=True, padx=15)
 
-        above3_title = Label(above3_frame, text='일일 부하 사용량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'), anchor='w')
+        above3_title = Label(above3_frame, text='일일 부하 사용량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'),
+                             anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         above3_value = Label(above3_frame, text=' 749843.4 ', fg='#B97687', bg='#2f323b', font=('arial', 25, 'bold'))
@@ -151,10 +163,11 @@ class main_Activity(tk.Frame):
         above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('arial', 20, 'bold'), anchor='e')
         above3_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
-        above4_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180)
+        above4_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
         above4_frame.pack(side=LEFT, fill=BOTH, expand=True)
 
-        above4_title = Label(above4_frame, text='누적 부하 사용량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'), anchor='w')
+        above4_title = Label(above4_frame, text='누적 부하 사용량', fg='white', bg='#2f323b', font=('arial', 15, 'bold'),
+                             anchor='w')
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         above4_value = Label(above4_frame, text=' 498736.75 ', fg='#d18063', bg='#2f323b', font=('arial', 25, 'bold'))
@@ -263,6 +276,11 @@ class main_Activity(tk.Frame):
         control_label = Label(main_Activity.main_canvas, text='운전상태', font=('arial', 15, 'bold'), fg='white',
                               bg='#2f323b')
         control_label.place(x=20, y=45)
+
+        system_exit_btn = Button(main_Activity.main_canvas, text='', highlightbackground='#2F323B',
+                                 activebackground='#2F323B', bd=0, width=50, height=2,
+                                 bg='#2F323B', command=lambda: self.sys_exit())
+        system_exit_btn.place(x=950, y=0)
 
         main_Activity.control_now = Label(main_Activity.main_canvas, text=' - ', font=('arial', 15, 'bold'), fg='white',
                                           bg='#2f323b')
@@ -454,7 +472,8 @@ class main_Activity(tk.Frame):
         bottom_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 그래프 캔버스 그리기
-        main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
+        main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870,
+                                             height=400)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
         #
         # Label(main_Activity.bottom_canvas, text='그래프 준비중', fg='white', bg='#2f323b', font=('arial', 30, 'bold')).pack(fill=BOTH, expand=True)
