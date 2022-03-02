@@ -32,19 +32,19 @@ class error_Activity(tk.Frame):
                            bd=0, bg='#111111')
         logo_label.pack(side=LEFT, padx=20)
 
-        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.gif')
+        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.png')
         setting_label = Button(menu_frame, image=self.setting_image, highlightbackground="#111111",
                                activebackground='#111111', bd=0, bg='#111111',
                                command=lambda: controller.show_frame("setting_Activity"))
         setting_label.pack(side=RIGHT, padx=(20, 40))
 
-        self.control_image = tk.PhotoImage(file='images/control_btn.gif')
+        self.control_image = tk.PhotoImage(file='images/control_btn.png')
         control_label = Button(menu_frame, image=self.control_image, highlightbackground="#111111",
                                activebackground='#111111', bd=0, bg='#111111',
                                command=lambda: controller.show_frame("control_Activity"))
         control_label.pack(side=RIGHT, padx=20)
 
-        self.main_image = tk.PhotoImage(file='images/main_btn_off.gif')
+        self.main_image = tk.PhotoImage(file='images/main_btn_off.png')
         main_label = Button(menu_frame, image=self.main_image, highlightbackground="#111111",
                             activebackground='#111111', bd=0, bg='#111111',
                             command=lambda: controller.show_frame("main_Activity"))

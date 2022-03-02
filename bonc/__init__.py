@@ -14,6 +14,7 @@ import comd.main_cmd
 import comd.var
 
 import ui.main_Activity
+import ui.detail_Activity
 import ui.setting_Activity
 import ui.control_Activity
 import ui.run_Activity
@@ -53,6 +54,7 @@ class start_app(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         mainActivity = ui.main_Activity.main_Activity
+        detailActivity = ui.detail_Activity.detail_Activity
         controlActivity = ui.control_Activity.control_Activity
         settingActivity = ui.setting_Activity.setting_Activity
         runActivity = ui.run_Activity.run_Activity
@@ -60,7 +62,7 @@ class start_app(tk.Tk):
 
         self.frames = {}
 
-        for F in (mainActivity, controlActivity, settingActivity, runActivity, errorActivity):
+        for F in (mainActivity, detailActivity, controlActivity, settingActivity, runActivity, errorActivity):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -77,7 +79,7 @@ class start_app(tk.Tk):
         bipvt_connection = comd.read_cmd.bipvt_client().connect()
         print('BIPVT Connection : ', bipvt_connection)
         if not bipvt_connection:
-            notification.error_alert_notification.bipvt_connection_error()
+            # notification.error_alert_notification.bipvt_connection_error()
             comd.var.bipvt_connect_status = False
         else:
             comd.var.bipvt_connect_status = True
@@ -85,7 +87,7 @@ class start_app(tk.Tk):
         heatpump_connection = comd.read_cmd.heatpump_client().connect()
         print('HeatPump Connection : ', heatpump_connection)
         if not heatpump_connection:
-            notification.error_alert_notification.heatpump_connection_error()
+            # notification.error_alert_notification.heatpump_connection_error()
             comd.var.hydro_connect_status = False
         else:
             comd.var.hydro_connect_status = True
@@ -153,12 +155,12 @@ class start_app(tk.Tk):
 if __name__ == '__main__':
     try:
         # database check
-        db.sqlite_connect.start_check_lite()
-
-        db.sqlite_connect.select_protocol()
-        db.sqlite_connect.schedule_select()
-        db.sqlite_connect.automode_select()
-        db.sqlite_connect.select_system()
+        # db.sqlite_connect.start_check_lite()
+        #
+        # db.sqlite_connect.select_protocol()
+        # db.sqlite_connect.schedule_select()
+        # db.sqlite_connect.automode_select()
+        # db.sqlite_connect.select_system()
 
         app = start_app()
         thread = threading.Thread(target=app.setInterval, args=(app.data_receive, 0.9))
@@ -174,4 +176,3 @@ if __name__ == '__main__':
 
     except Exception as ex:
         print('mainLoop', ex)
-

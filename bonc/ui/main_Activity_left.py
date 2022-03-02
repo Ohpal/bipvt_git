@@ -34,9 +34,9 @@ class main_Activity(tk.Frame):
                            bd=0, bg='#2F323B')
         logo_label.pack(padx=10, ipady=30)
 
-        self.main_image = tk.PhotoImage(file='images/main_btn.gif')
-        self.control_image = tk.PhotoImage(file='images/control_btn_off.gif')
-        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.gif')
+        self.main_image = tk.PhotoImage(file='images/main_btn.png')
+        self.control_image = tk.PhotoImage(file='images/control_btn_off.png')
+        self.setting_image = tk.PhotoImage(file='images/setting_btn_off.png')
 
         main_menu = Button(left_frame, image=self.main_image, highlightbackground='#2F323B', activebackground='#2F323B',
                            bd=0, bg='#2F323B', command=lambda: controller.show_frame('main_Activity'))
