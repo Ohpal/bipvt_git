@@ -9,8 +9,6 @@ from time import sleep
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
 
-
-
 import notification.insert_keypad
 import comd.var
 
@@ -19,8 +17,14 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 from matplotlib import animation
+import matplotlib.dates as mdates
+from matplotlib import style
 import numpy as np
+import mplcursors
+from datetime import datetime, timedelta
 
+style.use("seaborn-darkgrid")
+nb_points = 60
 
 class main_Activity(tk.Frame):
     def __init__(self, parent, controller):
@@ -337,18 +341,6 @@ class main_Activity(tk.Frame):
                                    font=('SCDream5', 15, 'bold'))
         bipvt_current_unit.place(x=360 - x, y=200)
 
-        # bipvt_inner_temp_label = Label(main_Activity.main_canvas, text='입구온도', fg='white', bg='#2f323b', font=('SCDream5', 15))
-        # bipvt_inner_temp_label.place(x=40-x, y=245)
-        #
-        # main_Activity.bipvt_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        # main_Activity.bipvt_inner_temp_value.place(x=40-x, y=265)
-        #
-        # bipvt_outer_temp_label = Label(main_Activity.main_canvas, text='출구온도', fg='white', bg='#2f323b', font=('SCDream5', 15))
-        # bipvt_outer_temp_label.place(x=245-x, y=245)
-        #
-        # main_Activity.bipvt_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        # main_Activity.bipvt_outer_temp_value.place(x=245-x, y=265)
-        #
         fan_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         fan_status_label.place(x=775 - x, y=240)
 
@@ -475,22 +467,61 @@ class main_Activity(tk.Frame):
         bottom_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 그래프 캔버스 그리기
-        main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870,
-                                             height=400)
+        main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
-        #
-        # Label(main_Activity.bottom_canvas, text='그래프 준비중', fg='white', bg='#2f323b', font=('SCDream5', 30, 'bold')).pack(fill=BOTH, expand=True)
 
-        # 그래프 그리기 준비중...
-        fig = Figure()
-        fig.patch.set_facecolor('#2f323b')
+        self.fig = Figure(dpi=100)
+        self.fig.patch.set_facecolor('#2f323b')
 
-        ax = fig.add_subplot(111)
-        ax.tick_params(axis='x', colors='white')
-        ax.tick_params(axis='y', colors='white')
+        # plt.rc('font', family='SCDream5')
+        # plt.xlabel('발전량')
 
-        graph_canvas = FigureCanvasTkAgg(fig, master=main_Activity.bottom_canvas)
-        graph_canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
+        self.ax = self.fig.add_subplot(111)
+        self.ax.tick_params(axis='x', colors='white')
+        self.ax.tick_params(axis='y', colors='white')
+
+        # self.ax.xlabel('발전량')
+        # format the x-axis to show the time
+        myFmt = mdates.DateFormatter("%H:%M:%S")
+        self.ax.xaxis.set_major_formatter(myFmt)
+        # initial x and y data
+        dateTimeObj = datetime.now() + timedelta(seconds=-nb_points)
+        self.x_data = [dateTimeObj + timedelta(seconds=i) for i in range(nb_points)]
+        self.y_data = [0 for i in range(nb_points)]
+        # create the plot(c:line color, markerfacecolor:marker color
+        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=9, marker='o', linewidth=2)[0]
+        self.ax.set_ylim(0, 100)
+        self.ax.set_xlim(self.x_data[0], self.x_data[-1])
+
+        self.graph_canvas = FigureCanvasTkAgg(self.fig, master=main_Activity.bottom_canvas)
+        self.graph_canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
+        self.animate()
+        # x, y cursors and show data
+        self.crs = mplcursors.cursor(self.ax, hover=True)
+        self.crs.connect('add', lambda sel: self.cursor_annotation(sel))
+
+    def cursor_annotation(self, sel):
+        sel.annotation.set_text('Time : {1}\nPV : {0} kW'.format(round(sel.target[1], 2), datetime.fromtimestamp(sel.target[0]).strftime("%H:%M")))
+        sel.annotation.get_bbox_patch().set(fc='lightsalmon', alpha=0.5)
+
+    def animate(self):
+        # append new data point to the x and y data
+        self.x_data.append(datetime.now())
+        self.y_data.append(random.randint(0, 100))
+        # remove oldest data point
+        self.x_data = self.x_data[1:]
+        self.y_data = self.y_data[1:]
+        #  update plot data
+        self.plot.set_xdata(self.x_data)
+        self.plot.set_ydata(self.y_data)
+        # set text x,y / y data
+        # self.ax.text(self.x_data[-1], self.y_data[-1], '{}'.format(self.y_data[-1]), fontdict={'size': 8}, rotation=60)
+        # range x data
+        self.ax.set_xlim(self.x_data[0], self.x_data[-1])
+        # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
+        print(self.x_data[-1], self.y_data[-1])
+        self.graph_canvas.draw_idle()  # redraw plot
+        self.after(1000, self.animate)  # repeat after 1s
 
     def sys_exit(self):
         res_msg = tkinter.messagebox.askyesno('프로그램 종료', '프로그램을 종료하시겠습니까?', icon='warning')
