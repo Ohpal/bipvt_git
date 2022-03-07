@@ -253,93 +253,123 @@ class main_Activity(tk.Frame):
         main_Activity.main_canvas.create_image(600 - x, 750, image=self.heatpump_image)
         main_Activity.main_canvas.create_image(450 - x, 950, image=self.storage_image)
         main_Activity.main_canvas.create_image(300 - x, 750, image=self.dhw_image)
-        main_Activity.main_canvas.create_image(750 - x, 950, image=self.fcu_image)
+        main_Activity.main_canvas.create_image(750 - x, 960, image=self.fcu_image)
 
         #########
-        bipvt_connect_label = Label(main_Activity.main_canvas, text='PVT통신', font=('SCDream5', 15, 'bold'), fg='white',
+        connect_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        connect_frame.place(x=20, y=9)
+
+        bipvt_connect_label = Label(connect_frame, text='PVT통신', font=('SCDream5', 15, 'bold'), fg='white',
                                     bg='#2f323b')
-        bipvt_connect_label.place(x=20, y=13)
+        bipvt_connect_label.pack(side=LEFT)
 
-        main_Activity.bipvt_connect_value = Label(main_Activity.main_canvas, text='●', font=('SCDream5', 30, 'bold'),
+        main_Activity.bipvt_connect_value = Label(connect_frame, text='●', font=('SCDream5', 30, 'bold'),
                                                   fg='red', bg='#2f323b')
-        main_Activity.bipvt_connect_value.place(x=100, y=0)
+        main_Activity.bipvt_connect_value.pack(side=LEFT, padx=(5, 10))
 
-        heatpump_connect_label = Label(main_Activity.main_canvas, text='히트펌프통신', font=('SCDream5', 15, 'bold'), fg='white',
+        heatpump_connect_label = Label(connect_frame, text='히트펌프통신', font=('SCDream5', 15, 'bold'), fg='white',
                                        bg='#2f323b')
-        heatpump_connect_label.place(x=140, y=13)
+        heatpump_connect_label.pack(side=LEFT)
 
-        main_Activity.heatpump_connect_value = Label(main_Activity.main_canvas, text='●', font=('SCDream5', 30, 'bold'),
+        main_Activity.heatpump_connect_value = Label(connect_frame, text='●', font=('SCDream5', 30, 'bold'),
                                                      fg='red', bg='#2f323b')
-        main_Activity.heatpump_connect_value.place(x=270, y=0)
+        main_Activity.heatpump_connect_value.pack(side=LEFT, padx=(5,10))
 
-        fcu_connect_label = Label(main_Activity.main_canvas, text='FCU통신', font=('SCDream5', 15, 'bold'), fg='white',
+        fcu_connect_label = Label(connect_frame, text='FCU통신', font=('SCDream5', 15, 'bold'), fg='white',
                                   bg='#2f323b')
-        fcu_connect_label.place(x=310, y=13)
+        fcu_connect_label.pack(side=LEFT)
 
-        main_Activity.fcu_connect_value = Label(main_Activity.main_canvas, text='●', font=('SCDream5', 30, 'bold'),
+        main_Activity.fcu_connect_value = Label(connect_frame, text='●', font=('SCDream5', 30, 'bold'),
                                                 fg='red', bg='#2f323b')
-        main_Activity.fcu_connect_value.place(x=390, y=0)
+        main_Activity.fcu_connect_value.pack(side=LEFT, padx=(5,10))
 
         control_label = Label(main_Activity.main_canvas, text='운전상태', font=('SCDream5', 15, 'bold'), fg='white',
                               bg='#2f323b')
-        control_label.place(x=20, y=45)
+        control_label.place(x=20, y=50)
+
+        main_Activity.control_now = Label(main_Activity.main_canvas, text=' - ', font=('SCDream5', 15, 'bold'), fg='white',
+                                          bg='#2f323b')
+        main_Activity.control_now.place(x=100, y=50)
 
         system_exit_btn = Button(main_Activity.main_canvas, text='', highlightbackground='#2F323B',
                                  activebackground='#2F323B', bd=0, width=50, height=2,
                                  bg='#2F323B', command=lambda: self.sys_exit())
         system_exit_btn.place(x=950, y=0)
 
-        main_Activity.control_now = Label(main_Activity.main_canvas, text=' - ', font=('SCDream5', 15, 'bold'), fg='white',
-                                          bg='#2f323b')
-        main_Activity.control_now.place(x=100, y=45)
+        # bipvt 일사량
+        bipvt_insolation_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_insolation_frame.place(x=230 -x -20, y=100)
+
+        bipvt_insolation_label = Label(bipvt_insolation_frame, text='일  사 량', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        bipvt_insolation_label.pack(side=LEFT)
+
+        main_Activity.bipvt_insolation_value = Label(bipvt_insolation_frame, text='-', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        main_Activity.bipvt_insolation_value.pack(side=LEFT, padx=(10, 3))
+
+        bipvt_insolation_unit = Label(bipvt_insolation_frame, text='W/m²', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        bipvt_insolation_unit.pack(side=LEFT)
 
         # bipvt 내부온도
-        bipvt_temp_label = Label(main_Activity.main_canvas, text='내부온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        bipvt_temp_label.place(x=230 - x, y=110)
+        bipvt_temp_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_temp_frame.place(x=230 -x -20, y=130)
 
-        main_Activity.bipvt_temp_value = Label(main_Activity.main_canvas, text='-', fg='#96c63e', bg='#2f323b',
+        bipvt_temp_label = Label(bipvt_temp_frame, text='내부온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        bipvt_temp_label.pack(side=LEFT)
+
+        main_Activity.bipvt_temp_value = Label(bipvt_temp_frame, text='-', fg='#96c63e', bg='#2f323b',
                                                font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_temp_value.place(x=320 - x, y=110)
+        main_Activity.bipvt_temp_value.pack(side=LEFT, padx=(10, 3))
 
-        bipvt_temp_unit = Label(main_Activity.main_canvas, text='℃', fg='#96c63e', bg='#2f323b',
+        bipvt_temp_unit = Label(bipvt_temp_frame, text='℃', fg='#96c63e', bg='#2f323b',
                                 font=('SCDream5', 15, 'bold'))
-        bipvt_temp_unit.place(x=360 - x, y=110)
+        bipvt_temp_unit.pack(side=LEFT)
 
-        bipvt_power_label = Label(main_Activity.main_canvas, text='전      력', fg='white', bg='#2f323b',
+        # bipvt 전력
+        bipvt_power_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_power_frame.place(x=230-x-20, y=160)
+
+        bipvt_power_label = Label(bipvt_power_frame, text='전      력', fg='white', bg='#2f323b',
                                   font=('SCDream5', 15, 'bold'))
-        bipvt_power_label.place(x=230 - x, y=140)
+        bipvt_power_label.pack(side=LEFT)
 
-        main_Activity.bipvt_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+        main_Activity.bipvt_power_value = Label(bipvt_power_frame, text=' - ', fg='#96c63e', bg='#2f323b',
                                                 font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_power_value.place(x=320 - x, y=140)
+        main_Activity.bipvt_power_value.pack(side=LEFT, padx=(10, 3))
 
-        bipvt_power_unit = Label(main_Activity.main_canvas, text='kW', fg='#96c63e', bg='#2f323b',
+        bipvt_power_unit = Label(bipvt_power_frame, text='kW', fg='#96c63e', bg='#2f323b',
                                  font=('SCDream5', 15, 'bold'))
-        bipvt_power_unit.place(x=360 - x, y=140)
+        bipvt_power_unit.pack(side=LEFT)
 
-        bipvt_voltage_label = Label(main_Activity.main_canvas, text='전      압', fg='white', bg='#2f323b',
+        # bipvt 전압
+        bipvt_voltage_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_voltage_frame.place(x=230-x-20, y=190)
+        
+        bipvt_voltage_label = Label(bipvt_voltage_frame, text='전      압', fg='white', bg='#2f323b',
                                     font=('SCDream5', 15, 'bold'))
-        bipvt_voltage_label.place(x=230 - x, y=170)
+        bipvt_voltage_label.pack(side=LEFT)
 
-        main_Activity.bipvt_voltage_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+        main_Activity.bipvt_voltage_value = Label(bipvt_voltage_frame, text=' - ', fg='#96c63e', bg='#2f323b',
                                                   font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_voltage_value.place(x=320 - x, y=170)
+        main_Activity.bipvt_voltage_value.pack(side=LEFT, padx=(10, 3))
 
-        bipvt_voltage_unit = Label(main_Activity.main_canvas, text='V', fg='#96c63e', bg='#2f323b',
+        bipvt_voltage_unit = Label(bipvt_voltage_frame, text='V', fg='#96c63e', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        bipvt_voltage_unit.place(x=360 - x, y=170)
+        bipvt_voltage_unit.pack(side=LEFT)
 
-        bipvt_current_label = Label(main_Activity.main_canvas, text='전      류', fg='white', bg='#2f323b',
-                                    font=('SCDream5', 15, 'bold'))
-        bipvt_current_label.place(x=230 - x, y=200)
+        # bipvt 전류
+        bipvt_current_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_current_frame.place(x=230-x-20, y=220)
 
-        main_Activity.bipvt_current_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+        bipvt_current_label = Label(bipvt_current_frame, text='전      류', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        bipvt_current_label.pack(side=LEFT)
+
+        main_Activity.bipvt_current_value = Label(bipvt_current_frame, text=' - ', fg='#96c63e', bg='#2f323b',
                                                   font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_current_value.place(x=320 - x, y=200)
+        main_Activity.bipvt_current_value.pack(side=LEFT, padx=(10, 3))
 
-        bipvt_current_unit = Label(main_Activity.main_canvas, text='A', fg='#96c63e', bg='#2f323b',
+        bipvt_current_unit = Label(bipvt_current_frame, text='A', fg='#96c63e', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        bipvt_current_unit.place(x=360 - x, y=200)
+        bipvt_current_unit.pack(side=LEFT)
 
         fan_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         fan_status_label.place(x=775 - x, y=240)

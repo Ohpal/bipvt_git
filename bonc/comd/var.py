@@ -49,3 +49,8 @@ doublecoil_value = ''
 bipvt_read = False
 heatpump_read = False
 fcu_read = False
+
+day_pv_power = []
+total_pv_power = []
+day_load_power = []
+total_load_power = []

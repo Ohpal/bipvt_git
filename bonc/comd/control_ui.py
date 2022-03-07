@@ -47,7 +47,8 @@ def main_timer():
 
 def set_bipvt_data(pv_power, pv_voltage, pv_current, insolation, bipvt_inner_temp, bipvt_outer_temp,
                    buffer_tank_temp, bipvt_fault, damper_status, fan_status, exchanger_status, buffer_status):
-    ui.main_Activity.main_Activity.bipvt_temp_value.config(text=insolation)
+    ui.main_Activity.main_Activity.bipvt_insolation_value.config(text=insolation)
+    ui.main_Activity.main_Activity.bipvt_temp_value.config(text=bipvt_inner_temp)
     ui.main_Activity.main_Activity.bipvt_power_value.config(text=pv_power)
     ui.main_Activity.main_Activity.bipvt_voltage_value.config(text=pv_voltage)
     ui.main_Activity.main_Activity.bipvt_current_value.config(text=pv_current)
