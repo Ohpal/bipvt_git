@@ -549,7 +549,7 @@ class main_Activity(tk.Frame):
         # range x data
         self.ax.set_xlim(self.x_data[0], self.x_data[-1])
         # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
-        print(self.x_data[-1], self.y_data[-1])
+        # print(self.x_data[-1], self.y_data[-1])
         self.graph_canvas.draw_idle()  # redraw plot
         self.after(1000, self.animate)  # repeat after 1s
 

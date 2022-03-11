@@ -58,3 +58,6 @@ total_load_power = []
 # socket
 soc_fail_count = 0
 soc_connect_fail = False
+
+# scheudle list
+schedule_list = 3

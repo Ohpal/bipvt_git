@@ -259,6 +259,14 @@ def mainLoop():
         comd.var.heatpump_read = False
         print('HeatPump READ Error : ', ex)
 
+    # Update Weather Data
+    try:
+        weather_select = db.pg_connect.weather_select()
+        comd.control_ui.set_weather_ui(weather_select)
+
+    except Exception as ex:
+        print('Weather Select Error : ', ex)
+
     # Get Weather Data
     try:
         get_weather_time = time.localtime()

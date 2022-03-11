@@ -110,33 +110,64 @@ def setting_protocol():
     protocol_rows = cur.fetchall()
     protocol_rows = protocol_rows[0]
 
-    protocol_type = protocol_rows[5]
-    print('type', protocol_type)
-    ui.setting_Activity.setting_Activity.bipvt_combo.set(protocol_type)
+    # 설비 통신 타입 검색
+    bipvt_type = protocol_rows[9]
+    heatpump_type = protocol_rows[10]
 
-    bipvt_ip = protocol_rows[1].split('.')
-    heatpump_ip = protocol_rows[3].split('.')
+    # 콤보박스에 설비 통신 타입 입력
+    ui.setting_Activity.setting_Activity.bipvt_combo.set(bipvt_type)
+    ui.setting_Activity.setting_Activity.heatpump_combo.set(heatpump_type)
+    # BIPVT IP 통신인 경우
+    if bipvt_type == 'Socket 통신' or bipvt_type == 'Modbus-TCP 통신':
+        ui.setting_Activity.setting_Activity.bipvt_serial_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.bipvt_tcp_frame.pack()
+
+        bipvt_ip = protocol_rows[1].split('.')
+        ui.setting_Activity.setting_Activity.bipvt_entry1.insert('end', bipvt_ip[0])
+        ui.setting_Activity.setting_Activity.bipvt_entry2.insert('end', bipvt_ip[1])
+        ui.setting_Activity.setting_Activity.bipvt_entry3.insert('end', bipvt_ip[2])
+        ui.setting_Activity.setting_Activity.bipvt_entry4.insert('end', bipvt_ip[3])
+        ui.setting_Activity.setting_Activity.bipvt_entry5.insert('end', protocol_rows[2])
+
+        comd.var.bipvt_ip = protocol_rows[1]
+        comd.var.bipvt_port = protocol_rows[2]
+    else:   # BIPVT Serial 통신인 경우
+        ui.setting_Activity.setting_Activity.bipvt_tcp_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.bipvt_serial_frame.pack()
+
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry1.insert('end', protocol_rows[5])
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry2.insert('end', protocol_rows[6])
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry3.insert('end', protocol_rows[7])
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry4.insert('end', protocol_rows[8])
+
+        # var에 값 넘겨줘야함
+
+    # 히트펌프 IP 통신인 경우
+    if heatpump_type == 'Socket 통신' or heatpump_type == 'Modbus-TCP 통신':
+        ui.setting_Activity.setting_Activity.heatpump_serial_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.heatpump_tcp_frame.pack()
+
+        heatpump_ip = protocol_rows[3].split('.')
+        ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', heatpump_ip[0])
+        ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', heatpump_ip[1])
+        ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', heatpump_ip[2])
+        ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', heatpump_ip[3])
+        ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', protocol_rows[2])
+
+        comd.var.heatpump_ip = protocol_rows[3]
+        comd.var.heatpump_port = protocol_rows[4]
+    else:
+        # 히트펌프 Serial 통신인 경우
+        ui.setting_Activity.setting_Activity.heatpump_tcp_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.heatpump_serial_frame.pack()
+
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry1.insert('end', protocol_rows[11])
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry2.insert('end', protocol_rows[12])
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry3.insert('end', protocol_rows[13])
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry4.insert('end', protocol_rows[14])
 
 
-
-    ui.setting_Activity.setting_Activity.bipvt_entry1.insert('end', bipvt_ip[0])
-    ui.setting_Activity.setting_Activity.bipvt_entry2.insert('end', bipvt_ip[1])
-    ui.setting_Activity.setting_Activity.bipvt_entry3.insert('end', bipvt_ip[2])
-    ui.setting_Activity.setting_Activity.bipvt_entry4.insert('end', bipvt_ip[3])
-    ui.setting_Activity.setting_Activity.bipvt_entry5.insert('end', protocol_rows[2])
-
-    # ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', heatpump_ip[0])
-    # ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', heatpump_ip[1])
-    # ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', heatpump_ip[2])
-    # ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', heatpump_ip[3])
-    # ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', protocol_rows[4])
-
-    comd.var.bipvt_ip = protocol_rows[1]
-    comd.var.bipvt_port = protocol_rows[2]
-    comd.var.heatpump_ip = protocol_rows[3]
-    comd.var.heatpump_port = protocol_rows[4]
-
-
+# 프로토콜 변경시 저장하는 쿼리문
 def protocol_update(entry1, entry2, value1, value2):
     cur, conn = lite_conn()
 

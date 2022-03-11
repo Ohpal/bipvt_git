@@ -305,3 +305,14 @@ def set_line_ui(damper_status, fan_status, exchanger_status, buffer_status, doub
         ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='#96c63e')
     else:
         ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
+
+def set_weather_ui(weather_select):
+    if weather_select[0] == 'Clear':
+    elif weather_select[0] == 'Clouds':
+    elif weather_select[0] == 'Rain':
+    elif weather_select[0] == 'Drizzle':
+    elif weather_select[0] == 'Snow':
+    elif weather_select[0] == 'Thunderstorm':
+    else:
+        print('??')
+

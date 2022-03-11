@@ -26,7 +26,7 @@ def bipvt_client():
 
         return bipvt_client
     except Exception as ex:
-        print('bipvt_client() Exception -> ', ex)
+        # print('bipvt_client() Exception -> ', ex)
         comd.var.bipvt_connect_status = False
 
 
@@ -41,7 +41,7 @@ def heatpump_client():
 
         return heatpump_client
     except Exception as ex:
-        print('heatpump_clinet() Exception -> ', ex)
+        # print('heatpump_clinet() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
 
 
@@ -67,7 +67,7 @@ def connect_bipvt():
         bipvt_connection = bipvt_client.connect()
         return bipvt_connection
     except Exception as ex:
-        print('connect_bipvt() Exception -> ', ex)
+        # print('connect_bipvt() Exception -> ', ex)
         comd.var.bipvt_connect_status = False
 
 
@@ -77,7 +77,7 @@ def connect_heatpump():
         heatpump_connection = heatpump_client.connect()
         return heatpump_connection
     except Exception as ex:
-        print('connect_heatpump() Exception -> ', ex)
+        # print('connect_heatpump() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
 
 

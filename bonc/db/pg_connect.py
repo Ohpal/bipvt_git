@@ -42,3 +42,18 @@ def weather_insert(value):
 
     except Exception as ex:
         print('weather_insert Error >>', ex)
+
+
+def weather_select():
+    try:
+        cur, conn =  db_conn()
+        sql = 'select weather, temp, humi from weather_tb order by d_time desc'
+        cur.execute(sql)
+        row = cur.fetchone()
+
+        cur.close()
+        conn.close()
+
+        return list(row)
+    except Exception as ex:
+        print('weather_select Error >>', ex)

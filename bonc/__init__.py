@@ -114,7 +114,7 @@ class start_app(tk.Tk):
         try:
             if not comd.var.bipvt_connect_status:
                 bipvt_connection = comd.read_cmd.connect_bipvt()
-                print('BIPVT Connection : ', bipvt_connection)
+                # print('BIPVT Connection : ', bipvt_connection)
                 if bipvt_connection:
                     comd.var.bipvt_connect_status = True
                     comd.var.bipvt_error = False
@@ -127,7 +127,7 @@ class start_app(tk.Tk):
 
             if not comd.var.heatpump_connect_status:
                 heatpump_connection = comd.read_cmd.connect_heatpump()
-                print('HeatPump Connection : ', heatpump_connection)
+                # print('HeatPump Connection : ', heatpump_connection)
                 if heatpump_connection:
                     comd.var.heatpump_connect_status = True
                     comd.var.heatpump_error = False
