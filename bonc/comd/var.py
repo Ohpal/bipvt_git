@@ -54,3 +54,7 @@ day_pv_power = []
 total_pv_power = []
 day_load_power = []
 total_load_power = []
+
+# socket
+soc_fail_count = 0
+soc_connect_fail = False

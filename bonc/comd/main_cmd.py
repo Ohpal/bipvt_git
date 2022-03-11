@@ -1,19 +1,18 @@
 import os, sys
 import time
-
-if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-    os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
-
 import datetime
 import struct
 
 import comd.var
 import comd.control_ui
-
 import comd.read_cmd
 import db.pg_connect
 
 import ui.error_Activity
+import comd.openweather
+
+if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+    os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
 
 before_time = ''
 
@@ -73,6 +72,7 @@ def mainLoop():
             bipvt_inner_temp = '{0:0.1f}'.format(bipvt_inner_temp)
             bipvt_outer_temp = '{0:0.1f}'.format(bipvt_outer_temp)
             buffer_tank_temp = '{0:0.1f}'.format(buffer_tank_temp)
+
 
             # 태양광 전력 0~1000 사이 측정
             if not 0 <= float(pv_power) <= 1000:
@@ -258,6 +258,18 @@ def mainLoop():
     except Exception as ex:
         comd.var.heatpump_read = False
         print('HeatPump READ Error : ', ex)
+
+    # Get Weather Data
+    try:
+        get_weather_time = time.localtime()
+        get_weather_time = '%02d:%02d' %(get_weather_time.tm_min, get_weather_time.tm_sec)
+
+        if get_weather_time == '00:00':
+            weather_data = comd.openweather.get_weather()
+            db.pg_connect.weather_insert(weather_data)
+
+    except Exception as ex:
+        print('Weather Read Error : ', ex)
 
     # Control TEMS
     try:

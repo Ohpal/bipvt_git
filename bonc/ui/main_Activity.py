@@ -507,8 +507,8 @@ class main_Activity(tk.Frame):
         # plt.xlabel('발전량')
 
         self.ax = self.fig.add_subplot(111)
-        self.ax.tick_params(axis='x', colors='white')
-        self.ax.tick_params(axis='y', colors='white')
+        self.ax.tick_params(axis='x', colors='white', labelsize=13)
+        self.ax.tick_params(axis='y', colors='white', labelsize=13)
 
         # self.ax.xlabel('발전량')
         # format the x-axis to show the time
@@ -519,7 +519,7 @@ class main_Activity(tk.Frame):
         self.x_data = [dateTimeObj + timedelta(seconds=i) for i in range(nb_points)]
         self.y_data = [0 for i in range(nb_points)]
         # create the plot(c:line color, markerfacecolor:marker color
-        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=9, marker='o', linewidth=2)[0]
+        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2)[0]
         self.ax.set_ylim(0, 100)
         self.ax.set_xlim(self.x_data[0], self.x_data[-1])
 

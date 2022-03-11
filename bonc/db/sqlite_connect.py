@@ -110,8 +110,14 @@ def setting_protocol():
     protocol_rows = cur.fetchall()
     protocol_rows = protocol_rows[0]
 
+    protocol_type = protocol_rows[5]
+    print('type', protocol_type)
+    ui.setting_Activity.setting_Activity.bipvt_combo.set(protocol_type)
+
     bipvt_ip = protocol_rows[1].split('.')
     heatpump_ip = protocol_rows[3].split('.')
+
+
 
     ui.setting_Activity.setting_Activity.bipvt_entry1.insert('end', bipvt_ip[0])
     ui.setting_Activity.setting_Activity.bipvt_entry2.insert('end', bipvt_ip[1])
@@ -119,11 +125,11 @@ def setting_protocol():
     ui.setting_Activity.setting_Activity.bipvt_entry4.insert('end', bipvt_ip[3])
     ui.setting_Activity.setting_Activity.bipvt_entry5.insert('end', protocol_rows[2])
 
-    ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', heatpump_ip[0])
-    ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', heatpump_ip[1])
-    ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', heatpump_ip[2])
-    ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', heatpump_ip[3])
-    ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', protocol_rows[4])
+    # ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', heatpump_ip[0])
+    # ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', heatpump_ip[1])
+    # ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', heatpump_ip[2])
+    # ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', heatpump_ip[3])
+    # ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', protocol_rows[4])
 
     comd.var.bipvt_ip = protocol_rows[1]
     comd.var.bipvt_port = protocol_rows[2]

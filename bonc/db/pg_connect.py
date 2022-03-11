@@ -27,3 +27,18 @@ def data_insert(value):
 
     except Exception as ex:
         print('data_insert Error >>', ex)
+
+
+def weather_insert(value):
+    try:
+        cur, conn = db_conn()
+        sql = 'insert into weather_tb values(%s,%s,%s,%s,%s,%s,%s,%s)'
+
+        cur.execute(sql, value)
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+    except Exception as ex:
+        print('weather_insert Error >>', ex)

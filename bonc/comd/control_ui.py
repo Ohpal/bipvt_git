@@ -5,6 +5,8 @@ if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
 
 import ui.main_Activity
 import ui.control_Activity
+import ui.detail_Activity
+import ui.setting_Activity
 
 import comd.var
 import datetime
@@ -43,6 +45,14 @@ def main_timer():
 
     ui.main_Activity.main_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
     ui.main_Activity.main_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
+    ui.detail_Activity.detail_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
+    ui.detail_Activity.detail_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
+    ui.setting_Activity.setting_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
+    ui.setting_Activity.setting_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
+
+
+# def set_weather_data(weather, temp, humi):
+#     ui.main_Activity
 
 
 def set_bipvt_data(pv_power, pv_voltage, pv_current, insolation, bipvt_inner_temp, bipvt_outer_temp,

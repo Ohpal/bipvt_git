@@ -72,25 +72,25 @@ class start_app(tk.Tk):
 
         # protocol setting by sqlite3
         db.sqlite_connect.setting_protocol()
-        db.sqlite_connect.setting_schedule()
-        db.sqlite_connect.setting_system()
+        # db.sqlite_connect.setting_schedule()
+        # db.sqlite_connect.setting_system()
 
-        # connection_check
-        bipvt_connection = comd.read_cmd.bipvt_client().connect()
-        print('BIPVT Connection : ', bipvt_connection)
-        if not bipvt_connection:
-            # notification.error_alert_notification.bipvt_connection_error()
-            comd.var.bipvt_connect_status = False
-        else:
-            comd.var.bipvt_connect_status = True
-
-        heatpump_connection = comd.read_cmd.heatpump_client().connect()
-        print('HeatPump Connection : ', heatpump_connection)
-        if not heatpump_connection:
-            # notification.error_alert_notification.heatpump_connection_error()
-            comd.var.hydro_connect_status = False
-        else:
-            comd.var.hydro_connect_status = True
+        # # connection_check
+        # bipvt_connection = comd.read_cmd.bipvt_client().connect()
+        # print('BIPVT Connection : ', bipvt_connection)
+        # if not bipvt_connection:
+        #     # notification.error_alert_notification.bipvt_connection_error()
+        #     comd.var.bipvt_connect_status = False
+        # else:
+        #     comd.var.bipvt_connect_status = True
+        #
+        # heatpump_connection = comd.read_cmd.heatpump_client().connect()
+        # print('HeatPump Connection : ', heatpump_connection)
+        # if not heatpump_connection:
+        #     # notification.error_alert_notification.heatpump_connection_error()
+        #     comd.var.hydro_connect_status = False
+        # else:
+        #     comd.var.hydro_connect_status = True
 
         db.sqlite_connect.automode_select()
 

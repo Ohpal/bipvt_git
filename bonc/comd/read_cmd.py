@@ -1,9 +1,11 @@
 import os, sys
+import comd.var
 
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
 
 from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client.sync import ModbusSerialClient
 import comd.var
 
 bipvt_client = False
@@ -297,12 +299,14 @@ def fcu_read_data():
     except Exception as ex:
         print('fcu_read_data() Exception -> ', ex)
 
+
 def fcu_drive_on():
     global fcu_client
     try:
         fcu_client.write_register(16, 1, unit=1)
     except Exception as ex:
         print('fcu_drive_on() Exception -> ', ex)
+
 
 def fcu_drive_off():
     global fcu_client
@@ -311,12 +315,14 @@ def fcu_drive_off():
     except Exception as ex:
         print('fcu_drive_off() Exception -> ', ex)
 
+
 def fcu_turbo_on():
     global fcu_client
     try:
         fcu_client.write_register(12, 1, unit=1)
     except Exception as ex:
         print('fcu_turbo_on() Exception -> ', ex)
+
 
 def fcu_turbo_off():
     global fcu_client
@@ -325,12 +331,14 @@ def fcu_turbo_off():
     except Exception as ex:
         print('fcu_turbo_off() Exception -> ', ex)
 
+
 def fcu_auto_on():
     global fcu_client
     try:
         fcu_client.write_register(8, 1, unit=1)
     except Exception as ex:
         print('fcu_auto_on() Exception -> ', ex)
+
 
 def fcu_auto_off():
     global fcu_client
@@ -339,12 +347,14 @@ def fcu_auto_off():
     except Exception as ex:
         print('fcu_auto_off() Exception -> ', ex)
 
+
 def fcu_cool_on():
     global fcu_client
     try:
         fcu_client.write_register(1, 1, unit=1)
     except Exception as ex:
         print('fcu_cool_on() Exception -> ', ex)
+
 
 def fcu_hot_on():
     global fcu_client
@@ -353,12 +363,14 @@ def fcu_hot_on():
     except Exception as ex:
         print('fcu_hot_on() Exception -> ', ex)
 
+
 def fcu_wind_on():
     global fcu_client
     try:
         fcu_client.write_register(3, 1, unit=1)
     except Exception as ex:
         print('fcu_wind_on() Exception -> ', ex)
+
 
 def fcu_blow_on():
     global fcu_client
@@ -367,12 +379,14 @@ def fcu_blow_on():
     except Exception as ex:
         print('fcu_wind_on() Exception -> ', ex)
 
+
 def fcu_fan_off():
     global fcu_client
     try:
         fcu_client.write_register(4, 1, unit=1)
     except Exception as ex:
         print('fcu_fan_off() Exception -> ', ex)
+
 
 def fcu_fan_low():
     global fcu_client
@@ -381,12 +395,14 @@ def fcu_fan_low():
     except Exception as ex:
         print('fcu_fan_low() Exception -> ', ex)
 
+
 def fcu_fan_middle():
     global fcu_client
     try:
         fcu_client.write_register(6, 1, unit=1)
     except Exception as ex:
         print('fcu_fan_middle() Exception -> ', ex)
+
 
 def fcu_fan_high():
     global fcu_client
@@ -395,6 +411,7 @@ def fcu_fan_high():
     except Exception as ex:
         print('fcu_fan_high() Exception -> ', ex)
 
+
 def fcu_swing_on():
     global fcu_client
     try:
@@ -402,12 +419,14 @@ def fcu_swing_on():
     except Exception as ex:
         print('fcu_swing_on() Exception -> ', ex)
 
+
 def fcu_swing_off():
     global fcu_client
     try:
         fcu_client.write_register(13, 0, unit=1)
     except Exception as ex:
         print('fcu_swing_off() Exception -> ', ex)
+
 
 # System Read and Write Function
 def auto_mode():
