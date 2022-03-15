@@ -4,6 +4,7 @@ from tkinter import *
 import tkinter as tk
 import tkinter.simpledialog
 import tkinter.messagebox
+from PIL import ImageTk, Image
 from time import sleep
 
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
@@ -26,29 +27,41 @@ from datetime import datetime, timedelta
 style.use("seaborn-darkgrid")
 nb_points = 60
 
+
+def imgCallback():
+    img = tk.PhotoImage(file='images/weather/01d.png')
+    main_Activity.gps_menu.configure(image=img)
+    main_Activity.gps_menu.image = img
+
+
 class main_Activity(tk.Frame):
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        # self.bind('<Return>', imgCallback())
 
         title_frame = Frame(self, bg='#111111')
         title_frame.pack(fill=X, side=TOP)
 
-        self.logo_image = tk.PhotoImage(file="images/TEMS2.png")
+        self.logo_image = PhotoImage(file="images/TEMS2.png")
         logo_label = Label(title_frame, image=self.logo_image, highlightbackground="#111111",
                            activebackground='#111111', bd=0, bg='#111111')
         logo_label.pack(side=LEFT, padx=(30, 50), ipady=20)
 
         self.gps_image = tk.PhotoImage(file='images/gps.png')
-        gps_menu = Label(title_frame, image=self.gps_image, highlightbackground='#111111', activebackground='#111111',
+        main_Activity.gps_menu = Label(title_frame, image=self.gps_image, highlightbackground='#111111', activebackground='#111111',
                          bd=0, bg='#111111')
-        gps_menu.pack(side=LEFT, padx=(0, 10), pady=(8, 0))
+        main_Activity.gps_menu.pack(side=LEFT, padx=(0, 10), pady=(8, 0))
 
         weather_menu = Label(title_frame, text='날씨', highlightbackground='#111111', activebackground='#111111', bd=0,
                              bg='#111111', font=('SCDream5', 16, 'bold'), fg='white')
         weather_menu.pack(side=LEFT, padx=10, pady=(8, 0))
 
-        main_Activity.weather_value = Label(title_frame, text='맑음', highlightbackground='#111111',
+        weather_img = Image.open('images/weather/01d.png')
+        weather_img = weather_img.resize((40, 40), Image.ANTIALIAS)
+        self.weather_image = ImageTk.PhotoImage(weather_img)
+        main_Activity.weather_value = Label(title_frame, highlightbackground='#111111', image=self.weather_image,
                                             activebackground='#111111', bd=0, bg='#111111', font=('SCDream5', 16, 'bold'),
                                             fg='white')
         main_Activity.weather_value.pack(side=LEFT, pady=(8, 0))

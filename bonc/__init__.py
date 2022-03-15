@@ -10,7 +10,6 @@ import threading
 import datetime
 
 import db.sqlite_connect
-import comd.main_cmd
 import comd.var
 
 import ui.main_Activity
@@ -20,6 +19,7 @@ import ui.control_Activity
 import ui.run_Activity
 import ui.error_Activity
 import notification.error_alert_notification
+import comd.main_cmd
 
 
 def now_time():
@@ -75,22 +75,28 @@ class start_app(tk.Tk):
         # db.sqlite_connect.setting_schedule()
         # db.sqlite_connect.setting_system()
 
+
+        ####################################TCP / Serial 나눠야함##################################
         # # connection_check
-        # bipvt_connection = comd.read_cmd.bipvt_client().connect()
-        # print('BIPVT Connection : ', bipvt_connection)
-        # if not bipvt_connection:
-        #     # notification.error_alert_notification.bipvt_connection_error()
-        #     comd.var.bipvt_connect_status = False
-        # else:
-        #     comd.var.bipvt_connect_status = True
-        #
-        # heatpump_connection = comd.read_cmd.heatpump_client().connect()
-        # print('HeatPump Connection : ', heatpump_connection)
-        # if not heatpump_connection:
-        #     # notification.error_alert_notification.heatpump_connection_error()
-        #     comd.var.hydro_connect_status = False
-        # else:
-        #     comd.var.hydro_connect_status = True
+        bipvt_connection = comd.read_cmd.bipvt_client().connect()
+        print('BIPVT Connection : ', bipvt_connection)
+        if not bipvt_connection:
+            # notification.error_alert_notification.bipvt_connection_error()
+            comd.var.bipvt_connect_status = False
+        else:
+            comd.var.bipvt_connect_status = True
+
+        try:
+            heatpump_connection = comd.read_cmd.heatpump_client().connect()
+        except:
+            heatpump_connection = False
+
+        print('HeatPump Connection : ', heatpump_connection)
+        if not heatpump_connection:
+            # notification.error_alert_notification.heatpump_connection_error()
+            comd.var.heatpump_connect_status = False
+        else:
+            comd.var.heatpump_connect_status = True
 
         db.sqlite_connect.automode_select()
 
@@ -155,9 +161,9 @@ class start_app(tk.Tk):
 if __name__ == '__main__':
     try:
         # database check
-        # db.sqlite_connect.start_check_lite()
+        db.sqlite_connect.start_check_lite()
         #
-        # db.sqlite_connect.select_protocol()
+        db.sqlite_connect.select_protocol()
         # db.sqlite_connect.schedule_select()
         # db.sqlite_connect.automode_select()
         # db.sqlite_connect.select_system()

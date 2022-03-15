@@ -8,8 +8,18 @@ name = 'bipvt_heatpump'
 bipvt_ip = ''
 bipvt_port = ''
 
+bipvt_serial_port = ''
+bipvt_brate = ''
+bipvt_parity = ''
+bipvt_stopbit = ''
+
 heatpump_ip = ''
 heatpump_port = ''
+
+heatpump_serial_port = ''
+heatpump_brate = ''
+heatpump_parity = ''
+heatpump_stopbit = ''
 
 fcu_ip = ''
 fcu_port = ''
@@ -61,3 +71,5 @@ soc_connect_fail = False
 
 # scheudle list
 schedule_list = 3
+
+openweather = 'images/weather/01d.png'

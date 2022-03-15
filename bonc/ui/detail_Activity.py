@@ -8,6 +8,7 @@ import tkinter as tk
 from tkinter.tix import *
 import tkinter.simpledialog
 import tkinter.messagebox
+from PIL import Image, ImageTk
 import datetime
 import notification.insert_keypad
 import db.sqlite_connect
@@ -44,7 +45,10 @@ class detail_Activity(tk.Frame):
                              bg='#111111', font=('SCDream5', 16, 'bold'), fg='white')
         weather_menu.pack(side=LEFT, padx=10, pady=(8, 0))
 
-        detail_Activity.weather_value = Label(title_frame, text='맑음', highlightbackground='#111111',
+        weather_img = Image.open('images/weather/01d.png')
+        weather_img = weather_img.resize((40, 40), Image.ANTIALIAS)
+        self.weather_image = ImageTk.PhotoImage(weather_img)
+        detail_Activity.weather_value = Label(title_frame, highlightbackground='#111111', image=self.weather_image,
                                               activebackground='#111111', bd=0, bg='#111111',
                                               font=('SCDream5', 16, 'bold'),
                                               fg='white')

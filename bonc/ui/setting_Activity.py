@@ -8,6 +8,7 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.simpledialog
 import tkinter.messagebox
+from PIL import Image, ImageTk
 from time import sleep
 from pymodbus.client.sync import ModbusTcpClient
 import notification.insert_keypad
@@ -42,7 +43,10 @@ class setting_Activity(tk.Frame):
                              bg='#111111', font=('SCDream5', 16, 'bold'), fg='white')
         weather_menu.pack(side=LEFT, padx=10, pady=(8, 0))
 
-        setting_Activity.weather_value = Label(title_frame, text='맑음', highlightbackground='#111111',
+        weather_img = Image.open('images/weather/01d.png')
+        weather_img = weather_img.resize((40, 40), Image.ANTIALIAS)
+        self.weather_image = ImageTk.PhotoImage(weather_img)
+        setting_Activity.weather_value = Label(title_frame, text='맑음', highlightbackground='#111111', image=self.weather_image,
                                             activebackground='#111111', bd=0, bg='#111111',
                                             font=('SCDream5', 16, 'bold'),
                                             fg='white')
@@ -249,7 +253,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.bipvt_entry5.bind('<FocusIn>', self.insert_bipvt_port)
 
         bipvt_apply = Button(setting_Activity.bipvt_tcp_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용', command=lambda: self.bipvt_apply_btn())
-        bipvt_apply.pack(side=LEFT, padx=30)
+        bipvt_apply.pack(side=LEFT, padx=(30, 0))
 
         # bipvt serial frame
         setting_Activity.bipvt_serial_frame = Frame(bipvt_canvas, bg='#2f323b')
@@ -281,7 +285,7 @@ class setting_Activity(tk.Frame):
 
         bipvt_serial_apply = Button(setting_Activity.bipvt_serial_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용',
                              command=lambda: self.bipvt_serial_apply_btn())
-        bipvt_serial_apply.pack(side=LEFT, padx=30)
+        bipvt_serial_apply.pack(side=LEFT, padx=(30, 0))
 
         # 히트펌프 캔버스
         heatpump_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=0)
@@ -332,7 +336,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.heatpump_entry5.bind('<FocusIn>', self.insert_heatpump_port)
 
         heatpump_apply = Button(setting_Activity.heatpump_tcp_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용', command=lambda: self.heatpump_apply_btn())
-        heatpump_apply.pack(side=LEFT, padx=30)
+        heatpump_apply.pack(side=LEFT, padx=(30, 0))
 
         # heatpump serial frame
         setting_Activity.heatpump_serial_frame = Frame(heatpump_canvas, bg='#2f323b')
@@ -365,7 +369,7 @@ class setting_Activity(tk.Frame):
 
         heatpump_serial_apply = Button(setting_Activity.heatpump_serial_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용',
                              command=lambda: self.heatpump_serial_apply_btn())
-        heatpump_serial_apply.pack(side=LEFT, padx=30)
+        heatpump_serial_apply.pack(side=LEFT, padx=(30, 0))
 
         fcu_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=1)
         fcu_canvas.pack(fill=X, padx=30, pady=(30, 0))
@@ -416,7 +420,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.fcu_entry5.bind('<FocusIn>', self.insert_fcu_port)
 
         fcu_apply = Button(setting_Activity.fcu_tcp_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용', command=lambda: self.fcu_apply_btn())
-        fcu_apply.pack(side=LEFT, padx=30)
+        fcu_apply.pack(side=LEFT, padx=(30, 0))
 
         # fcu serial frame
         setting_Activity.fcu_serial_frame = Frame(fcu_canvas, bg='#2f323b')
@@ -449,7 +453,7 @@ class setting_Activity(tk.Frame):
 
         fcu_serial_apply = Button(setting_Activity.fcu_serial_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용',
                              command=lambda: self.fcu_serial_apply_btn())
-        fcu_serial_apply.pack(side=LEFT, padx=30)
+        fcu_serial_apply.pack(side=LEFT, padx=(30, 0))
 
         # communication canvas
         schedule_frame = Frame(self, bg='#2f323b')
@@ -474,10 +478,14 @@ class setting_Activity(tk.Frame):
         schedule_add_frame = Frame(schedule_insert_frame, bg='#2f323b')
         schedule_add_frame.pack(fill=X)
 
-        schedule_remove_btn = Button(schedule_add_frame, text='삭제하기', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_remove())
-        schedule_remove_btn.pack(side=RIGHT, padx=(0, 50))
+        schedule_apply_btn = Button(schedule_add_frame, text='스케줄 적용', font=('SCDream5', 15, 'bold'),
+                                    command=lambda: self.schedule_apply())
+        schedule_apply_btn.pack(side=RIGHT, padx=(0, 20))
 
-        schedule_add_btn = Button(schedule_add_frame, text='추가하기', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_add())
+        schedule_remove_btn = Button(schedule_add_frame, text='스케줄 삭제', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_remove())
+        schedule_remove_btn.pack(side=RIGHT, padx=(0, 20))
+
+        schedule_add_btn = Button(schedule_add_frame, text='스케줄 추가', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_add())
         schedule_add_btn.pack(side=RIGHT, padx=20)
 
         setting_Activity.schedule_merge_frame = Frame(schedule_insert_canvas, bg='#2f323b')
@@ -496,6 +504,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.hour_label2 = list(range(schedule_list))
         setting_Activity.schedule_end_min_entry = list(range(schedule_list))
         setting_Activity.min_label2 = list(range(schedule_list))
+        # setting_Activity.schedule_apply_btn = list(range(schedule_list))
 
         for i in range(schedule_list):
             setting_Activity.schedule_subframe[i] = Frame(setting_Activity.schedule_merge_frame, bg='#2f323b', highlightthickness=0, highlightbackground='#2f323b')
@@ -530,7 +539,6 @@ class setting_Activity(tk.Frame):
 
             setting_Activity.min_label2[i] = Label(setting_Activity.schedule_subframe[i], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
             setting_Activity.min_label2[i].pack(side=LEFT, padx=(5, 10))
-
 
     #     # left frame
     #     center_frame = Frame(self, bg='#2f323b')
@@ -753,6 +761,7 @@ class setting_Activity(tk.Frame):
     #     manual_btn.pack(side=LEFT)
     #
     #
+    # BIPVT TCP 통신 적용 버튼 클릭시
     def bipvt_apply_btn(self):
         if self.bipvt_entry1.get() == '' or self.bipvt_entry2.get() == '' or self.bipvt_entry3.get() == '' or self.bipvt_entry4.get() == '' or self.bipvt_entry5.get() == '':
             tkinter.messagebox.showwarning('설정오류', 'BIPVT 설정값을 입력하세요')
@@ -760,34 +769,54 @@ class setting_Activity(tk.Frame):
             res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
 
             if res_msg:
-                set_ip = self.bipvt_entry1.get() + '.' +self.bipvt_entry2.get() + '.' +self.bipvt_entry3.get() + '.' +self.bipvt_entry4.get()
-                db.sqlite_connect.protocol_update('bipvt_ip', 'bipvt_port', set_ip, self.bipvt_entry5.get())
+                set_ip = self.bipvt_entry1.get() + '.' + self.bipvt_entry2.get() + '.' + self.bipvt_entry3.get() + '.' + self.bipvt_entry4.get()
+                set_data = [set_ip, self.bipvt_entry5.get()]
+                db.sqlite_connect.protocol_update('bipvt', setting_Activity.bipvt_combo.get(), set_data)
+                self.bipvt_client()
+
+    # BIPVT Serial 통신 적용 버튼 클릭시
+    def bipvt_serial_apply_btn(self):
+        if self.bipvt_serial_entry1.get() == '' or self.bipvt_serial_entry2.get() == '' or self.bipvt_serial_entry3.get() == '' or self.bipvt_serial_entry4.get():
+            tkinter.messagebox.showwarning('설정오류', 'BIPVT 설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                set_port = self.bipvt_serial_entry1.get()
+                set_brate = self.bipvt_serial_entry2.get()
+                set_parity = self.bipvt_serial_entry3.get()
+                set_stopbit = self.bipvt_serial_entry4.get()
+                set_data = [set_port, set_brate, set_parity, set_stopbit]
+                db.sqlite_connect.protocol_update('bipvt', setting_Activity.bipvt_combo.get(), set_data)
                 self.bipvt_client()
 
 
-    # def bipvt_serial_apply_btn(self):
-    #     if self.bipvt_serial_entry1.get() == '' or self.bipvt_serial_entry2.get() == '' or self.bipvt_serial_entry3.get() == '' or self.bipvt_serial_entry4.get():
-    #         tkinter.messagebox.showwarning('설정오류', 'BIPVT 설정값을 입력하세요')
-    #     else:
-    #         res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
-    #
-    #         if res_msg:
-    #             set_ip = self.bipvt_serial_entry1.get() + '.' +self.bipvt_serial_entry1.get() + '.' +self.bipvt_serial_entry1.get() + '.' +self.bipvt_serial_entry1.get()
-    #             db.sqlite_connect.protocol_update('bipvt_ip', 'bipvt_port', set_ip, self.bipvt_entry5.get())
-    #             self.bipvt_client()
-    #
-    #
-    # def heatpump_apply_btn(self):
-    #     if self.heatpump_entry1.get() == '' or self.heatpump_entry2.get() == '' or self.heatpump_entry3.get() == '' or self.heatpump_entry4.get() == '' or self.heatpump_entry5.get() == '':
-    #         tkinter.messagebox.showwarning('설정오류', '히트펌프 설정값을 입력하세요')
-    #     else:
-    #         res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
-    #
-    #         if res_msg:
-    #             set_ip = self.heatpump_entry1.get() + '.' + self.heatpump_entry2.get() + '.' + self.heatpump_entry3.get() + '.' + self.heatpump_entry4.get()
-    #             db.sqlite_connect.protocol_update('heatpump_ip', 'heatpump_port', set_ip, self.heatpump_entry5.get())
-    #             self.heatpump_client()
-    #
+    def heatpump_apply_btn(self):
+        if self.heatpump_entry1.get() == '' or self.heatpump_entry2.get() == '' or self.heatpump_entry3.get() == '' or self.heatpump_entry4.get() == '' or self.heatpump_entry5.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '히트펌프 설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                set_ip = self.heatpump_entry1.get() + '.' + self.heatpump_entry2.get() + '.' + self.heatpump_entry3.get() + '.' + self.heatpump_entry4.get()
+                set_data = [set_ip, self.heatpump_entry5.get()]
+                db.sqlite_connect.protocol_update('heatpump', setting_Activity.heatpump_combo.get(), set_data)
+                self.heatpump_client()
+
+    def heatpump_serial_apply_btn(self):
+        if self.heatpump_serial_entry1.get() == '' or self.heatpump_serial_entry2.get() == '' or self.heatpump_serial_entry3.get() == '' or self.heatpump_serial_entry4.get():
+            tkinter.messagebox.showwarning('설정오류', 'heatpump 설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                set_port = self.heatpump_serial_entry1.get()
+                set_brate = self.heatpump_serial_entry2.get()
+                set_parity = self.heatpump_serial_entry3.get()
+                set_stopbit = self.heatpump_serial_entry4.get()
+                set_data = [set_port, set_brate, set_parity, set_stopbit]
+                db.sqlite_connect.protocol_update('heatpump', setting_Activity.heatpump_combo.get(), set_data)
+                self.heatpump_client()
     #
     # def system_apply_btn(self):
     #     if self.insolation_value.get() == '' or self.bipvt_inner_temp_value.get() == '' or self.cool_value.get() == '' or self.hot_value.get() == '' or self.dhw_value.get() == '' or self.doublecoil_value.get() == '':
@@ -797,32 +826,32 @@ class setting_Activity(tk.Frame):
     #
     #         if res_msg:
     #             db.sqlite_connect.system_update(self.insolation_value.get(), self.bipvt_inner_temp_value.get(),self.cool_value.get(), self.hot_value.get(), self.dhw_value.get(), self.doublecoil_value.get())
-    #
-    #
-    #
-    # def bipvt_client(self):
-    #     try:
-    #         hosting = comd.var.bipvt_ip
-    #         porting = int(comd.var.bipvt_port)
-    #
-    #         comd.read_cmd.bipvt_client = ModbusTcpClient(hosting, porting)
-    #         comd.read_cmd.bipvt_client.inter_char_timeout = 3
-    #     except Exception as ex:
-    #         print('bipvt_reclient() Exception -> ', ex)
-    #         comd.var.bipvt_connect_status = False
-    #
-    #
-    # def heatpump_client(self):
-    #     try:
-    #         hosting = comd.var.heatpump_ip
-    #         porting = int(comd.var.heatpump_port)
-    #
-    #         comd.read_cmd.heatpump_client = ModbusTcpClient(hosting, porting)
-    #         comd.read_cmd.heatpump_client.inter_char_timeout = 3
-    #     except Exception as ex:
-    #         print('heatpump_reclinet() Exception -> ', ex)
-    #         comd.var.heatpump_connect_status = False
-    #
+
+
+    # 통신설정 변경시 BIPVT 클라이언트 재실행
+    def bipvt_client(self):
+        try:
+            hosting = comd.var.bipvt_ip
+            porting = int(comd.var.bipvt_port)
+
+            comd.read_cmd.bipvt_client = ModbusTcpClient(hosting, porting)
+            comd.read_cmd.bipvt_client.inter_char_timeout = 3
+        except Exception as ex:
+            print('bipvt_reclient() Exception -> ', ex)
+            comd.var.bipvt_connect_status = False
+
+    # 통신설정 변경시 히트펌프 클라이언트 재실행
+    def heatpump_client(self):
+        try:
+            hosting = comd.var.heatpump_ip
+            porting = int(comd.var.heatpump_port)
+
+            comd.read_cmd.heatpump_client = ModbusTcpClient(hosting, porting)
+            comd.read_cmd.heatpump_client.inter_char_timeout = 3
+        except Exception as ex:
+            print('heatpump_reclinet() Exception -> ', ex)
+            comd.var.heatpump_connect_status = False
+
     # def insert_insolation_value(self, event):
     #     notification.insert_keypad.put_insolation_value(self, '값 입력')
     # def insert_bipvt_inner_temp_value(self, event):
@@ -897,6 +926,7 @@ class setting_Activity(tk.Frame):
     def insert_fcu_serial4(self, event):
         notification.insert_keypad.put_fcu_serial_value4(self, '값 입력')
 
+    # BIPVT 통신 설정
     def bipvt_selected(self, event):
         if setting_Activity.bipvt_combo.get() == 'Socket 통신' or setting_Activity.bipvt_combo.get() == 'Modbus-TCP 통신':
             setting_Activity.bipvt_serial_frame.pack_forget()
@@ -905,6 +935,7 @@ class setting_Activity(tk.Frame):
             setting_Activity.bipvt_tcp_frame.pack_forget()
             setting_Activity.bipvt_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
 
+    # 히트펌프 통신 설정
     def heatpump_selected(self, event):
         if setting_Activity.heatpump_combo.get() == 'Socket 통신' or setting_Activity.heatpump_combo.get() == 'Modbus-TCP 통신':
             setting_Activity.heatpump_serial_frame.pack_forget()
@@ -913,6 +944,7 @@ class setting_Activity(tk.Frame):
             setting_Activity.heatpump_tcp_frame.pack_forget()
             setting_Activity.heatpump_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
 
+    # FCU 통신 설정
     def fcu_selected(self, event):
         if setting_Activity.fcu_combo.get() == 'Socket 통신' or setting_Activity.fcu_combo.get() == 'Modbus-TCP 통신':
             setting_Activity.fcu_serial_frame.pack_forget()
@@ -921,59 +953,98 @@ class setting_Activity(tk.Frame):
             setting_Activity.fcu_tcp_frame.pack_forget()
             setting_Activity.fcu_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
 
+    # 스케줄 추가하기 버튼 클릭시
     def schedule_add(self):
-        comd.var.schedule_list += 1
-        sc_list = comd.var.schedule_list
+        if comd.var.schedule_list == 3:
+            tk.messagebox.showinfo('스케줄 설정', '스케줄 설정은 최대 3개까지 가능합니다.')
+        else:
+            comd.var.schedule_list += 1
+            sc_list = comd.var.schedule_list
 
-        setting_Activity.schedule_subframe.append(Frame(setting_Activity.schedule_merge_frame, bg='#2f323b', highlightthickness=0,highlightbackground='#2f323b'))
-        setting_Activity.schedule_subtitle.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='스케줄설정%d' % (sc_list), font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-        setting_Activity.schedule_start_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-        setting_Activity.hour_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-        setting_Activity.schedule_start_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-        setting_Activity.min_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-        setting_Activity.tilde_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='~', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-        setting_Activity.schedule_end_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-        setting_Activity.hour_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-        setting_Activity.schedule_end_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-        setting_Activity.min_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.schedule_subframe.append(Frame(setting_Activity.schedule_merge_frame, bg='#2f323b', highlightthickness=0,highlightbackground='#2f323b'))
+            setting_Activity.schedule_subtitle.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='스케줄설정%d' % (sc_list), font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.schedule_start_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
+            setting_Activity.hour_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.schedule_start_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
+            setting_Activity.min_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.tilde_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='~', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.schedule_end_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
+            setting_Activity.hour_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            setting_Activity.schedule_end_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
+            setting_Activity.min_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
+            # setting_Activity.schedule_apply_btn.append(Button(setting_Activity.schedule_subframe[sc_list-1], text='적용', font=('SCDream5', 15, 'bold'), width=6))
 
-        setting_Activity.schedule_subframe[sc_list-1].pack(pady=15)
-        setting_Activity.schedule_subtitle[sc_list-1].pack(side=LEFT, padx=(0, 30))
-        setting_Activity.schedule_start_hour_entry[sc_list-1].pack(side=LEFT)
-        setting_Activity.hour_label[sc_list-1].pack(side=LEFT, padx=(5, 20))
-        setting_Activity.schedule_start_min_entry[sc_list-1].pack(side=LEFT)
-        setting_Activity.min_label[sc_list-1].pack(side=LEFT, padx=(5, 10))
-        setting_Activity.tilde_label[sc_list-1].pack(side=LEFT, padx=(15, 25))
-        setting_Activity.schedule_end_hour_entry[sc_list-1].pack(side=LEFT)
-        setting_Activity.hour_label2[sc_list-1].pack(side=LEFT, padx=(5, 20))
-        setting_Activity.schedule_end_min_entry[sc_list-1].pack(side=LEFT)
-        setting_Activity.min_label2[sc_list-1].pack(side=LEFT, padx=(5, 10))
+            setting_Activity.schedule_subframe[sc_list-1].pack(pady=15)
+            setting_Activity.schedule_subtitle[sc_list-1].pack(side=LEFT, padx=(0, 30))
+            setting_Activity.schedule_start_hour_entry[sc_list-1].pack(side=LEFT)
+            setting_Activity.hour_label[sc_list-1].pack(side=LEFT, padx=(5, 20))
+            setting_Activity.schedule_start_min_entry[sc_list-1].pack(side=LEFT)
+            setting_Activity.min_label[sc_list-1].pack(side=LEFT, padx=(5, 10))
+            setting_Activity.tilde_label[sc_list-1].pack(side=LEFT, padx=(15, 25))
+            setting_Activity.schedule_end_hour_entry[sc_list-1].pack(side=LEFT)
+            setting_Activity.hour_label2[sc_list-1].pack(side=LEFT, padx=(5, 20))
+            setting_Activity.schedule_end_min_entry[sc_list-1].pack(side=LEFT)
+            setting_Activity.min_label2[sc_list-1].pack(side=LEFT, padx=(5, 10))
+            # setting_Activity.schedule_apply_btn[sc_list-1].pack(side=LEFT, padx=(30, 0))
 
+    # 스케줄 삭제하기 버튼 클릭시
     def schedule_remove(self):
-        comd.var.schedule_list -= 1
-        sc_list = comd.var.schedule_list
+        if comd.var.schedule_list == 1:
+            tk.messagebox.showinfo('스케줄 삭제', '스케줄은 최소 1개이상 있어야 합니다.')
+        else:
+            comd.var.schedule_list -= 1
+            sc_list = comd.var.schedule_list
 
-        setting_Activity.schedule_subframe[sc_list].pack_forget()
-        setting_Activity.schedule_subtitle[sc_list].pack_forget()
-        setting_Activity.schedule_start_hour_entry[sc_list].pack_forget()
-        setting_Activity.hour_label[sc_list].pack_forget()
-        setting_Activity.schedule_start_min_entry[sc_list].pack_forget()
-        setting_Activity.min_label[sc_list].pack_forget()
-        setting_Activity.tilde_label[sc_list].pack_forget()
-        setting_Activity.schedule_end_hour_entry[sc_list].pack_forget()
-        setting_Activity.hour_label2[sc_list].pack_forget()
-        setting_Activity.schedule_end_min_entry[sc_list].pack_forget()
-        setting_Activity.min_label2[sc_list].pack_forget()
+            setting_Activity.schedule_subframe[sc_list].pack_forget()
+            setting_Activity.schedule_subtitle[sc_list].pack_forget()
+            setting_Activity.schedule_start_hour_entry[sc_list].pack_forget()
+            setting_Activity.hour_label[sc_list].pack_forget()
+            setting_Activity.schedule_start_min_entry[sc_list].pack_forget()
+            setting_Activity.min_label[sc_list].pack_forget()
+            setting_Activity.tilde_label[sc_list].pack_forget()
+            setting_Activity.schedule_end_hour_entry[sc_list].pack_forget()
+            setting_Activity.hour_label2[sc_list].pack_forget()
+            setting_Activity.schedule_end_min_entry[sc_list].pack_forget()
+            setting_Activity.min_label2[sc_list].pack_forget()
+            # setting_Activity.schedule_apply_btn[sc_list].pack_forget()
 
-        del setting_Activity.schedule_subframe[-1]
-        del setting_Activity.schedule_subtitle[-1]
-        del setting_Activity.schedule_start_hour_entry[-1]
-        del setting_Activity.hour_label[-1]
-        del setting_Activity.schedule_start_min_entry[-1]
-        del setting_Activity.min_label[-1]
-        del setting_Activity.tilde_label[-1]
-        del setting_Activity.schedule_end_hour_entry[-1]
-        del setting_Activity.hour_label2[-1]
-        del setting_Activity.schedule_end_min_entry[-1]
-        del setting_Activity.min_label2[-1]
+            del setting_Activity.schedule_subframe[-1]
+            del setting_Activity.schedule_subtitle[-1]
+            del setting_Activity.schedule_start_hour_entry[-1]
+            del setting_Activity.hour_label[-1]
+            del setting_Activity.schedule_start_min_entry[-1]
+            del setting_Activity.min_label[-1]
+            del setting_Activity.tilde_label[-1]
+            del setting_Activity.schedule_end_hour_entry[-1]
+            del setting_Activity.hour_label2[-1]
+            del setting_Activity.schedule_end_min_entry[-1]
+            del setting_Activity.min_label2[-1]
+            # del setting_Activity.schedule_apply_btn[-1]
 
+    # 스케줄 적용
+    def schedule_apply(self):
+        schedule_list = comd.var.schedule_list
+        start_time = list(range(schedule_list))
+        end_time = list(range(schedule_list))
+        time_check = [False for idx in range(schedule_list)]
+        same_check = [False for jdx in range(schedule_list)]
+        for i in range(schedule_list):
+            start_time[i] = ('%s:%s' % (setting_Activity.schedule_start_hour_entry[i].get(), setting_Activity.schedule_start_min_entry[i].get()))
+            end_time[i] = ('%s:%s' % (setting_Activity.schedule_end_hour_entry[i].get(), setting_Activity.schedule_end_min_entry[i].get()))
+
+            if not (setting_Activity.schedule_start_hour_entry[i].get() == '' or setting_Activity.schedule_start_min_entry[i] == '' or setting_Activity.schedule_end_hour_entry[i] == '' or setting_Activity.schedule_end_min_entry[i] == ''):
+                time_check[i] = True
+            if not (start_time[i] == end_time[i] or setting_Activity.schedule_start_hour_entry[i].get() == '' or setting_Activity.schedule_start_min_entry[i] == '' or setting_Activity.schedule_end_hour_entry[i] == '' or setting_Activity.schedule_end_min_entry[i] == ''):
+                same_check[i] = True
+
+        if False in time_check:
+            tkinter.messagebox.showwarning('설정오류', '스케줄설정%s의 설정 시간을 입력하세요' % str(time_check.index(False)+1))
+        if False in same_check:
+            tkinter.messagebox.showwarning('설정오류', '스케줄설정%s을 동일한 시간으로 설정할 수 없습니다.' % str(same_check.index(False)+1))
+        # else:
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                # db.sqlite_connect.schedule_update(schedule_list, start_time, end_time)
+                print('미개발')

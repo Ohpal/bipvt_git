@@ -14,10 +14,20 @@ db_name = 'embedded_ems.db'
 
 protocol_table_query = "CREATE TABLE IF NOT EXISTS protocol(" \
                        "id INTEGER PRIMARY KEY, " \
-                       'bipvt_ip varchar(32),' \
-                       'bipvt_port varchar(32),' \
-                       'heatpump_ip varchar(32),' \
-                       'heatpump_port varchar(32)' \
+                        "bipvt_ip             varchar(32)," \
+                        "bipvt_port           varchar(32)," \
+                        "heatpump_ip          varchar(32)," \
+                        "heatpump_port        varchar(32)," \
+                        "bipvt_serial_port    varchar(32) default 0," \
+                        "bipvt_brate          varchar(32) default 0," \
+                        "bipvt_parity         varchar(32) default 0," \
+                        "bipvt_stopbit        varchar(32) default 0," \
+                        "bipvt_type           varchar(32)," \
+                        "heatpump_type        varchar(32)," \
+                        "heatpump_serial_port varchar(32) default 0," \
+                        "heatpump_brate       varchar(32) default 0," \
+                        "heatpump_parity      varchar(32) default 0," \
+                        "heatpump_stopbit     varchar(32) default 0" \
                        ")"
 
 schedule_table_query = "CREATE TABLE IF NOT EXISTS schedules(" \
@@ -97,11 +107,23 @@ def select_protocol():
     protocol_rows = cur.fetchall()
     protocol_rows = protocol_rows[0]
 
-    comd.var.bipvt_ip = protocol_rows[1]
-    comd.var.bipvt_port = protocol_rows[2]
-    comd.var.heatpump_ip = protocol_rows[3]
-    comd.var.heatpump_port = protocol_rows[4]
+    if protocol_rows[9] == 'Modbus-TCP 통신' or protocol_rows[9] == 'Socket 통신':
+        comd.var.bipvt_ip = protocol_rows[1]
+        comd.var.bipvt_port = protocol_rows[2]
+    else:
+        comd.var.bipvt_serial_port = protocol_rows[5]
+        comd.var.bipvt_brate = protocol_rows[6]
+        comd.var.bipvt_parity = protocol_rows[7]
+        comd.var.bipvt_stopbit = protocol_rows[8]
 
+    if protocol_rows[10] == 'Modbus-TCP 통신' or protocol_rows[10] == 'Socket 통신':
+        comd.var.heatpump_ip = protocol_rows[3]
+        comd.var.heatpump_port = protocol_rows[4]
+    else:
+        comd.var.heatpump_serial_port = protocol_rows[11]
+        comd.var.heatpump_brate = protocol_rows[12]
+        comd.var.heatpump_parity = protocol_rows[13]
+        comd.var.heatpump_stopbit = protocol_rows[14]
 
 def setting_protocol():
     cur, conn = lite_conn()
@@ -140,7 +162,10 @@ def setting_protocol():
         ui.setting_Activity.setting_Activity.bipvt_serial_entry3.insert('end', protocol_rows[7])
         ui.setting_Activity.setting_Activity.bipvt_serial_entry4.insert('end', protocol_rows[8])
 
-        # var에 값 넘겨줘야함
+        comd.var.bipvt_serial_port = protocol_rows[5]
+        comd.var.bipvt_brate = protocol_rows[6]
+        comd.var.bipvt_parity = protocol_rows[7]
+        comd.var.bipvt_stopbit = protocol_rows[8]
 
     # 히트펌프 IP 통신인 경우
     if heatpump_type == 'Socket 통신' or heatpump_type == 'Modbus-TCP 통신':
@@ -166,49 +191,102 @@ def setting_protocol():
         ui.setting_Activity.setting_Activity.heatpump_serial_entry3.insert('end', protocol_rows[13])
         ui.setting_Activity.setting_Activity.heatpump_serial_entry4.insert('end', protocol_rows[14])
 
+        comd.var.heatpump_serial_port = protocol_rows[11]
+        comd.var.heatpump_brate = protocol_rows[12]
+        comd.var.heatpump_parity = protocol_rows[13]
+        comd.var.heatpump_stopbit = protocol_rows[14]
 
 # 프로토콜 변경시 저장하는 쿼리문
-def protocol_update(entry1, entry2, value1, value2):
+def protocol_update(facility, types, data):
     cur, conn = lite_conn()
+    print('UPDATE : ', facility, types, data)
 
-    print('UPDATE : ', entry1, entry2, value1, value2)
-
-    sql = 'update protocol set ' + entry1 + '= ?, ' + entry2 + '= ? where id = 1'
-    cur.execute(sql, (value1, value2))
-    conn.commit()
-
-    item = entry1.split('_')[0]
-    ip_split = value1.split('.')
-
-    if item == 'bipvt':
+    if facility == 'bipvt':
+        sql = 'update protocol set bipvt_ip =?, bipvt_port =?, bipvt_type=? where id=1'
+        cur.execute(sql, (data[0], data[1], types))
 
         ui.setting_Activity.setting_Activity.bipvt_entry1.delete(0, 'end')
         ui.setting_Activity.setting_Activity.bipvt_entry2.delete(0, 'end')
         ui.setting_Activity.setting_Activity.bipvt_entry3.delete(0, 'end')
         ui.setting_Activity.setting_Activity.bipvt_entry4.delete(0, 'end')
         ui.setting_Activity.setting_Activity.bipvt_entry5.delete(0, 'end')
-        ui.setting_Activity.setting_Activity.bipvt_entry1.insert('end', ip_split[0])
-        ui.setting_Activity.setting_Activity.bipvt_entry2.insert('end', ip_split[1])
-        ui.setting_Activity.setting_Activity.bipvt_entry3.insert('end', ip_split[2])
-        ui.setting_Activity.setting_Activity.bipvt_entry4.insert('end', ip_split[3])
-        ui.setting_Activity.setting_Activity.bipvt_entry5.insert('end', value2)
-        comd.var.bipvt_ip = value1
-        comd.var.bipvt_port = value2
-    elif item == 'heatpump':
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry1.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry2.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry3.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.bipvt_serial_entry4.delete(0, 'end')
+
+        if types == 'Socket 통신' or types == 'Modbus-TCP 통신':
+            ip_split = data[0].split('.')
+            ui.setting_Activity.setting_Activity.bipvt_entry1.insert('end', ip_split[0])
+            ui.setting_Activity.setting_Activity.bipvt_entry2.insert('end', ip_split[1])
+            ui.setting_Activity.setting_Activity.bipvt_entry3.insert('end', ip_split[2])
+            ui.setting_Activity.setting_Activity.bipvt_entry4.insert('end', ip_split[3])
+            ui.setting_Activity.setting_Activity.bipvt_entry5.insert('end', data[1])
+            comd.var.bipvt_ip = data[0]
+            comd.var.bipvt_port = data[1]
+            comd.var.bipvt_serial_port = ''
+            comd.var.bipvt_brate = ''
+            comd.var.bipvt_parity = ''
+            comd.var.bipvt_stopbit = ''
+        else:
+            sql = 'update protocol set bipvt_serial_port=?, bipvt_brate=?, bipvt_parity=?, bipvt_stopbit=?, bipvt_type=? where id=1'
+            cur.execute(sql, (data[0], data[1], data[2], data[3], types))
+
+            ui.setting_Activity.setting_Activity.bipvt_serial_entry1.insert('end', data[0])
+            ui.setting_Activity.setting_Activity.bipvt_serial_entry2.insert('end', data[1])
+            ui.setting_Activity.setting_Activity.bipvt_serial_entry3.insert('end', data[2])
+            ui.setting_Activity.setting_Activity.bipvt_serial_entry4.insert('end', data[3])
+            comd.var.bipvt_ip = ''
+            comd.var.bipvt_port = ''
+            comd.var.bipvt_serial_port = data[0]
+            comd.var.bipvt_brate = data[1]
+            comd.var.bipvt_parity = data[2]
+            comd.var.bipvt_stopbit = data[3]
+
+    elif facility == 'heatpump':
+        sql = 'update protocol set heatpump_ip =?, heatpump_port =?, heatpump_type=? where id=1'
+        cur.execute(sql, (data[0], data[1], types))
+
         ui.setting_Activity.setting_Activity.heatpump_entry1.delete(0, 'end')
         ui.setting_Activity.setting_Activity.heatpump_entry2.delete(0, 'end')
         ui.setting_Activity.setting_Activity.heatpump_entry3.delete(0, 'end')
         ui.setting_Activity.setting_Activity.heatpump_entry4.delete(0, 'end')
         ui.setting_Activity.setting_Activity.heatpump_entry5.delete(0, 'end')
-        ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', ip_split[0])
-        ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', ip_split[1])
-        ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', ip_split[2])
-        ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', ip_split[3])
-        ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', value2)
-        comd.var.heatpump_ip = value1
-        comd.var.heatpump_port = value2
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry1.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry2.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry3.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.heatpump_serial_entry4.delete(0, 'end')
 
-    hosting = 'Hosting Change >> %s : %s \t|\t %s : %s' % (entry1, value1, entry2, value2)
+        if types == 'Socket 통신' or types == 'Modbus-TCP 통신':
+            ip_split = data[0].split('.')
+            ui.setting_Activity.setting_Activity.heatpump_entry1.insert('end', ip_split[0])
+            ui.setting_Activity.setting_Activity.heatpump_entry2.insert('end', ip_split[1])
+            ui.setting_Activity.setting_Activity.heatpump_entry3.insert('end', ip_split[2])
+            ui.setting_Activity.setting_Activity.heatpump_entry4.insert('end', ip_split[3])
+            ui.setting_Activity.setting_Activity.heatpump_entry5.insert('end', data[1])
+            comd.var.heatpump_ip = data[0]
+            comd.var.heatpump_port = data[1]
+            comd.var.heatpump_serial_port = ''
+            comd.var.heatpump_brate = ''
+            comd.var.heatpump_parity = ''
+            comd.var.heatpump_stopbit = ''
+        else:
+            sql = 'update protocol set heatpump_serial_port=?, heatpump_brate=?, heatpump_parity=?, heatpump_stopbit=?, heatpump_type=? where id=1'
+            cur.execute(sql, (data[0], data[1], data[2], data[3], types))
+
+            ui.setting_Activity.setting_Activity.heatpump_serial_entry1.insert('end', data[0])
+            ui.setting_Activity.setting_Activity.heatpump_serial_entry2.insert('end', data[1])
+            ui.setting_Activity.setting_Activity.heatpump_serial_entry3.insert('end', data[2])
+            ui.setting_Activity.setting_Activity.heatpump_serial_entry4.insert('end', data[3])
+            comd.var.heatpump_ip = ''
+            comd.var.heatpump_port = ''
+            comd.var.heatpump_serial_port = data[0]
+            comd.var.heatpump_brate = data[1]
+            comd.var.heatpump_parity = data[2]
+            comd.var.heatpump_stopbit = data[3]
+
+    conn.commit()
+    hosting = 'Hosting Change >> %s\t|\t%s|\t%s ' % (facility, types, data)
     print(hosting)
 
 
@@ -243,27 +321,51 @@ def setting_schedule():
     comd.var.end_min = rows[4]
 
 
-def schedule_update(entry1, entry2, entry3, entry4):
-    cur, conn = lite_conn()
+# def schedule_update(idx, start_time, end_time):
+    # cur, conn = lite_conn()
+    #
+    # select_sql = 'select count(*) from schedules'
+    # cur.execute(select_sql)
+    # rows = cur.fetchall()[0]
+    # print('rows : ', rows, 'idx : ', idx)
+    # rows = rows[0]
+    # for i in range(idx):
+    #     start_time_sub = start_time[i].split(':')
+    #     end_time_sub = end_time[i].split(':')
+    #
+    #     if rows - idx >= 1:
+    #         delete_sql = 'delete from schedules where id = ?'
+    #         cur.execute(delete_sql, (idx - i,))
+    #         print('delete : ', rows - (idx - i+1))
+    #     elif rows - idx <= -1:
+    #         insert_sql = 'insert into schedules(start_hour, start_min, end_hour, end_min) values(?,?,?,?)'
+    #         cur.execute(insert_sql, (start_time_sub[0], start_time_sub[1], end_time_sub[0], end_time_sub[1]))
+    #         print('insert : ', i+1)
+    #
+    #     # if int(idx) - int(rows) >= 1:
+    #     #     insert_sql = 'insert into schedules(start_hour, start_min, end_hour, end_min) values(?,?,?,?)'
+    #     #     cur.execute(insert_sql, (start_time_sub[0], start_time_sub[1], end_time_sub[0], end_time_sub[1]))
+    #     # elif int(idx) - int(rows) <= -1:
+    #     #     delete_sql = 'delete from schedules where id = ?'
+    #     #     cur.execute(delete_sql, (idx-i,))
+    #     else:
+    #         sql = 'update schedules set start_hour = ?, start_min = ?, end_hour = ?, end_min = ? where id = ?'
+    #         cur.execute(sql, (start_time_sub[0], start_time_sub[1], end_time_sub[0], end_time_sub[1], i+1))
+    #         print('Update : ', i+1)
+    #     conn.commit()
 
-    print('UPDATE : ', entry1, entry2, entry3, entry4)
-
-    sql = 'update schedules set start_hour = ?, start_min = ?, end_hour = ?, end_min = ? where id = 1'
-    cur.execute(sql, (entry1, entry2, entry3, entry4))
-    conn.commit()
-
-    ui.control_Activity.control_Activity.start_hour_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.start_min_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.end_hour_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.end_min_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.start_hour_entry.insert('end', entry1)
-    ui.control_Activity.control_Activity.start_min_entry.insert('end', entry2)
-    ui.control_Activity.control_Activity.end_hour_entry.insert('end', entry3)
-    ui.control_Activity.control_Activity.end_min_entry.insert('end', entry4)
-    comd.var.start_hour = entry1
-    comd.var.start_min = entry2
-    comd.var.end_hour = entry3
-    comd.var.end_min = entry4
+    # ui.control_Activity.control_Activity.start_hour_entry.delete(0, 'end')
+    # ui.control_Activity.control_Activity.start_min_entry.delete(0, 'end')
+    # ui.control_Activity.control_Activity.end_hour_entry.delete(0, 'end')
+    # ui.control_Activity.control_Activity.end_min_entry.delete(0, 'end')
+    # ui.control_Activity.control_Activity.start_hour_entry.insert('end', entry1)
+    # ui.control_Activity.control_Activity.start_min_entry.insert('end', entry2)
+    # ui.control_Activity.control_Activity.end_hour_entry.insert('end', entry3)
+    # ui.control_Activity.control_Activity.end_min_entry.insert('end', entry4)
+    # comd.var.start_hour = entry1
+    # comd.var.start_min = entry2
+    # comd.var.end_hour = entry3
+    # comd.var.end_min = entry4
 
 
 def automode_select():

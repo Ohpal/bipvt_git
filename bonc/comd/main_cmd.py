@@ -142,7 +142,7 @@ def mainLoop():
 
             comd.var.bipvt_read = True
 
-            print(packet)
+            # print(packet)
         else:
             comd.var.bipvt_read = True
             pv_power = ' - '
@@ -240,7 +240,7 @@ def mainLoop():
 
             comd.var.heatpump_read = True
 
-            print(heatpump_packet)
+            # print(heatpump_packet)
 
         else:
             comd.var.heatpump_read = True
@@ -258,14 +258,6 @@ def mainLoop():
     except Exception as ex:
         comd.var.heatpump_read = False
         print('HeatPump READ Error : ', ex)
-
-    # Update Weather Data
-    try:
-        weather_select = db.pg_connect.weather_select()
-        comd.control_ui.set_weather_ui(weather_select)
-
-    except Exception as ex:
-        print('Weather Select Error : ', ex)
 
     # Get Weather Data
     try:
@@ -289,7 +281,7 @@ def mainLoop():
         if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
 
             if comd.var.auto_mode:
-                print('auto')
+                # print('auto')
                 auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
 
             elif comd.var.reserve_mode:
@@ -321,7 +313,8 @@ def mainLoop():
                 print('stop Mode')
 
     except Exception as ex:
-        print('TEMS Control ERROR >> ', ex)
+        # print('TEMS Control ERROR >> ', ex)
+        pass
 
     try:
         if comd.var.bipvt_read:
@@ -378,6 +371,14 @@ def mainLoop():
     except Exception as ex:
         print('DB insert ERROR >> ', ex)
 
+    # Update Weather Data
+    try:
+        weather_select = db.pg_connect.weather_select()
+        comd.control_ui.set_weather_ui(weather_select)
+
+    except Exception as ex:
+        print('Weather Select Error : ', ex)
+
 
 def auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp):
     if float(insolation) >= float(comd.var.insolation_value):
@@ -396,7 +397,6 @@ def auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp,
     else:
         comd.read_cmd.exchanger_off()
         comd.read_cmd.buffer_off()
-
 
     # 제상모드에 안갔을경우
     if not comd.var.keep_mode:

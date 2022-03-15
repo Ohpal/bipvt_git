@@ -25,6 +25,7 @@ def get_weather():
         min_temp = data['main']['temp_min']
         wind_speed = data['wind']['speed']
         wind_deg = data['wind']['deg']
+        icon = data['weather'][0]['icon']
 
         packet = [
             now_time(),
@@ -34,7 +35,8 @@ def get_weather():
             max_temp,
             min_temp,
             wind_speed,
-            wind_deg
+            wind_deg,
+            icon
         ]
 
         print(packet)

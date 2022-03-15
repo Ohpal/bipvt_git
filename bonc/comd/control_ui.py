@@ -1,4 +1,5 @@
 import os, sys
+import tkinter as tk
 
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
@@ -11,6 +12,9 @@ import ui.setting_Activity
 import comd.var
 import datetime
 
+from PIL import Image, ImageTk
+
+img = ''
 
 def now_time():
     now = datetime.datetime.now()
@@ -306,13 +310,41 @@ def set_line_ui(damper_status, fan_status, exchanger_status, buffer_status, doub
     else:
         ui.main_Activity.main_Activity.main_canvas.itemconfig(ui.main_Activity.main_Activity.line9, fill='white')
 
-def set_weather_ui(weather_select):
-    if weather_select[0] == 'Clear':
-    elif weather_select[0] == 'Clouds':
-    elif weather_select[0] == 'Rain':
-    elif weather_select[0] == 'Drizzle':
-    elif weather_select[0] == 'Snow':
-    elif weather_select[0] == 'Thunderstorm':
-    else:
-        print('??')
 
+def set_weather_ui(weather_select):
+    global img
+
+    if '01' in weather_select[3]:
+        img = Image.open('images/weather/01d.png')
+    elif '02' in weather_select[3]:
+        img = Image.open('images/weather/02d.png')
+    elif '03' in weather_select[3]:
+        img = Image.open('images/weather/03d.png')
+    elif '04' in weather_select[3]:
+        img = Image.open('images/weather/04d.png')
+    elif '09' in weather_select[3]:
+        img = Image.open('images/weather/09d.png')
+    elif '10' in weather_select[3]:
+        img = Image.open('images/weather/10d.png')
+    elif '11' in weather_select[3]:
+        img = Image.open('images/weather/11d.png')
+    elif '13' in weather_select[3]:
+        img = Image.open('images/weather/13d.png')
+    elif '50' in weather_select[3]:
+        img = Image.open('images/weather/50d.png')
+    else:
+        img = Image.open('images/weather/01d.png')
+
+    img = img.resize((40, 40), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
+    ui.main_Activity.main_Activity.weather_value.config(image=img)
+    ui.detail_Activity.detail_Activity.weather_value.config(image=img)
+    ui.setting_Activity.setting_Activity.weather_value.config(image=img)
+
+    ui.main_Activity.main_Activity.temperature_value.config(text=round(weather_select[1], 1))
+    ui.detail_Activity.detail_Activity.temperature_value.config(text=round(weather_select[1], 1))
+    ui.setting_Activity.setting_Activity.temperature_value.config(text=round(weather_select[1], 1))
+
+    ui.main_Activity.main_Activity.humi_value.config(text=int(weather_select[2]))
+    ui.detail_Activity.detail_Activity.humi_value.config(text=int(weather_select[2]))
+    ui.setting_Activity.setting_Activity.humi_value.config(text=int(weather_select[2]))

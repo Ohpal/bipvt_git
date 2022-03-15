@@ -32,7 +32,7 @@ def data_insert(value):
 def weather_insert(value):
     try:
         cur, conn = db_conn()
-        sql = 'insert into weather_tb values(%s,%s,%s,%s,%s,%s,%s,%s)'
+        sql = 'insert into weather_tb values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'
 
         cur.execute(sql, value)
         conn.commit()
@@ -47,7 +47,7 @@ def weather_insert(value):
 def weather_select():
     try:
         cur, conn =  db_conn()
-        sql = 'select weather, temp, humi from weather_tb order by d_time desc'
+        sql = 'select weather, temp, humi, icon from weather_tb order by d_time desc'
         cur.execute(sql)
         row = cur.fetchone()
 
