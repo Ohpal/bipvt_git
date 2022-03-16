@@ -195,23 +195,26 @@ class setting_Activity(tk.Frame):
         communication_frame = Frame(self, bg='#111111')
         communication_frame.pack(fill=BOTH, side=TOP, expand=True)
 
-        setting_Activity.communication_canvas = Canvas(communication_frame, bg='#2f323b', highlightbackground='#111111', width=870, height=500)
+        setting_Activity.communication_canvas = Canvas(communication_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=500)
         setting_Activity.communication_canvas.pack(fill=X, padx=15, pady=15)
 
         communication_title_frame = Frame(setting_Activity.communication_canvas, bg='#2f323b')
         communication_title_frame.pack(fill=X, expand=True)
 
         communication_title = Label(communication_title_frame, text='통신 설정', font=('SCDream5', 20, 'bold'), fg='#96c63e', bg='#2f323b')
-        communication_title.pack()
+        communication_title.pack(pady=10)
 
         # BIPVT 캔버스
-        bipvt_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=1)
+        bipvt_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
         bipvt_canvas.pack(fill=X, padx=30, pady=(30, 0))
 
-        bipvt_frame = Frame(bipvt_canvas, bg='#2f323b')
+        bipvt_labelframe = LabelFrame(bipvt_canvas, bg='#2f323b', text='BIPVT 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
+        bipvt_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
+
+        bipvt_frame = Frame(bipvt_labelframe, bg='#2f323b')
         bipvt_frame.pack(fill=X, padx=50, pady=20)
 
-        bipvt_label = Label(bipvt_frame, text='BIPVT 통신 설정', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
+        bipvt_label = Label(bipvt_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
         bipvt_label.pack(side=LEFT, padx=(0, 20))
 
         setting_Activity.bipvt_combo = ttk.Combobox(bipvt_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
@@ -219,7 +222,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.bipvt_combo.bind('<<ComboboxSelected>>', self.bipvt_selected)
         setting_Activity.bipvt_combo.pack(side=LEFT)
 
-        setting_Activity.bipvt_tcp_frame = Frame(bipvt_canvas, bg='#2f323b')
+        setting_Activity.bipvt_tcp_frame = Frame(bipvt_labelframe, bg='#2f323b')
         setting_Activity.bipvt_tcp_frame.pack(fill=X, padx=(50, 0), pady=10, ipadx=10, ipady=10)
 
         Label(setting_Activity.bipvt_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
@@ -256,7 +259,7 @@ class setting_Activity(tk.Frame):
         bipvt_apply.pack(side=LEFT, padx=(30, 0))
 
         # bipvt serial frame
-        setting_Activity.bipvt_serial_frame = Frame(bipvt_canvas, bg='#2f323b')
+        setting_Activity.bipvt_serial_frame = Frame(bipvt_labelframe, bg='#2f323b')
         setting_Activity.bipvt_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
 
         Label(setting_Activity.bipvt_serial_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
@@ -288,13 +291,16 @@ class setting_Activity(tk.Frame):
         bipvt_serial_apply.pack(side=LEFT, padx=(30, 0))
 
         # 히트펌프 캔버스
-        heatpump_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=0)
+        heatpump_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
         heatpump_canvas.pack(fill=X, pady=(20, 30), padx=30)
+        
+        heatpump_labelframe = LabelFrame(heatpump_canvas, bg='#2f323b', text='히트펌프 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
+        heatpump_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
 
-        heatpump_frame = Frame(heatpump_canvas, bg='#2f323b')
+        heatpump_frame = Frame(heatpump_labelframe, bg='#2f323b')
         heatpump_frame.pack(fill=X, padx=50, pady=20)
 
-        heatpump_label = Label(heatpump_frame, text='히트펌프 통신 설정', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
+        heatpump_label = Label(heatpump_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
         heatpump_label.pack(side=LEFT, padx=(0, 20))
 
         setting_Activity.heatpump_combo = ttk.Combobox(heatpump_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
@@ -302,7 +308,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.heatpump_combo.bind('<<ComboboxSelected>>', self.heatpump_selected)
         setting_Activity.heatpump_combo.pack(side=LEFT)
 
-        setting_Activity.heatpump_tcp_frame = Frame(heatpump_canvas, bg='#2f323b')
+        setting_Activity.heatpump_tcp_frame = Frame(heatpump_labelframe, bg='#2f323b')
         setting_Activity.heatpump_tcp_frame.pack(fill=X, padx=(50, 0), pady=10)
 
         Label(setting_Activity.heatpump_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
@@ -339,7 +345,7 @@ class setting_Activity(tk.Frame):
         heatpump_apply.pack(side=LEFT, padx=(30, 0))
 
         # heatpump serial frame
-        setting_Activity.heatpump_serial_frame = Frame(heatpump_canvas, bg='#2f323b')
+        setting_Activity.heatpump_serial_frame = Frame(heatpump_labelframe, bg='#2f323b')
         setting_Activity.heatpump_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
         # setting_Activity.heatpump_serial_frame.pack_forget()
 
@@ -371,14 +377,17 @@ class setting_Activity(tk.Frame):
                              command=lambda: self.heatpump_serial_apply_btn())
         heatpump_serial_apply.pack(side=LEFT, padx=(30, 0))
 
-        fcu_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=1)
+        # FCU 통신 설정
+        fcu_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
         fcu_canvas.pack(fill=X, padx=30, pady=(30, 0))
 
-        # FCU 통신 설정
-        fcu_frame = Frame(fcu_canvas, bg='#2f323b')
+        fcu_labelframe = LabelFrame(fcu_canvas, bg='#2f323b', text='FCU 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
+        fcu_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
+
+        fcu_frame = Frame(fcu_labelframe, bg='#2f323b')
         fcu_frame.pack(fill=X, padx=50, pady=20)
 
-        fcu_label = Label(fcu_frame, text='FCU 통신 설정', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
+        fcu_label = Label(fcu_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
         fcu_label.pack(side=LEFT, padx=(0, 20))
 
         setting_Activity.fcu_combo = ttk.Combobox(fcu_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
@@ -386,7 +395,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.fcu_combo.bind('<<ComboboxSelected>>', self.fcu_selected)
         setting_Activity.fcu_combo.pack(side=LEFT)
 
-        setting_Activity.fcu_tcp_frame = Frame(fcu_canvas, bg='#2f323b')
+        setting_Activity.fcu_tcp_frame = Frame(fcu_labelframe, bg='#2f323b')
         setting_Activity.fcu_tcp_frame.pack(fill=X, padx=(50, 0), pady=10)
 
         Label(setting_Activity.fcu_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
@@ -423,7 +432,7 @@ class setting_Activity(tk.Frame):
         fcu_apply.pack(side=LEFT, padx=(30, 0))
 
         # fcu serial frame
-        setting_Activity.fcu_serial_frame = Frame(fcu_canvas, bg='#2f323b')
+        setting_Activity.fcu_serial_frame = Frame(fcu_labelframe, bg='#2f323b')
         setting_Activity.fcu_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
         # setting_Activity.fcu_serial_frame.pack_forget()
 
@@ -776,7 +785,7 @@ class setting_Activity(tk.Frame):
 
     # BIPVT Serial 통신 적용 버튼 클릭시
     def bipvt_serial_apply_btn(self):
-        if self.bipvt_serial_entry1.get() == '' or self.bipvt_serial_entry2.get() == '' or self.bipvt_serial_entry3.get() == '' or self.bipvt_serial_entry4.get():
+        if self.bipvt_serial_entry1.get() == '' or self.bipvt_serial_entry2.get() == '' or self.bipvt_serial_entry3.get() == '' or self.bipvt_serial_entry4.get() == '':
             tkinter.messagebox.showwarning('설정오류', 'BIPVT 설정값을 입력하세요')
         else:
             res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
@@ -804,7 +813,7 @@ class setting_Activity(tk.Frame):
                 self.heatpump_client()
 
     def heatpump_serial_apply_btn(self):
-        if self.heatpump_serial_entry1.get() == '' or self.heatpump_serial_entry2.get() == '' or self.heatpump_serial_entry3.get() == '' or self.heatpump_serial_entry4.get():
+        if self.heatpump_serial_entry1.get() == '' or self.heatpump_serial_entry2.get() == '' or self.heatpump_serial_entry3.get() == '' or self.heatpump_serial_entry4.get() == '':
             tkinter.messagebox.showwarning('설정오류', 'heatpump 설정값을 입력하세요')
         else:
             res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
@@ -817,6 +826,33 @@ class setting_Activity(tk.Frame):
                 set_data = [set_port, set_brate, set_parity, set_stopbit]
                 db.sqlite_connect.protocol_update('heatpump', setting_Activity.heatpump_combo.get(), set_data)
                 self.heatpump_client()
+
+    def fcu_apply_btn(self):
+        if self.fcu_entry1.get() == '' or self.fcu_entry2.get() == '' or self.fcu_entry3.get() == '' or self.fcu_entry4.get() == '' or self.fcu_entry5.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '히트펌프 설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                set_ip = self.fcu_entry1.get() + '.' + self.fcu_entry2.get() + '.' + self.fcu_entry3.get() + '.' + self.fcu_entry4.get()
+                set_data = [set_ip, self.fcu_entry5.get()]
+                db.sqlite_connect.protocol_update('fcu', setting_Activity.fcu_combo.get(), set_data)
+                self.fcu_client()
+
+    def fcu_serial_apply_btn(self):
+        if self.fcu_serial_entry1.get() == '' or self.fcu_serial_entry2.get() == '' or self.fcu_serial_entry3.get() == '' or self.fcu_serial_entry4.get() == '':
+            tkinter.messagebox.showwarning('설정오류', 'fcu 설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                set_port = self.fcu_serial_entry1.get()
+                set_brate = self.fcu_serial_entry2.get()
+                set_parity = self.fcu_serial_entry3.get()
+                set_stopbit = self.fcu_serial_entry4.get()
+                set_data = [set_port, set_brate, set_parity, set_stopbit]
+                db.sqlite_connect.protocol_update('fcu', setting_Activity.fcu_combo.get(), set_data)
+                self.fcu_client()
     #
     # def system_apply_btn(self):
     #     if self.insolation_value.get() == '' or self.bipvt_inner_temp_value.get() == '' or self.cool_value.get() == '' or self.hot_value.get() == '' or self.dhw_value.get() == '' or self.doublecoil_value.get() == '':

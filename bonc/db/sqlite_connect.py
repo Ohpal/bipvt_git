@@ -125,6 +125,16 @@ def select_protocol():
         comd.var.heatpump_parity = protocol_rows[13]
         comd.var.heatpump_stopbit = protocol_rows[14]
 
+    if protocol_rows[21] == 'Modbus-TCP 통신' or protocol_rows[21] == 'Socket 통신':
+        comd.var.fcu_ip = protocol_rows[15]
+        comd.var.fcu_port = protocol_rows[16]
+    else:
+        comd.var.fcu_serial_port = protocol_rows[17]
+        comd.var.fcu_brate = protocol_rows[18]
+        comd.var.fcu_parity = protocol_rows[19]
+        comd.var.fcu_stopbit = protocol_rows[20]
+
+
 def setting_protocol():
     cur, conn = lite_conn()
     sql = 'select * from protocol'
@@ -135,6 +145,7 @@ def setting_protocol():
     # 설비 통신 타입 검색
     bipvt_type = protocol_rows[9]
     heatpump_type = protocol_rows[10]
+    fcu_type = protocol_rows[21]
 
     # 콤보박스에 설비 통신 타입 입력
     ui.setting_Activity.setting_Activity.bipvt_combo.set(bipvt_type)
@@ -195,6 +206,35 @@ def setting_protocol():
         comd.var.heatpump_brate = protocol_rows[12]
         comd.var.heatpump_parity = protocol_rows[13]
         comd.var.heatpump_stopbit = protocol_rows[14]
+
+    # FCU IP 통신인 경우
+    if fcu_type == 'Socket 통신' or fcu_type == 'Modbus-TCP 통신':
+        ui.setting_Activity.setting_Activity.fcu_serial_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack()
+
+        fcu_ip = protocol_rows[3].split('.')
+        ui.setting_Activity.setting_Activity.fcu_entry1.insert('end', fcu_ip[0])
+        ui.setting_Activity.setting_Activity.fcu_entry2.insert('end', fcu_ip[1])
+        ui.setting_Activity.setting_Activity.fcu_entry3.insert('end', fcu_ip[2])
+        ui.setting_Activity.setting_Activity.fcu_entry4.insert('end', fcu_ip[3])
+        ui.setting_Activity.setting_Activity.fcu_entry5.insert('end', protocol_rows[2])
+
+        comd.var.fcu_ip = protocol_rows[3]
+        comd.var.fcu_port = protocol_rows[4]
+    else:
+        # FCU Serial 통신인 경우
+        ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack_forget()
+        ui.setting_Activity.setting_Activity.fcu_serial_frame.pack()
+
+        ui.setting_Activity.setting_Activity.fcu_serial_entry1.insert('end', protocol_rows[17])
+        ui.setting_Activity.setting_Activity.fcu_serial_entry2.insert('end', protocol_rows[18])
+        ui.setting_Activity.setting_Activity.fcu_serial_entry3.insert('end', protocol_rows[19])
+        ui.setting_Activity.setting_Activity.fcu_serial_entry4.insert('end', protocol_rows[20])
+
+        comd.var.fcu_serial_port = protocol_rows[11]
+        comd.var.fcu_brate = protocol_rows[12]
+        comd.var.fcu_parity = protocol_rows[13]
+        comd.var.fcu_stopbit = protocol_rows[14]
 
 # 프로토콜 변경시 저장하는 쿼리문
 def protocol_update(facility, types, data):

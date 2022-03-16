@@ -53,10 +53,8 @@ def main_timer():
     ui.detail_Activity.detail_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
     ui.setting_Activity.setting_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
     ui.setting_Activity.setting_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
-
-
-# def set_weather_data(weather, temp, humi):
-#     ui.main_Activity
+    ui.control_Activity.control_Activity.time_label1.config(text='{} [{}]'.format(timer[0], weekDay))
+    ui.control_Activity.control_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
 
 
 def set_bipvt_data(pv_power, pv_voltage, pv_current, insolation, bipvt_inner_temp, bipvt_outer_temp,
@@ -340,11 +338,14 @@ def set_weather_ui(weather_select):
     ui.main_Activity.main_Activity.weather_value.config(image=img)
     ui.detail_Activity.detail_Activity.weather_value.config(image=img)
     ui.setting_Activity.setting_Activity.weather_value.config(image=img)
+    ui.control_Activity.control_Activity.weather_value.config(image=img)
 
     ui.main_Activity.main_Activity.temperature_value.config(text=round(weather_select[1], 1))
     ui.detail_Activity.detail_Activity.temperature_value.config(text=round(weather_select[1], 1))
     ui.setting_Activity.setting_Activity.temperature_value.config(text=round(weather_select[1], 1))
+    ui.control_Activity.control_Activity.temperature_value.config(text=round(weather_select[1], 1))
 
     ui.main_Activity.main_Activity.humi_value.config(text=int(weather_select[2]))
     ui.detail_Activity.detail_Activity.humi_value.config(text=int(weather_select[2]))
     ui.setting_Activity.setting_Activity.humi_value.config(text=int(weather_select[2]))
+    ui.control_Activity.control_Activity.humi_value.config(text=int(weather_select[2]))

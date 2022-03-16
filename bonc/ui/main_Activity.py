@@ -25,13 +25,7 @@ import mplcursors
 from datetime import datetime, timedelta
 
 style.use("seaborn-darkgrid")
-nb_points = 60
-
-
-def imgCallback():
-    img = tk.PhotoImage(file='images/weather/01d.png')
-    main_Activity.gps_menu.configure(image=img)
-    main_Activity.gps_menu.image = img
+nb_points = 600
 
 
 class main_Activity(tk.Frame):
@@ -39,7 +33,6 @@ class main_Activity(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        # self.bind('<Return>', imgCallback())
 
         title_frame = Frame(self, bg='#111111')
         title_frame.pack(fill=X, side=TOP)
@@ -525,7 +518,7 @@ class main_Activity(tk.Frame):
 
         # self.ax.xlabel('발전량')
         # format the x-axis to show the time
-        myFmt = mdates.DateFormatter("%H:%M:%S")
+        myFmt = mdates.DateFormatter("%H:%M")
         self.ax.xaxis.set_major_formatter(myFmt)
         # initial x and y data
         dateTimeObj = datetime.now() + timedelta(seconds=-nb_points)
@@ -544,7 +537,7 @@ class main_Activity(tk.Frame):
         self.crs.connect('add', lambda sel: self.cursor_annotation(sel))
 
     def cursor_annotation(self, sel):
-        sel.annotation.set_text('Time : {1}\nPV : {0} kW'.format(round(sel.target[1], 2), datetime.fromtimestamp(sel.target[0]).strftime("%H:%M")))
+        sel.annotation.set_text('Time >> {1}\nPV >> {0} kW'.format(round(sel.target[1], 2), datetime.fromtimestamp(sel.target[0]).strftime("%H:%M")))
         sel.annotation.get_bbox_patch().set(fc='lightsalmon', alpha=0.5)
 
     def animate(self):
@@ -564,7 +557,7 @@ class main_Activity(tk.Frame):
         # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
         # print(self.x_data[-1], self.y_data[-1])
         self.graph_canvas.draw_idle()  # redraw plot
-        self.after(1000, self.animate)  # repeat after 1s
+        self.after(1000*60, self.animate)  # repeat after 1s
 
     def sys_exit(self):
         res_msg = tkinter.messagebox.askyesno('프로그램 종료', '프로그램을 종료하시겠습니까?', icon='warning')

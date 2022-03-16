@@ -24,6 +24,12 @@ heatpump_stopbit = ''
 fcu_ip = ''
 fcu_port = ''
 
+fcu_serial_port = ''
+fcu_brate = ''
+fcu_parity = ''
+fcu_stopbit = ''
+
+
 bipvt_connect_status = False
 heatpump_connect_status = False
 fcu_connect_status = False

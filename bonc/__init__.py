@@ -1,13 +1,13 @@
 import os, sys
 
-# from dbm.ndbm import _dbm
-
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
 
 import tkinter as tk
 import threading
 import datetime
+from time import sleep
+from subprocess import run
 
 import db.sqlite_connect
 import comd.var
@@ -20,6 +20,34 @@ import ui.run_Activity
 import ui.error_Activity
 import notification.error_alert_notification
 import comd.main_cmd
+
+# 라이브러리 자동 설치
+def restart():
+    sleep(1)
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+try:
+    import PIL
+    import pymodbus
+    import serial
+    import requests
+    import psycopg2
+    import sqlite3
+    import matplotlib
+    import numpy
+    import mplcursors
+except:
+    run(('pip', 'install', 'pillow'))
+    run(('pip', 'install', 'pymodbus'))
+    run(('pip', 'install', 'pyserial'))
+    run(('pip', 'install', 'requests'))
+    run(('pip', 'install', 'psycopg2'))
+    run(('pip', 'install', 'sqlite3'))
+    run(('pip', 'install', 'matplotlib'))
+    run(('pip', 'install', 'numpy'))
+    run(('pip', 'install', 'mplcursors'))
+
+    restart()
 
 
 def now_time():
