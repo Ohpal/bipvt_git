@@ -180,7 +180,7 @@ class control_Activity(tk.Frame):
         top_frame.pack(fill=BOTH, side=TOP, expand=True)
 
         # 데이터 캔버스 그리기
-        control_Activity.top_canvas = Canvas(top_frame, bg='#111111', highlightbackground='#111111', width=870, height=200)
+        control_Activity.top_canvas = Canvas(top_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=200, bd=0)
         control_Activity.top_canvas.pack(padx=15, fill=X, pady=(15, 0))
 
         above1_frame = Frame(control_Activity.top_canvas, bg='#2f323b', height=180, width=250)
@@ -190,8 +190,8 @@ class control_Activity(tk.Frame):
                              anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above1_value = Label(above1_frame, text=' 79514.3 ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above1_value.pack(fill=X, pady=10)
+        control_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        control_Activity.above1_value.pack(fill=X, pady=10)
 
         above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -204,9 +204,9 @@ class control_Activity(tk.Frame):
                              anchor='w')
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above2_value = Label(above2_frame, text=' 7979842.7 ', fg='#6ECEDA', bg='#2f323b',
+        control_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above2_value.pack(fill=X, pady=10)
+        control_Activity.above2_value.pack(fill=X, pady=10)
 
         above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -219,8 +219,8 @@ class control_Activity(tk.Frame):
                              anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above3_value = Label(above3_frame, text=' 749843.4 ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above3_value.pack(fill=X, pady=10)
+        control_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        control_Activity.above3_value.pack(fill=X, pady=10)
 
         above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -233,9 +233,9 @@ class control_Activity(tk.Frame):
                              anchor='w')
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above4_value = Label(above4_frame, text=' 498736.75 ', fg='#d18063', bg='#2f323b',
+        control_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above4_value.pack(fill=X, pady=10)
+        control_Activity.above4_value.pack(fill=X, pady=10)
 
         above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -244,7 +244,7 @@ class control_Activity(tk.Frame):
         control_frame = Frame(self, bg='#111111')
         control_frame.pack(fill=BOTH, side=TOP, expand=True)
 
-        control_canvas = Canvas(control_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=800)
+        control_canvas = Canvas(control_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=800, bd=0)
         control_canvas.pack(fill=X, padx=15, pady=15)
 
         auto_mode_label = Label(control_canvas, text='운전모드 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
@@ -269,8 +269,38 @@ class control_Activity(tk.Frame):
                                                 font=('SCDream5', 18, 'bold'), command=lambda: self.stop_control())
         control_Activity.stop_mode_btn.pack(side=LEFT)
 
-        heatpump_mode_label = Label(control_canvas, text='히트펌프 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        heatpump_mode_label.place(x=30, y=150)
+        heatpump_control_label = Label(control_canvas, text='히트펌프 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
+        heatpump_control_label.place(x=30, y=150)
+
+        heatpump_control_frame = Frame(control_canvas, bg='#2f323b')
+        heatpump_control_frame.place(x=30, y=200)
+
+        control_Activity.heatpump_on_btn = Button(heatpump_control_frame, text='운    전', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_on_btn.pack(side=LEFT)
+
+        control_Activity.heatpump_off_btn = Button(heatpump_control_frame, text='정    지', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_off_btn.pack(side=LEFT, padx=(10, 0))
+
+        heatpump_mode_label = Label(control_canvas, text='히트펌프 모드 변경', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
+        heatpump_mode_label.place(x=30, y=280)
+
+        heatpump_mode_frame = Frame(control_canvas, bg='#2f323b')
+        heatpump_mode_frame.place(x=30, y=330)
+
+        control_Activity.heatpump_cool_btn = Button(heatpump_mode_frame, text='냉    방', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_cool_btn.pack(side=LEFT)
+
+        control_Activity.heatpump_heat_btn = Button(heatpump_mode_frame, text='난    방', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_heat_btn.pack(side=LEFT, padx=(10, 0))
+
+        control_Activity.heatpump_cool_btn = Button(heatpump_mode_frame, text='급    탕', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_cool_btn.pack(side=LEFT, padx=10)
+
+        control_Activity.heatpump_heat_btn = Button(heatpump_mode_frame, text='제    상', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_heat_btn.pack(side=LEFT)
+
+
+
 
         fcu_mode_label = Label(control_canvas, text='에어컨(FCU) 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
         fcu_mode_label.place(x=580, y=20)
@@ -394,60 +424,400 @@ class control_Activity(tk.Frame):
 
 
         # 시스템 설정 프레임
-        setting_frame = Frame(self, bg='#111111')
-        setting_frame.pack(fill=BOTH, side=BOTTOM, expand=True)
+        on_img = Image.open('images/on-button.png')
+        off_img = Image.open('images/off-button.png')
+        on_img = on_img.resize((60, 60), Image.ANTIALIAS)
+        off_img = off_img.resize((60, 60), Image.ANTIALIAS)
+        self.on_image = ImageTk.PhotoImage(on_img)
+        self.off_image = ImageTk.PhotoImage(off_img)
 
-        setting_canvas = Canvas(setting_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
+        setting_frame = Frame(self, bg='#111111')
+        setting_frame.pack(fill=BOTH, side=BOTTOM)
+
+        setting_canvas = Canvas(setting_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400, bd=0)
         setting_canvas.pack(fill=X, padx=15, pady=15)
 
         setting_title_frame = Frame(setting_canvas, bg='#2f323b')
         setting_title_frame.pack(fill=X, pady=20)
 
-        Label(setting_title_frame, text='제어수치 설정', bg='#2f323b', fg='#96c63e', font=('SCDream5', 20, 'bold')).pack()
+        Label(setting_title_frame, text='스케줄 제어 설정', bg='#2f323b', fg='#96c63e', font=('SCDream5', 20, 'bold')).pack()
 
         setting_left_frame = Frame(setting_canvas, bg='#2f323b')
         setting_left_frame.pack(fill=BOTH, side=LEFT, expand=True)
 
+        schedule_merge_frame = Frame(setting_left_frame, bg='#2f323b')
+        schedule_merge_frame.pack(fill=X, padx=(50, 0), pady=10, ipadx=10, ipady=10)
 
-        insolation_frame = Frame(setting_left_frame, bg='#2f323b')
-        insolation_frame.pack(fill=X, pady=10)
+        control_Activity.schedule_subframe_1 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_1.pack(pady=5)
 
-        insolation_label = Label(insolation_frame, text='팬 제어를 위한 일사량 설정', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold'), width=22, anchor='w')
-        insolation_label.pack(side=LEFT, padx=(20, 0))
+        control_Activity.schedule_subtitle_1 = Label(control_Activity.schedule_subframe_1,
+                                                      text='월요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_1.pack(side=LEFT, padx=(0, 30))
 
-        control_Activity.insolation_value = Entry(insolation_frame, width=8, font=('SCDream5', 20, 'bold'))
-        control_Activity.insolation_value.pack(side=LEFT, padx=10)
+        control_Activity.schedule_start_hour_entry_1 = Entry(control_Activity.schedule_subframe_1, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_1.pack(side=LEFT)
 
-        insolation_btn = Button(insolation_frame, text='적  용', font=('SCDream5', 15, 'bold'))
-        insolation_btn.pack(side=LEFT)
+        control_Activity.hour_label_1 = Label(control_Activity.schedule_subframe_1, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_1.pack(side=LEFT, padx=(5, 20))
 
-        damper_temp_frame = Frame(setting_left_frame, bg='#2f323b')
-        damper_temp_frame.pack(fill=X, pady=10)
+        control_Activity.schedule_start_min_entry_1 = Entry(control_Activity.schedule_subframe_1, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_1.pack(side=LEFT)
 
-        damper_temp_label = Label(damper_temp_frame, text='댐퍼 제어를 위한 온도 설정', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold'), width=22, anchor='w')
-        damper_temp_label.pack(side=LEFT, padx=(20, 0))
+        control_Activity.min_label_1 = Label(control_Activity.schedule_subframe_1, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_1.pack(side=LEFT, padx=(5, 10))
 
-        control_Activity.damper_temp_value = Entry(damper_temp_frame, width=8, font=('SCDream5', 20, 'bold'))
-        control_Activity.damper_temp_value.pack(side=LEFT, padx=10)
+        control_Activity.tilde_label_1 = Label(control_Activity.schedule_subframe_1, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_1.pack(side=LEFT, padx=(15, 25))
 
-        damper_temp_btn = Button(damper_temp_frame, text='적  용', font=('SCDream5', 15, 'bold'))
-        damper_temp_btn.pack(side=LEFT)
+        control_Activity.schedule_end_hour_entry_1 = Entry(control_Activity.schedule_subframe_1, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_1.pack(side=LEFT)
 
-        setting_right_frame = Frame(setting_canvas, bg='#2f323b')
-        setting_right_frame.pack(fill=BOTH, side=RIGHT, expand=True)
+        control_Activity.hour_label2_1 = Label(control_Activity.schedule_subframe_1, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_1.pack(side=LEFT, padx=(5, 20))
 
-        bipvt_power_frame = Frame(setting_right_frame, bg='#2f323b')
-        bipvt_power_frame.pack(fill=X, pady=10)
+        control_Activity.schedule_end_min_entry_1 = Entry(control_Activity.schedule_subframe_1, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_1.pack(side=LEFT)
 
-        bipvt_power_label = Label(bipvt_power_frame, text='태양광 발전 용량', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold'), width=22, anchor='w')
-        bipvt_power_label.pack(side=LEFT, padx=(20, 0))
+        control_Activity.min_label2_1 = Label(control_Activity.schedule_subframe_1, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_1.pack(side=LEFT, padx=(5, 10))
 
-        control_Activity.bipvt_power_value = Entry(bipvt_power_frame, width=8, font=('SCDream5', 20, 'bold'))
-        control_Activity.bipvt_power_value.pack(side=LEFT, padx=10)
+        control_Activity.check_btn_1 = Button(control_Activity.schedule_subframe_1, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_1())
+        control_Activity.check_btn_1.pack(side=LEFT, padx=10)
 
-        bipvt_power_btn = Button(bipvt_power_frame, text='적  용', font=('SCDream5', 15, 'bold'))
-        bipvt_power_btn.pack(side=LEFT)
+        control_Activity.schedule_set_btn_1 = Button(control_Activity.schedule_subframe_1, text='적  용', font=('SCDream5', 18, 'bold'), command= lambda :self.schedule_apply_1())
+        control_Activity.schedule_set_btn_1.pack(side=LEFT)
 
+        control_Activity.schedule_subframe_2 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_2.pack(pady=5)
+
+        control_Activity.schedule_subtitle_2 = Label(control_Activity.schedule_subframe_2,
+                                                      text='화요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_2.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_2 = Entry(control_Activity.schedule_subframe_2, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_2.pack(side=LEFT)
+
+        control_Activity.hour_label_2 = Label(control_Activity.schedule_subframe_2, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_2.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_2 = Entry(control_Activity.schedule_subframe_2, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_2.pack(side=LEFT)
+
+        control_Activity.min_label_2 = Label(control_Activity.schedule_subframe_2, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_2.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_2 = Label(control_Activity.schedule_subframe_2, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_2.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_2 = Entry(control_Activity.schedule_subframe_2, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_2.pack(side=LEFT)
+
+        control_Activity.hour_label2_2 = Label(control_Activity.schedule_subframe_2, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_2.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_2 = Entry(control_Activity.schedule_subframe_2, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_2.pack(side=LEFT)
+
+        control_Activity.min_label2_2 = Label(control_Activity.schedule_subframe_2, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_2.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_2 = Button(control_Activity.schedule_subframe_2, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_2())
+        control_Activity.check_btn_2.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_2 = Button(control_Activity.schedule_subframe_2, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_2.pack(side=LEFT)
+
+        control_Activity.schedule_subframe_3 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_3.pack(pady=5)
+
+        control_Activity.schedule_subtitle_3 = Label(control_Activity.schedule_subframe_3,
+                                                      text='수요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_3.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_3 = Entry(control_Activity.schedule_subframe_3, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_3.pack(side=LEFT)
+
+        control_Activity.hour_label_3 = Label(control_Activity.schedule_subframe_3, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_3.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_3 = Entry(control_Activity.schedule_subframe_3, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_3.pack(side=LEFT)
+
+        control_Activity.min_label_3 = Label(control_Activity.schedule_subframe_3, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_3.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_3 = Label(control_Activity.schedule_subframe_3, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_3.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_3 = Entry(control_Activity.schedule_subframe_3, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_3.pack(side=LEFT)
+
+        control_Activity.hour_label2_3 = Label(control_Activity.schedule_subframe_3, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_3.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_3 = Entry(control_Activity.schedule_subframe_3, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_3.pack(side=LEFT)
+
+        control_Activity.min_label2_3 = Label(control_Activity.schedule_subframe_3, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_3.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_3 = Button(control_Activity.schedule_subframe_3, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_3())
+        control_Activity.check_btn_3.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_3 = Button(control_Activity.schedule_subframe_3, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_3.pack(side=LEFT)
+
+        control_Activity.schedule_subframe_4 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_4.pack(pady=5)
+
+        control_Activity.schedule_subtitle_4 = Label(control_Activity.schedule_subframe_4,
+                                                      text='목요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_4.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_4 = Entry(control_Activity.schedule_subframe_4, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_4.pack(side=LEFT)
+
+        control_Activity.hour_label_4 = Label(control_Activity.schedule_subframe_4, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_4.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_4 = Entry(control_Activity.schedule_subframe_4, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_4.pack(side=LEFT)
+
+        control_Activity.min_label_4 = Label(control_Activity.schedule_subframe_4, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_4.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_4 = Label(control_Activity.schedule_subframe_4, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_4.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_4 = Entry(control_Activity.schedule_subframe_4, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_4.pack(side=LEFT)
+
+        control_Activity.hour_label2_4 = Label(control_Activity.schedule_subframe_4, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_4.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_4 = Entry(control_Activity.schedule_subframe_4, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_4.pack(side=LEFT)
+
+        control_Activity.min_label2_4 = Label(control_Activity.schedule_subframe_4, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_4.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_4 = Button(control_Activity.schedule_subframe_4, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_4())
+        control_Activity.check_btn_4.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_4 = Button(control_Activity.schedule_subframe_4, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_4.pack(side=LEFT)
+
+        control_Activity.schedule_subframe_5 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_5.pack(pady=5)
+
+        control_Activity.schedule_subtitle_5 = Label(control_Activity.schedule_subframe_5,
+                                                      text='금요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_5.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_5 = Entry(control_Activity.schedule_subframe_5, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_5.pack(side=LEFT)
+
+        control_Activity.hour_label_5 = Label(control_Activity.schedule_subframe_5, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_5.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_5 = Entry(control_Activity.schedule_subframe_5, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_5.pack(side=LEFT)
+
+        control_Activity.min_label_5 = Label(control_Activity.schedule_subframe_5, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_5.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_5 = Label(control_Activity.schedule_subframe_5, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_5.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_5 = Entry(control_Activity.schedule_subframe_5, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_5.pack(side=LEFT)
+
+        control_Activity.hour_label2_5 = Label(control_Activity.schedule_subframe_5, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_5.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_5 = Entry(control_Activity.schedule_subframe_5, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_5.pack(side=LEFT)
+
+        control_Activity.min_label2_5 = Label(control_Activity.schedule_subframe_5, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_5.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_5 = Button(control_Activity.schedule_subframe_5, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_5())
+        control_Activity.check_btn_5.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_5 = Button(control_Activity.schedule_subframe_5, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_5.pack(side=LEFT)
+
+        control_Activity.schedule_subframe_6 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_6.pack(pady=5)
+
+        control_Activity.schedule_subtitle_6 = Label(control_Activity.schedule_subframe_6,
+                                                      text='토요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_6.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_6 = Entry(control_Activity.schedule_subframe_6, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_6.pack(side=LEFT)
+
+        control_Activity.hour_label_6 = Label(control_Activity.schedule_subframe_6, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_6.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_6 = Entry(control_Activity.schedule_subframe_6, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_6.pack(side=LEFT)
+
+        control_Activity.min_label_6 = Label(control_Activity.schedule_subframe_6, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_6.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_6 = Label(control_Activity.schedule_subframe_6, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_6.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_6 = Entry(control_Activity.schedule_subframe_6, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_6.pack(side=LEFT)
+
+        control_Activity.hour_label2_6 = Label(control_Activity.schedule_subframe_6, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_6.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_6 = Entry(control_Activity.schedule_subframe_6, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_6.pack(side=LEFT)
+
+        control_Activity.min_label2_6 = Label(control_Activity.schedule_subframe_6, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_6.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_6 = Button(control_Activity.schedule_subframe_6, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_6())
+        control_Activity.check_btn_6.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_6 = Button(control_Activity.schedule_subframe_6, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_6.pack(side=LEFT)
+
+        control_Activity.schedule_subframe_7 = Frame(schedule_merge_frame, bg='#2f323b',
+                                                      highlightthickness=0, highlightbackground='#2f323b')
+        control_Activity.schedule_subframe_7.pack(pady=5)
+
+        control_Activity.schedule_subtitle_7 = Label(control_Activity.schedule_subframe_7,
+                                                      text='일요일', font=('SCDream5', 18, 'bold'),
+                                                      fg='white', bg='#2f323b')
+        control_Activity.schedule_subtitle_7.pack(side=LEFT, padx=(0, 30))
+
+        control_Activity.schedule_start_hour_entry_7 = Entry(control_Activity.schedule_subframe_7, width=8,
+                                                              font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_hour_entry_7.pack(side=LEFT)
+
+        control_Activity.hour_label_7 = Label(control_Activity.schedule_subframe_7, text='시',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label_7.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_start_min_entry_7 = Entry(control_Activity.schedule_subframe_7, width=8,
+                                                             font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_start_min_entry_7.pack(side=LEFT)
+
+        control_Activity.min_label_7 = Label(control_Activity.schedule_subframe_7, text='분',
+                                              font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label_7.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.tilde_label_7 = Label(control_Activity.schedule_subframe_7, text='~',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.tilde_label_7.pack(side=LEFT, padx=(15, 25))
+
+        control_Activity.schedule_end_hour_entry_7 = Entry(control_Activity.schedule_subframe_7, width=8,
+                                                            font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_hour_entry_7.pack(side=LEFT)
+
+        control_Activity.hour_label2_7 = Label(control_Activity.schedule_subframe_7, text='시',
+                                                font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.hour_label2_7.pack(side=LEFT, padx=(5, 20))
+
+        control_Activity.schedule_end_min_entry_7 = Entry(control_Activity.schedule_subframe_7, width=8,
+                                                           font=('SCDream5', 18, 'bold'), justify='center')
+        control_Activity.schedule_end_min_entry_7.pack(side=LEFT)
+
+        control_Activity.min_label2_7 = Label(control_Activity.schedule_subframe_7, text='분',
+                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
+        control_Activity.min_label2_7.pack(side=LEFT, padx=(5, 10))
+
+        control_Activity.check_btn_7 = Button(control_Activity.schedule_subframe_7, image=self.off_image,
+                                              highlightbackground='#2f323b', activebackground='#2f323b', bd=0,
+                                              bg='#2f323b', command=lambda: self.schedule_on_7())
+        control_Activity.check_btn_7.pack(side=LEFT, padx=10)
+
+        control_Activity.schedule_set_btn_7 = Button(control_Activity.schedule_subframe_7, text='적  용', font=('SCDream5', 18, 'bold'))
+        control_Activity.schedule_set_btn_7.pack(side=LEFT)
 
 
 
@@ -731,15 +1101,144 @@ class control_Activity(tk.Frame):
     def insert_end_min(self, event):
         notification.insert_keypad.put_end_min_value(self, '값 입력')
 
-    def schedule_apply(self):
-        start_time = '%s:%s' % (self.start_hour_entry.get(), self.start_min_entry.get())
-        end_time = '%s:%s' % (self.end_hour_entry.get(), self.end_min_entry.get())
-        if self.start_hour_entry.get() == '' or self.start_min_entry.get() == '' or self.end_hour_entry.get() == '' or self.end_min_entry.get() == '':
+    def schedule_apply_1(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_1.get(), control_Activity.schedule_start_min_entry_1.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_1.get(), control_Activity.schedule_end_min_entry_1.get())
+        if control_Activity.schedule_start_hour_entry_1.get() == '' or control_Activity.schedule_start_min_entry_1.get() == '' or control_Activity.schedule_end_hour_entry_1.get() == '' or control_Activity.schedule_end_min_entry_1.get() == '':
             tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
         elif start_time == end_time:
             tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
         else:
             res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
-
             if res_msg:
-                db.sqlite_connect.schedule_update(self.start_hour_entry.get(), self.start_min_entry.get(), self.end_hour_entry.get(), self.end_min_entry.get())
+                print(comd.var.schedule_day[0])
+                db.sqlite_connect.schedule_update('1', comd.var.schedule_day[0],control_Activity.schedule_start_hour_entry_1.get(), control_Activity.schedule_start_min_entry_1.get(), control_Activity.schedule_end_hour_entry_1.get(), control_Activity.schedule_end_min_entry_1.get())
+
+    def schedule_apply_2(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_2.get(), control_Activity.schedule_start_min_entry_2.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_2.get(), control_Activity.schedule_end_min_entry_2.get())
+        if control_Activity.schedule_start_hour_entry_2.get() == '' or control_Activity.schedule_start_min_entry_2.get() == '' or control_Activity.schedule_end_hour_entry_2.get() == '' or control_Activity.schedule_end_min_entry_2.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('2', comd.var.schedule_day[1],control_Activity.schedule_start_hour_entry_2.get(), control_Activity.schedule_start_min_entry_2.get(), control_Activity.schedule_end_hour_entry_2.get(), control_Activity.schedule_end_min_entry_2.get())
+
+    def schedule_apply_3(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_3.get(), control_Activity.schedule_start_min_entry_3.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_3.get(), control_Activity.schedule_end_min_entry_3.get())
+        if control_Activity.schedule_start_hour_entry_3.get() == '' or control_Activity.schedule_start_min_entry_3.get() == '' or control_Activity.schedule_end_hour_entry_3.get() == '' or control_Activity.schedule_end_min_entry_3.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('3', comd.var.schedule_day[2],control_Activity.schedule_start_hour_entry_3.get(), control_Activity.schedule_start_min_entry_3.get(), control_Activity.schedule_end_hour_entry_3.get(), control_Activity.schedule_end_min_entry_3.get())
+
+    def schedule_apply_4(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_4.get(), control_Activity.schedule_start_min_entry_4.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_4.get(), control_Activity.schedule_end_min_entry_4.get())
+        if control_Activity.schedule_start_hour_entry_4.get() == '' or control_Activity.schedule_start_min_entry_4.get() == '' or control_Activity.schedule_end_hour_entry_4.get() == '' or control_Activity.schedule_end_min_entry_4.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('4', comd.var.schedule_day[3],control_Activity.schedule_start_hour_entry_4.get(), control_Activity.schedule_start_min_entry_4.get(), control_Activity.schedule_end_hour_entry_4.get(), control_Activity.schedule_end_min_entry_4.get())
+
+    def schedule_apply_5(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_5.get(), control_Activity.schedule_start_min_entry_5.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_5.get(), control_Activity.schedule_end_min_entry_5.get())
+        if control_Activity.schedule_start_hour_entry_5.get() == '' or control_Activity.schedule_start_min_entry_5.get() == '' or control_Activity.schedule_end_hour_entry_5.get() == '' or control_Activity.schedule_end_min_entry_5.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('5', comd.var.schedule_day[4],control_Activity.schedule_start_hour_entry_5.get(), control_Activity.schedule_start_min_entry_5.get(), control_Activity.schedule_end_hour_entry_5.get(), control_Activity.schedule_end_min_entry_5.get())
+
+    def schedule_apply_6(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_6.get(), control_Activity.schedule_start_min_entry_6.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_6.get(), control_Activity.schedule_end_min_entry_6.get())
+        if control_Activity.schedule_start_hour_entry_6.get() == '' or control_Activity.schedule_start_min_entry_6.get() == '' or control_Activity.schedule_end_hour_entry_6.get() == '' or control_Activity.schedule_end_min_entry_6.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('6', comd.var.schedule_day[5],control_Activity.schedule_start_hour_entry_6.get(), control_Activity.schedule_start_min_entry_6.get(), control_Activity.schedule_end_hour_entry_6.get(), control_Activity.schedule_end_min_entry_6.get())
+
+    def schedule_apply_7(self):
+        start_time = '%s:%s' % (control_Activity.schedule_start_hour_entry_7.get(), control_Activity.schedule_start_min_entry_7.get())
+        end_time = '%s:%s' % (control_Activity.schedule_end_hour_entry_7.get(), control_Activity.schedule_end_min_entry_7.get())
+        if control_Activity.schedule_start_hour_entry_7.get() == '' or control_Activity.schedule_start_min_entry_7.get() == '' or control_Activity.schedule_end_hour_entry_7.get() == '' or control_Activity.schedule_end_min_entry_7.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정 시간을 입력하세요')
+        elif start_time == end_time:
+            tkinter.messagebox.showwarning('설정오류', '동일한 시간으로 설정할 수 없습니다.')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+            if res_msg:
+                db.sqlite_connect.schedule_update('7', comd.var.schedule_day[6], control_Activity.schedule_start_hour_entry_7.get(), control_Activity.schedule_start_min_entry_7.get(), control_Activity.schedule_end_hour_entry_7.get(), control_Activity.schedule_end_min_entry_7.get())
+
+
+    def schedule_on_1(self):
+        if comd.var.schedule_day[0]:
+            control_Activity.check_btn_1.config(image=self.off_image)
+            comd.var.schedule_day[0] = False
+        else:
+            control_Activity.check_btn_1.config(image=self.on_image)
+            comd.var.schedule_day[0] = True
+
+    def schedule_on_2(self):
+        if comd.var.schedule_day[1]:
+            control_Activity.check_btn_2.config(image=self.off_image)
+            comd.var.schedule_day[1] = False
+        else:
+            control_Activity.check_btn_2.config(image=self.on_image)
+            comd.var.schedule_day[1] = True
+
+    def schedule_on_3(self):
+        if comd.var.schedule_day[2]:
+            control_Activity.check_btn_3.config(image=self.off_image)
+            comd.var.schedule_day[2] = False
+        else:
+            control_Activity.check_btn_3.config(image=self.on_image)
+            comd.var.schedule_day[2] = True
+
+    def schedule_on_4(self):
+        if comd.var.schedule_day[3]:
+            control_Activity.check_btn_4.config(image=self.off_image)
+            comd.var.schedule_day[3] = False
+        else:
+            control_Activity.check_btn_4.config(image=self.on_image)
+            comd.var.schedule_day[3] = True
+
+    def schedule_on_5(self):
+        if comd.var.schedule_day[4]:
+            control_Activity.check_btn_5.config(image=self.off_image)
+            comd.var.schedule_day[4] = False
+        else:
+            control_Activity.check_btn_5.config(image=self.on_image)
+            comd.var.schedule_day[4] = True
+
+    def schedule_on_6(self):
+        if comd.var.schedule_day[5]:
+            control_Activity.check_btn_6.config(image=self.off_image)
+            comd.var.schedule_day[5] = False
+        else:
+            control_Activity.check_btn_6.config(image=self.on_image)
+            comd.var.schedule_day[5] = True
+
+    def schedule_on_7(self):
+        if comd.var.schedule_day[6]:
+            control_Activity.check_btn_7.config(image=self.off_image)
+            comd.var.schedule_day[6] = False
+        else:
+            control_Activity.check_btn_7.config(image=self.on_image)
+            comd.var.schedule_day[6] = True

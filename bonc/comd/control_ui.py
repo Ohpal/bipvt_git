@@ -57,34 +57,71 @@ def main_timer():
     ui.control_Activity.control_Activity.time_label2.config(text='{} {}'.format(ampm, timer[1]))
 
 
-def set_bipvt_data(pv_power, pv_voltage, pv_current, insolation, bipvt_inner_temp, bipvt_outer_temp,
-                   buffer_tank_temp, bipvt_fault, damper_status, fan_status, exchanger_status, buffer_status):
+def set_header_data(pv_power, pv_power_total, load_power, load_power_total):
+    ui.main_Activity.main_Activity.above1_value.config(text='{:,}'.format(pv_power))
+    ui.main_Activity.main_Activity.above2_value.config(text='{:,}'.format(pv_power_total))
+    ui.main_Activity.main_Activity.above3_value.config(text='{:,}'.format(load_power))
+    ui.main_Activity.main_Activity.above4_value.config(text='{:,}'.format(load_power_total))
+
+    ui.control_Activity.control_Activity.above1_value.config(text='{:,}'.format(pv_power))
+    ui.control_Activity.control_Activity.above2_value.config(text='{:,}'.format(pv_power_total))
+    ui.control_Activity.control_Activity.above3_value.config(text='{:,}'.format(load_power))
+    ui.control_Activity.control_Activity.above4_value.config(text='{:,}'.format(load_power_total))
+
+    ui.detail_Activity.detail_Activity.above1_value.config(text='{:,}'.format(pv_power))
+    ui.detail_Activity.detail_Activity.above2_value.config(text='{:,}'.format(pv_power_total))
+    ui.detail_Activity.detail_Activity.above3_value.config(text='{:,}'.format(load_power))
+    ui.detail_Activity.detail_Activity.above4_value.config(text='{:,}'.format(load_power_total))
+
+    ui.setting_Activity.setting_Activity.above1_value.config(text='{:,}'.format(pv_power))
+    ui.setting_Activity.setting_Activity.above2_value.config(text='{:,}'.format(pv_power_total))
+    ui.setting_Activity.setting_Activity.above3_value.config(text='{:,}'.format(load_power))
+    ui.setting_Activity.setting_Activity.above4_value.config(text='{:,}'.format(load_power_total))
+
+
+def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, outer_humi, wind_speed, bipvt_inside_temp1, bipvt_inside_temp2, bipvt_inside_temp3,  inside_temp, inside_humi,
+                                       damper_status, fan_status, exchanger_status, pv_power, storage_power, buffer_power, heatpump_power, dhw_power):
     ui.main_Activity.main_Activity.bipvt_insolation_value.config(text=insolation)
-    ui.main_Activity.main_Activity.bipvt_temp_value.config(text=bipvt_inner_temp)
-    ui.main_Activity.main_Activity.bipvt_power_value.config(text=pv_power)
-    ui.main_Activity.main_Activity.bipvt_voltage_value.config(text=pv_voltage)
-    ui.main_Activity.main_Activity.bipvt_current_value.config(text=pv_current)
+    ui.main_Activity.main_Activity.bipvt_inside_temp_value.config(text=str(round(float(bipvt_inside_temp1+bipvt_inside_temp2+bipvt_inside_temp3)/3, 1)))
+    # ui.main_Activity.main_Activity.bipvt_inside_temp_value2.config(text=str(bipvt_inside_temp2) + ' | \n')
+    # ui.main_Activity.main_Activity.bipvt_inside_temp_value3.config(text=bipvt_inside_temp3)
     # ui.main_Activity.main_Activity.bipvt_inner_temp_value.config(text=bipvt_inner_temp+'℃')
     # ui.main_Activity.main_Activity.bipvt_outer_temp_value.config(text=bipvt_outer_temp+'℃')
+    ui.main_Activity.main_Activity.fcu_temp_value.config(text=str(inside_temp) + ' ℃')
+    ui.main_Activity.main_Activity.fcu_humi_value.config(text=str(inside_humi) + ' %')
     ui.main_Activity.main_Activity.fan_status_value.config(text=fan_status)
     ui.main_Activity.main_Activity.damper_status_value.config(text=damper_status)
-    # ui.main_Activity.main_Activity.out_temp_value.config(text=bipvt_out_temp)
     ui.main_Activity.main_Activity.exchanger_status_value.config(text=exchanger_status)
-    ui.main_Activity.main_Activity.buffer_status_value.config(text=buffer_status)
-    ui.main_Activity.main_Activity.buffer_temp_value.config(text=buffer_tank_temp+'℃')
+    # ui.main_Activity.main_Activity.buffer_status_value.config(text=buffer_status)
+    ui.main_Activity.main_Activity.out_temp_value.config(text=str(outer_temp) + ' ℃')
+    ui.main_Activity.main_Activity.out_humi_value.config(text=str(outer_humi) + ' %')
+    ui.main_Activity.main_Activity.wind_speed_value.config(text=str(wind_speed) + 'm/s')
+    ui.main_Activity.main_Activity.bipvt_power_value.config(text='{:,}'.format(pv_power))
+    ui.main_Activity.main_Activity.storage_power_value.config(text=str(storage_power) + ' W')
+    ui.main_Activity.main_Activity.heatpump_activepower_value.config(text=str(heatpump_power) + ' W')
+    ui.main_Activity.main_Activity.buffer_power_value.config(text=str(buffer_power) + ' W')
+    ui.main_Activity.main_Activity.dhw_power_value.config(text=str(dhw_power) + ' W')
 
 
-def set_heatpump_data(heatpump_power, dhw_temp, heatpump_out_temp, storage_temp, heatpump_status,
-                heatpump_mode, heatpump_fault, doublecoil_status, dhw_status, storage_status):
-    ui.main_Activity.main_Activity.dhw_status_value.config(text=dhw_status)
-    ui.main_Activity.main_Activity.dhw_temp_value.config(text=dhw_temp+'℃')
-    ui.main_Activity.main_Activity.heatpump_status_value.config(text=heatpump_status)
-    ui.main_Activity.main_Activity.heatpump_activepower_value.config(text=heatpump_power+'kW')
+def set_heatpump_data(storage_inner_temp, storage_outer_temp, dhw_inner_temp, dhw_outer_temp, dhw_tank_temp, buffer_inner_temp, buffer_tank_temp, heatpump_mode, heatpump_status, heatpump_fault_status, heatpump_control):
+    ui.main_Activity.main_Activity.buffer_temp_value.config(text=buffer_tank_temp)
+    ui.main_Activity.main_Activity.buffer_inner_temp_value.config(text=buffer_inner_temp)
+    ui.main_Activity.main_Activity.dhw_temp_value.config(text=dhw_tank_temp)
+    ui.main_Activity.main_Activity.dhw_inner_temp_value.config(text=dhw_inner_temp)
+    ui.main_Activity.main_Activity.dhw_outer_temp_value.config(text=dhw_outer_temp)
+    ui.main_Activity.main_Activity.storage_temp_value.config(text=storage_inner_temp)
+    ui.main_Activity.main_Activity.storage_outer_temp_value.config(text=storage_outer_temp)
     ui.main_Activity.main_Activity.heatpump_mode_value.config(text=heatpump_mode)
-    ui.main_Activity.main_Activity.storage_status_value.config(text=storage_status)
-    ui.main_Activity.main_Activity.storage_temp_value.config(text=storage_temp+'℃')
-    ui.main_Activity.main_Activity.doublecoil_status_value.config(text=doublecoil_status)
-    ui.main_Activity.main_Activity.out_temp_value.config(text=heatpump_out_temp+'℃')
+    ui.main_Activity.main_Activity.heatpump_status_value.config(text=heatpump_status)
+
+    ui.main_Activity.main_Activity.doublecoil_status_value.config(text=heatpump_status)
+
+    # ui.main_Activity.main_Activity.dhw_status_value.config(text=dhw_status)
+    # ui.main_Activity.main_Activity.dhw_temp_value.config(text=dhw_temp+'℃')
+    # ui.main_Activity.main_Activity.heatpump_activepower_value.config(text=heatpump_power+'kW')
+    # ui.main_Activity.main_Activity.storage_status_value.config(text=storage_status)
+    # ui.main_Activity.main_Activity.storage_temp_value.config(text=storage_temp+'℃')
+    # ui.main_Activity.main_Activity.out_temp_value.config(text=heatpump_out_temp+'℃')
 
 
 def set_control_mode():
@@ -313,25 +350,25 @@ def set_weather_ui(weather_select):
     global img
 
     if '01' in weather_select[3]:
-        img = Image.open('images/weather/01d.png')
+        img = Image.open('images/weather/sunny.png')
     elif '02' in weather_select[3]:
-        img = Image.open('images/weather/02d.png')
+        img = Image.open('images/weather/cloudy.png')
     elif '03' in weather_select[3]:
-        img = Image.open('images/weather/03d.png')
+        img = Image.open('images/weather/cloudy.png')
     elif '04' in weather_select[3]:
-        img = Image.open('images/weather/04d.png')
+        img = Image.open('images/weather/cloudy.png')
     elif '09' in weather_select[3]:
-        img = Image.open('images/weather/09d.png')
+        img = Image.open('images/weather/downpour.png')
     elif '10' in weather_select[3]:
-        img = Image.open('images/weather/10d.png')
+        img = Image.open('images/weather/downpour.png')
     elif '11' in weather_select[3]:
-        img = Image.open('images/weather/11d.png')
+        img = Image.open('images/weather/thunder.png')
     elif '13' in weather_select[3]:
-        img = Image.open('images/weather/13d.png')
+        img = Image.open('images/weather/snow.png')
     elif '50' in weather_select[3]:
-        img = Image.open('images/weather/50d.png')
+        img = Image.open('images/weather/foggy.png')
     else:
-        img = Image.open('images/weather/01d.png')
+        img = Image.open('images/weather/sunny.png')
 
     img = img.resize((40, 40), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
@@ -349,3 +386,45 @@ def set_weather_ui(weather_select):
     ui.detail_Activity.detail_Activity.humi_value.config(text=int(weather_select[2]))
     ui.setting_Activity.setting_Activity.humi_value.config(text=int(weather_select[2]))
     ui.control_Activity.control_Activity.humi_value.config(text=int(weather_select[2]))
+
+
+def set_schedule_checking():
+    on_img = Image.open('images/on-button.png')
+    off_img = Image.open('images/off-button.png')
+    on_img = on_img.resize((60, 60), Image.ANTIALIAS)
+    off_img = off_img.resize((60, 60), Image.ANTIALIAS)
+    on_image = ImageTk.PhotoImage(on_img)
+    off_image = ImageTk.PhotoImage(off_img)
+
+    print(comd.var.schedule_day)
+
+    if comd.var.schedule_day[0]:
+        print('1111')
+        ui.control_Activity.control_Activity.check_btn_1.config(image=on_image)
+    else:
+        print('2222')
+        ui.control_Activity.control_Activity.check_btn_1.config(image=off_image)
+    if comd.var.schedule_day[1]:
+        ui.control_Activity.control_Activity.check_btn_2.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_2.config(image=off_image)
+    if comd.var.schedule_day[2]:
+        ui.control_Activity.control_Activity.check_btn_3.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_3.config(image=off_image)
+    if comd.var.schedule_day[3]:
+        ui.control_Activity.control_Activity.check_btn_4.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_4.config(image=off_image)
+    if comd.var.schedule_day[4]:
+        ui.control_Activity.control_Activity.check_btn_5.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_5.config(image=off_image)
+    if comd.var.schedule_day[5]:
+        ui.control_Activity.control_Activity.check_btn_6.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_6.config(image=off_image)
+    if comd.var.schedule_day[6]:
+        ui.control_Activity.control_Activity.check_btn_7.config(image=on_image)
+    else:
+        ui.control_Activity.control_Activity.check_btn_7.config(image=off_image)

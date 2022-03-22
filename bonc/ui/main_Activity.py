@@ -18,6 +18,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 from matplotlib import animation
+# from matplotlib.text
 import matplotlib.dates as mdates
 from matplotlib import style
 import numpy as np
@@ -25,7 +26,7 @@ import mplcursors
 from datetime import datetime, timedelta
 
 style.use("seaborn-darkgrid")
-nb_points = 600
+nb_points = 60
 
 
 class main_Activity(tk.Frame):
@@ -137,14 +138,14 @@ class main_Activity(tk.Frame):
         main_Activity.top_canvas.pack(padx=15, fill=X, pady=(15, 0))
 
         above1_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
-        above1_frame.pack(side=LEFT, fill=BOTH, expand=True, )
+        above1_frame.pack(side=LEFT, fill=BOTH, expand=True)
 
         above1_title = Label(above1_frame, text='일일 태양광 발전량', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'),
                              anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above1_value = Label(above1_frame, text=' 79514.3 ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above1_value.pack(fill=X, pady=10)
+        main_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        main_Activity.above1_value.pack(fill=X, pady=10)
 
         above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above1_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
@@ -156,8 +157,8 @@ class main_Activity(tk.Frame):
                              anchor='w')
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above2_value = Label(above2_frame, text=' 7979842.7 ', fg='#6ECEDA', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above2_value.pack(fill=X, pady=10)
+        main_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        main_Activity.above2_value.pack(fill=X, pady=10)
 
         above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above2_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
@@ -169,8 +170,8 @@ class main_Activity(tk.Frame):
                              anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above3_value = Label(above3_frame, text=' 749843.4 ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above3_value.pack(fill=X, pady=10)
+        main_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        main_Activity.above3_value.pack(fill=X, pady=10)
 
         above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above3_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
@@ -182,8 +183,8 @@ class main_Activity(tk.Frame):
                              anchor='w')
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above4_value = Label(above4_frame, text=' 498736.75 ', fg='#d18063', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above4_value.pack(fill=X, pady=10)
+        main_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        main_Activity.above4_value.pack(fill=X, pady=10)
 
         above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above4_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
@@ -315,26 +316,11 @@ class main_Activity(tk.Frame):
         bipvt_insolation_unit = Label(bipvt_insolation_frame, text='W/m²', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         bipvt_insolation_unit.pack(side=LEFT)
 
-        # bipvt 내부온도
-        bipvt_temp_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
-        bipvt_temp_frame.place(x=230 -x -20, y=130)
-
-        bipvt_temp_label = Label(bipvt_temp_frame, text='내부온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        bipvt_temp_label.pack(side=LEFT)
-
-        main_Activity.bipvt_temp_value = Label(bipvt_temp_frame, text='-', fg='#96c63e', bg='#2f323b',
-                                               font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_temp_value.pack(side=LEFT, padx=(10, 3))
-
-        bipvt_temp_unit = Label(bipvt_temp_frame, text='℃', fg='#96c63e', bg='#2f323b',
-                                font=('SCDream5', 15, 'bold'))
-        bipvt_temp_unit.pack(side=LEFT)
-
         # bipvt 전력
         bipvt_power_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
-        bipvt_power_frame.place(x=230-x-20, y=160)
+        bipvt_power_frame.place(x=230-x-20, y=130)
 
-        bipvt_power_label = Label(bipvt_power_frame, text='전      력', fg='white', bg='#2f323b',
+        bipvt_power_label = Label(bipvt_power_frame, text='발전전력', fg='white', bg='#2f323b',
                                   font=('SCDream5', 15, 'bold'))
         bipvt_power_label.pack(side=LEFT)
 
@@ -342,47 +328,39 @@ class main_Activity(tk.Frame):
                                                 font=('SCDream5', 15, 'bold'))
         main_Activity.bipvt_power_value.pack(side=LEFT, padx=(10, 3))
 
-        bipvt_power_unit = Label(bipvt_power_frame, text='kW', fg='#96c63e', bg='#2f323b',
+        bipvt_power_unit = Label(bipvt_power_frame, text='W', fg='#96c63e', bg='#2f323b',
                                  font=('SCDream5', 15, 'bold'))
         bipvt_power_unit.pack(side=LEFT)
 
-        # bipvt 전압
-        bipvt_voltage_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
-        bipvt_voltage_frame.place(x=230-x-20, y=190)
-        
-        bipvt_voltage_label = Label(bipvt_voltage_frame, text='전      압', fg='white', bg='#2f323b',
-                                    font=('SCDream5', 15, 'bold'))
-        bipvt_voltage_label.pack(side=LEFT)
+        # bipvt 내부온도
+        bipvt_temp_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
+        bipvt_temp_frame.place(x=230 -x -20, y=160)
 
-        main_Activity.bipvt_voltage_value = Label(bipvt_voltage_frame, text=' - ', fg='#96c63e', bg='#2f323b',
-                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_voltage_value.pack(side=LEFT, padx=(10, 3))
+        bipvt_temp_label = Label(bipvt_temp_frame, text='내부온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        bipvt_temp_label.pack(side=LEFT)
 
-        bipvt_voltage_unit = Label(bipvt_voltage_frame, text='V', fg='#96c63e', bg='#2f323b',
-                                   font=('SCDream5', 15, 'bold'))
-        bipvt_voltage_unit.pack(side=LEFT)
+        main_Activity.bipvt_inside_temp_value = Label(bipvt_temp_frame, text='-', fg='#96c63e', bg='#2f323b',
+                                               font=('SCDream5', 15, 'bold'))
+        main_Activity.bipvt_inside_temp_value.pack(side=LEFT, padx=(10, 0))
 
-        # bipvt 전류
-        bipvt_current_frame = Frame(main_Activity.main_canvas, bg='#2f323b')
-        bipvt_current_frame.place(x=230-x-20, y=220)
+        # main_Activity.bipvt_inside_temp_value2 = Label(bipvt_temp_frame, text='-', fg='#96c63e', bg='#2f323b',
+        #                                                font=('SCDream5', 15, 'bold'))
+        # main_Activity.bipvt_inside_temp_value2.pack(side=LEFT)
+        #
+        # main_Activity.bipvt_inside_temp_value3 = Label(bipvt_temp_frame, text='-', fg='#96c63e', bg='#2f323b',
+        #                                                font=('SCDream5', 15, 'bold'))
+        # main_Activity.bipvt_inside_temp_value3.pack(side=LEFT, padx=(0, 3))
 
-        bipvt_current_label = Label(bipvt_current_frame, text='전      류', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        bipvt_current_label.pack(side=LEFT)
-
-        main_Activity.bipvt_current_value = Label(bipvt_current_frame, text=' - ', fg='#96c63e', bg='#2f323b',
-                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.bipvt_current_value.pack(side=LEFT, padx=(10, 3))
-
-        bipvt_current_unit = Label(bipvt_current_frame, text='A', fg='#96c63e', bg='#2f323b',
-                                   font=('SCDream5', 15, 'bold'))
-        bipvt_current_unit.pack(side=LEFT)
+        bipvt_temp_unit = Label(bipvt_temp_frame, text='℃', fg='#96c63e', bg='#2f323b',
+                                font=('SCDream5', 15, 'bold'))
+        bipvt_temp_unit.pack(side=LEFT)
 
         fan_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        fan_status_label.place(x=775 - x, y=240)
+        fan_status_label.place(x=820 - x, y=170)
 
         main_Activity.fan_status_value = Label(main_Activity.main_canvas, text='ON', fg='#96c63e', bg='#2f323b',
                                                font=('SCDream5', 15, 'bold'))
-        main_Activity.fan_status_value.place(x=775 - x, y=270)
+        main_Activity.fan_status_value.place(x=820 - x, y=200)
 
         damper_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         damper_status_label.place(x=185 - x, y=370)
@@ -392,11 +370,25 @@ class main_Activity(tk.Frame):
         main_Activity.damper_status_value.place(x=185 - x, y=400)
 
         out_temp_label = Label(main_Activity.main_canvas, text='외부온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        out_temp_label.place(x=110 - x, y=655)
+        out_temp_label.place(x=80 - x, y=655)
 
         main_Activity.out_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
-        main_Activity.out_temp_value.place(x=110 - x, y=685)
+        main_Activity.out_temp_value.place(x=170 - x, y=655)
+
+        out_humi_label = Label(main_Activity.main_canvas, text='외부습도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        out_humi_label.place(x=80 - x, y=685)
+
+        main_Activity.out_humi_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                             font=('SCDream5', 15, 'bold'))
+        main_Activity.out_humi_value.place(x=170 - x, y=685)
+
+        out_humi_label = Label(main_Activity.main_canvas, text='풍      속', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        out_humi_label.place(x=80 - x, y=715)
+
+        main_Activity.wind_speed_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                             font=('SCDream5', 15, 'bold'))
+        main_Activity.wind_speed_value.place(x=170 - x, y=715)
 
         exchanger_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
                                        font=('SCDream5', 15, 'bold'))
@@ -406,96 +398,155 @@ class main_Activity(tk.Frame):
                                                      font=('SCDream5', 15, 'bold'))
         main_Activity.exchanger_status_value.place(x=670 - x, y=400)
 
-        buffer_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        buffer_status_label.place(x=335 - x, y=575)
+        # buffer_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        # buffer_status_label.place(x=335 - x, y=575)
+        #
+        # main_Activity.buffer_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
+        #                                           font=('SCDream5', 15, 'bold'))
+        # main_Activity.buffer_status_value.place(x=335 - x, y=605)
 
-        main_Activity.buffer_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
-                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.buffer_status_value.place(x=335 - x, y=605)
+        buffer_power_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        buffer_power_label.place(x=300 - x, y=575)
+
+        main_Activity.buffer_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b', font=('SCDream5', 15, 'bold',))
+        main_Activity.buffer_power_value.place(x=300 - x, y=605)
 
         buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼탱크온도', fg='white', bg='#2f323b',
                                   font=('SCDream5', 15, 'bold'))
-        buffer_temp_label.place(x=390 - x, y=655)
+        buffer_temp_label.place(x=370 - x, y=655)
 
         main_Activity.buffer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                 font=('SCDream5', 15, 'bold'))
-        main_Activity.buffer_temp_value.place(x=390 - x, y=685)
+        main_Activity.buffer_temp_value.place(x=490 - x, y=655)
 
-        dhw_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        dhw_status_label.place(x=185 - x, y=780)
+        buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼입구온도', fg='white', bg='#2f323b',
+                                  font=('SCDream5', 15, 'bold'))
+        buffer_temp_label.place(x=370 - x, y=685)
 
-        main_Activity.dhw_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
-                                               font=('SCDream5', 15, 'bold'))
-        main_Activity.dhw_status_value.place(x=185 - x, y=810)
+        main_Activity.buffer_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                                font=('SCDream5', 15, 'bold'))
+        main_Activity.buffer_inner_temp_value.place(x=490 - x, y=685)
 
-        dhw_temp_label = Label(main_Activity.main_canvas, text='온수탱크온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        dhw_temp_label.place(x=240 - x, y=855)
+        # dhw_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        # dhw_status_label.place(x=185 - x, y=780)
+
+        # main_Activity.dhw_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
+        #                                        font=('SCDream5', 15, 'bold'))
+        # main_Activity.dhw_status_value.place(x=185 - x, y=810)
+
+        dhw_power_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
+                                font=('SCDream5', 15, 'bold'))
+        dhw_power_label.place(x=155 - x, y=780)
+
+        main_Activity.dhw_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                              font=('SCDream5', 15, 'bold',))
+        main_Activity.dhw_power_value.place(x=155 - x, y=810)
+
+        dhw_temp_label = Label(main_Activity.main_canvas, text='급탕탱크온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        dhw_temp_label.place(x=220 - x, y=855)
 
         main_Activity.dhw_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
-        main_Activity.dhw_temp_value.place(x=240 - x, y=885)
+        main_Activity.dhw_temp_value.place(x=340 - x, y=855)
 
-        heatpump_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
+        dhw_inner_temp_label = Label(main_Activity.main_canvas, text='급탕입구온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        dhw_inner_temp_label.place(x=220 - x, y=885)
+
+        main_Activity.dhw_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                             font=('SCDream5', 15, 'bold'))
+        main_Activity.dhw_inner_temp_value.place(x=340 - x, y=885)
+
+        dhw_outer_temp_label = Label(main_Activity.main_canvas, text='급탕출구온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        dhw_outer_temp_label.place(x=220 - x, y=915)
+
+        main_Activity.dhw_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                             font=('SCDream5', 15, 'bold'))
+        main_Activity.dhw_outer_temp_value.place(x=340 - x, y=915)
+
+        heatpump_status_label = Label(main_Activity.main_canvas, text='상      태', fg='white', bg='#2f323b',
                                       font=('SCDream5', 15, 'bold'))
-        heatpump_status_label.place(x=600 - x, y=850)
+        heatpump_status_label.place(x=670 - x, y=760)
 
         main_Activity.heatpump_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
                                                     font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_status_value.place(x=600 - x, y=880)
+        main_Activity.heatpump_status_value.place(x=770 - x, y=760)
 
         heatpump_mode_label = Label(main_Activity.main_canvas, text='현재모드', fg='white', bg='#2f323b',
                                     font=('SCDream5', 15, 'bold'))
-        heatpump_mode_label.place(x=670 - x, y=770)
+        heatpump_mode_label.place(x=670 - x, y=790)
 
-        main_Activity.heatpump_mode_value = Label(main_Activity.main_canvas, text='급탕', fg='#96c63e', bg='#2f323b',
+        main_Activity.heatpump_mode_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                   font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_mode_value.place(x=770 - x, y=770)
+        main_Activity.heatpump_mode_value.place(x=770 - x, y=790)
 
         heatpump_activepower_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
                                            font=('SCDream5', 15, 'bold'))
-        heatpump_activepower_label.place(x=670 - x, y=800)
+        heatpump_activepower_label.place(x=670 - x, y=820)
 
         main_Activity.heatpump_activepower_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e',
                                                          bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_activepower_value.place(x=770 - x, y=800)
+        main_Activity.heatpump_activepower_value.place(x=770 - x, y=820)
 
-        storage_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        storage_status_label.place(x=335 - x, y=980)
+        # storage_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        # storage_status_label.place(x=335 - x, y=980)
+        #
+        # main_Activity.storage_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
+        #                                            font=('SCDream5', 15, 'bold'))
+        # main_Activity.storage_status_value.place(x=335 - x, y=1010)
 
-        main_Activity.storage_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
-                                                   font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_status_value.place(x=335 - x, y=1010)
+        storage_power_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
+                                    font=('SCDream5', 15, 'bold'))
+        storage_power_label.place(x=300 - x, y=980)
 
-        storage_temp_label = Label(main_Activity.main_canvas, text='저장탱크온도', fg='white', bg='#2f323b',
+        main_Activity.storage_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                                  font=('SCDream5', 15, 'bold',))
+        main_Activity.storage_power_value.place(x=300 - x, y=1010)
+
+        storage_temp_label = Label(main_Activity.main_canvas, text='부하입구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_temp_label.place(x=390 - x, y=1055)
+        storage_temp_label.place(x=370 - x, y=1055)
 
         main_Activity.storage_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_temp_value.place(x=390 - x, y=1085)
-        #
+        main_Activity.storage_temp_value.place(x=490 - x, y=1055)
+
+        storage_outer_temp_label = Label(main_Activity.main_canvas, text='부하출구온도', fg='white', bg='#2f323b',
+                                   font=('SCDream5', 15, 'bold'))
+        storage_outer_temp_label.place(x=370 - x, y=1055)
+
+        main_Activity.storage_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                                 font=('SCDream5', 15, 'bold'))
+        main_Activity.storage_outer_temp_value.place(x=490 - x, y=1055)
+
         doublecoil_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
                                         font=('SCDream5', 15, 'bold'))
-        doublecoil_status_label.place(x=775 - x, y=640)
+        doublecoil_status_label.place(x=820 - x, y=570)
 
         main_Activity.doublecoil_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
                                                       font=('SCDream5', 15, 'bold'))
-        main_Activity.doublecoil_status_value.place(x=775 - x, y=670)
+        main_Activity.doublecoil_status_value.place(x=820 - x, y=600)
 
-        fcu_status_label = Label(main_Activity.main_canvas, text='상      태', fg='white', bg='#2f323b',
+        fcu_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
                                  font=('SCDream5', 15, 'bold'))
-        fcu_status_label.place(x=690 - x, y=1055)
+        fcu_status_label.place(x=820 - x, y=970)
 
         main_Activity.fcu_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
                                                font=('SCDream5', 15, 'bold'))
-        main_Activity.fcu_status_value.place(x=775 - x, y=1055)
+        main_Activity.fcu_status_value.place(x=820 - x, y=1000)
 
         fcu_temp_label = Label(main_Activity.main_canvas, text='실내온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        fcu_temp_label.place(x=690 - x, y=1085)
+        fcu_temp_label.place(x=690 - x, y=1055)
 
         main_Activity.fcu_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
-        main_Activity.fcu_temp_value.place(x=775 - x, y=1085)
+        main_Activity.fcu_temp_value.place(x=775 - x, y=1055)
+
+        fcu_humi_label = Label(main_Activity.main_canvas, text='실내습도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
+        fcu_humi_label.place(x=690 - x, y=1085)
+
+        main_Activity.fcu_humi_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+                                             font=('SCDream5', 15, 'bold'))
+        main_Activity.fcu_humi_value.place(x=775 - x, y=1085)
 
         #########
         # 하단 그래프 프레임
@@ -506,19 +557,25 @@ class main_Activity(tk.Frame):
         main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
 
+        graph_title_frame = Frame(main_Activity.bottom_canvas, bg='#2f323b')
+        graph_title_frame.pack(fill=X)
+
+        Label(graph_title_frame, text='태양광 실시간/예측 발전 현황', bg='#2f323b', font=('SCDream5', 20, 'bold'), fg='white').pack()
+
         self.fig = Figure(dpi=100)
         self.fig.patch.set_facecolor('#2f323b')
 
         # plt.rc('font', family='SCDream5')
         # plt.xlabel('발전량')
+        # self.fig.suptitle('asdfasdf')
 
         self.ax = self.fig.add_subplot(111)
         self.ax.tick_params(axis='x', colors='white', labelsize=13)
         self.ax.tick_params(axis='y', colors='white', labelsize=13)
+        # self.set_ytickslables('발전량')
 
-        # self.ax.xlabel('발전량')
         # format the x-axis to show the time
-        myFmt = mdates.DateFormatter("%H:%M")
+        myFmt = mdates.DateFormatter("%H:%M:%S")
         self.ax.xaxis.set_major_formatter(myFmt)
         # initial x and y data
         dateTimeObj = datetime.now() + timedelta(seconds=-nb_points)
@@ -526,7 +583,7 @@ class main_Activity(tk.Frame):
         self.y_data = [0 for i in range(nb_points)]
         # create the plot(c:line color, markerfacecolor:marker color
         self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2)[0]
-        self.ax.set_ylim(0, 100)
+        self.ax.set_ylim(0, 3800)
         self.ax.set_xlim(self.x_data[0], self.x_data[-1])
 
         self.graph_canvas = FigureCanvasTkAgg(self.fig, master=main_Activity.bottom_canvas)
@@ -537,30 +594,49 @@ class main_Activity(tk.Frame):
         self.crs.connect('add', lambda sel: self.cursor_annotation(sel))
 
     def cursor_annotation(self, sel):
-        sel.annotation.set_text('Time >> {1}\nPV >> {0} kW'.format(round(sel.target[1], 2), datetime.fromtimestamp(sel.target[0]).strftime("%H:%M")))
+        time_data = sel.annotation._text.split('=')[1].replace('\ny', '')
+        sel.annotation.set_text('Time >> {1}\nPV >> {0} kW'.format(round(sel.target[1], 2), time_data))
         sel.annotation.get_bbox_patch().set(fc='lightsalmon', alpha=0.5)
 
     def animate(self):
         # append new data point to the x and y data
-        self.x_data.append(datetime.now())
-        self.y_data.append(random.randint(0, 100))
-        # remove oldest data point
-        self.x_data = self.x_data[1:]
-        self.y_data = self.y_data[1:]
-        #  update plot data
-        self.plot.set_xdata(self.x_data)
-        self.plot.set_ydata(self.y_data)
-        # set text x,y / y data
-        # self.ax.text(self.x_data[-1], self.y_data[-1], '{}'.format(self.y_data[-1]), fontdict={'size': 8}, rotation=60)
-        # range x data
-        self.ax.set_xlim(self.x_data[0], self.x_data[-1])
-        # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
-        # print(self.x_data[-1], self.y_data[-1])
-        self.graph_canvas.draw_idle()  # redraw plot
-        self.after(1000*60, self.animate)  # repeat after 1s
+        try:
+            try:
+                pv_power = comd.var.bipvt_temp_data[46]+comd.var.bipvt_temp_data[48]
+            except:
+                pv_power = 0
+
+            self.x_data.append(datetime.now())
+            self.y_data.append(pv_power)
+            # remove oldest data point
+            self.x_data = self.x_data[1:]
+            self.y_data = self.y_data[1:]
+            #  update plot data
+            self.plot.set_xdata(self.x_data)
+            self.plot.set_ydata(self.y_data)
+            # set text x,y / y data
+            # self.ax.text(self.x_data[-1], self.y_data[-1], '{}'.format(self.y_data[-1]), fontdict={'size': 8}, rotation=60)
+            # range x data
+            self.ax.set_xlim(self.x_data[0], self.x_data[-1])
+            # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
+            # print(self.x_data[-1], self.y_data[-1])
+            self.graph_canvas.draw_idle()  # redraw plot
+            self.after(1000*60, self.animate)  # repeat after 1s
+
+            # 1 : 60 / 1000*60
+        except Exception as ex:
+            print('animate() Exception >> ', ex)
 
     def sys_exit(self):
         res_msg = tkinter.messagebox.askyesno('프로그램 종료', '프로그램을 종료하시겠습니까?', icon='warning')
 
         if res_msg:
             sys.exit(0)
+
+    def now_time(self):
+        now = datetime.datetime.now()
+        now = now.strftime("%H:%M:%S")
+        return now
+
+    def time_converse(self, data):
+        return datetime.fromtimestamp(data).strftime("%H:%M")

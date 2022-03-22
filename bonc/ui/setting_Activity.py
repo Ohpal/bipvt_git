@@ -10,7 +10,7 @@ import tkinter.simpledialog
 import tkinter.messagebox
 from PIL import Image, ImageTk
 from time import sleep
-from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client.sync import ModbusTcpClient, ModbusSerialClient
 import notification.insert_keypad
 import subprocess
 
@@ -140,8 +140,8 @@ class setting_Activity(tk.Frame):
                              anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above1_value = Label(above1_frame, text=' 79514.3 ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above1_value.pack(fill=X, pady=10)
+        setting_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        setting_Activity.above1_value.pack(fill=X, pady=10)
 
         above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -154,9 +154,9 @@ class setting_Activity(tk.Frame):
                              anchor='w')
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above2_value = Label(above2_frame, text=' 7979842.7 ', fg='#6ECEDA', bg='#2f323b',
+        setting_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above2_value.pack(fill=X, pady=10)
+        setting_Activity.above2_value.pack(fill=X, pady=10)
 
         above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -169,8 +169,8 @@ class setting_Activity(tk.Frame):
                              anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above3_value = Label(above3_frame, text=' 749843.4 ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above3_value.pack(fill=X, pady=10)
+        setting_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        setting_Activity.above3_value.pack(fill=X, pady=10)
 
         above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -183,9 +183,9 @@ class setting_Activity(tk.Frame):
                              anchor='w')
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above4_value = Label(above4_frame, text=' 498736.75 ', fg='#d18063', bg='#2f323b',
+        setting_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above4_value.pack(fill=X, pady=10)
+        setting_Activity.above4_value.pack(fill=X, pady=10)
 
         above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -468,86 +468,7 @@ class setting_Activity(tk.Frame):
         schedule_frame = Frame(self, bg='#2f323b')
         schedule_frame.pack(fill=BOTH, side=TOP, expand=True)
 
-        # 스케줄 캔버스
-        schedule_canvas = Canvas(schedule_frame, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=0)
-        schedule_canvas.pack(fill=X, padx=15, pady=15)
 
-        schedule_title_frame = Frame(schedule_canvas, bg='#2f323b')
-        schedule_title_frame.pack(fill=X, padx=50, pady=20)
-
-        schedule_title = Label(schedule_title_frame, text='스케줄 설정', font=('SCDream5', 20, 'bold'), fg='#96c63e', bg='#2f323b')
-        schedule_title.pack()
-
-        schedule_insert_canvas = Canvas(schedule_canvas, bg='#2f323b', highlightbackground='#2f323b', highlightthickness=0)
-        schedule_insert_canvas.pack(fill=X, padx=30, pady=(30, 0))
-
-        schedule_insert_frame = Frame(schedule_insert_canvas, bg='#2f323b')
-        schedule_insert_frame.pack(fill=X, padx=50, pady=20)
-
-        schedule_add_frame = Frame(schedule_insert_frame, bg='#2f323b')
-        schedule_add_frame.pack(fill=X)
-
-        schedule_apply_btn = Button(schedule_add_frame, text='스케줄 적용', font=('SCDream5', 15, 'bold'),
-                                    command=lambda: self.schedule_apply())
-        schedule_apply_btn.pack(side=RIGHT, padx=(0, 20))
-
-        schedule_remove_btn = Button(schedule_add_frame, text='스케줄 삭제', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_remove())
-        schedule_remove_btn.pack(side=RIGHT, padx=(0, 20))
-
-        schedule_add_btn = Button(schedule_add_frame, text='스케줄 추가', font=('SCDream5', 15, 'bold'), command=lambda :self.schedule_add())
-        schedule_add_btn.pack(side=RIGHT, padx=20)
-
-        setting_Activity.schedule_merge_frame = Frame(schedule_insert_canvas, bg='#2f323b')
-        setting_Activity.schedule_merge_frame.pack(fill=X, padx=(50, 0), pady=10, ipadx=10, ipady=10)
-
-        schedule_list = comd.var.schedule_list
-        # 범위는 var(sqlite)에서 불러오기
-        setting_Activity.schedule_subframe = list(range(schedule_list))
-        setting_Activity.schedule_subtitle = list(range(schedule_list))
-        setting_Activity.schedule_start_hour_entry = list(range(schedule_list))
-        setting_Activity.hour_label = list(range(schedule_list))
-        setting_Activity.schedule_start_min_entry = list(range(schedule_list))
-        setting_Activity.min_label = list(range(schedule_list))
-        setting_Activity.tilde_label = list(range(schedule_list))
-        setting_Activity.schedule_end_hour_entry = list(range(schedule_list))
-        setting_Activity.hour_label2 = list(range(schedule_list))
-        setting_Activity.schedule_end_min_entry = list(range(schedule_list))
-        setting_Activity.min_label2 = list(range(schedule_list))
-        # setting_Activity.schedule_apply_btn = list(range(schedule_list))
-
-        for i in range(schedule_list):
-            setting_Activity.schedule_subframe[i] = Frame(setting_Activity.schedule_merge_frame, bg='#2f323b', highlightthickness=0, highlightbackground='#2f323b')
-            setting_Activity.schedule_subframe[i].pack(pady=15)
-
-            setting_Activity.schedule_subtitle[i] = Label(setting_Activity.schedule_subframe[i], text='스케줄설정%d' %(i+1), font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.schedule_subtitle[i].pack(side=LEFT, padx=(0, 30))
-
-            setting_Activity.schedule_start_hour_entry[i] = Entry(setting_Activity.schedule_subframe[i], width=8, font=('SCDream5', 15, 'bold'), justify='center')
-            setting_Activity.schedule_start_hour_entry[i].pack(side=LEFT)
-
-            setting_Activity.hour_label[i] = Label(setting_Activity.schedule_subframe[i], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.hour_label[i].pack(side=LEFT, padx=(5, 20))
-
-            setting_Activity.schedule_start_min_entry[i] = Entry(setting_Activity.schedule_subframe[i], width=8, font=('SCDream5', 15, 'bold'), justify='center')
-            setting_Activity.schedule_start_min_entry[i].pack(side=LEFT)
-
-            setting_Activity.min_label[i] = Label(setting_Activity.schedule_subframe[i], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.min_label[i].pack(side=LEFT, padx=(5, 10))
-
-            setting_Activity.tilde_label[i] = Label(setting_Activity.schedule_subframe[i], text='~', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.tilde_label[i].pack(side=LEFT, padx=(15, 25))
-
-            setting_Activity.schedule_end_hour_entry[i] = Entry(setting_Activity.schedule_subframe[i], width=8, font=('SCDream5', 15, 'bold'), justify='center')
-            setting_Activity.schedule_end_hour_entry[i].pack(side=LEFT)
-
-            setting_Activity.hour_label2[i] = Label(setting_Activity.schedule_subframe[i], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.hour_label2[i].pack(side=LEFT, padx=(5, 20))
-
-            setting_Activity.schedule_end_min_entry[i] = Entry(setting_Activity.schedule_subframe[i], width=8, font=('SCDream5', 15, 'bold'), justify='center')
-            setting_Activity.schedule_end_min_entry[i].pack(side=LEFT)
-
-            setting_Activity.min_label2[i] = Label(setting_Activity.schedule_subframe[i], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-            setting_Activity.min_label2[i].pack(side=LEFT, padx=(5, 10))
 
     #     # left frame
     #     center_frame = Frame(self, bg='#2f323b')
@@ -879,10 +800,12 @@ class setting_Activity(tk.Frame):
     # 통신설정 변경시 히트펌프 클라이언트 재실행
     def heatpump_client(self):
         try:
-            hosting = comd.var.heatpump_ip
-            porting = int(comd.var.heatpump_port)
+            serial_porting = comd.var.heatpump_serial_port
+            brate = comd.var.heatpump_brate
+            parity = 'N'
+            stopbit = comd.var.heatpump_stopbit
 
-            comd.read_cmd.heatpump_client = ModbusTcpClient(hosting, porting)
+            comd.read_cmd.heatpump_client = ModbusSerialClient(port=serial_porting, baudrate=brate, timeout=1, stopbits=stopbit, parity=parity)
             comd.read_cmd.heatpump_client.inter_char_timeout = 3
         except Exception as ex:
             print('heatpump_reclinet() Exception -> ', ex)

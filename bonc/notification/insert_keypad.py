@@ -15,6 +15,7 @@ def setFont(size=15):
     return font
 
 
+
 class put_start_hour_value(tkinter.simpledialog.Dialog):
     def body(self, master):
         def clear():
@@ -904,7 +905,8 @@ class put_fcu_ip_value1(tkinter.simpledialog.Dialog):
                 tk.messagebox.showwarning('IP 범위 에러', '0~223 사이의 값을 입력하세요.')
                 self.e1.delete(0, END)
 
-        self.geometry("400x400")
+        print(self.winfo_screenwidth()/2, self.winfo_screenheight()/2)
+        self.geometry("400x400+960+540")
 
         tk.Label(master, text="값을 입력하세요", font=setFont()).grid(row=0, column=0, columnspan=3)
 

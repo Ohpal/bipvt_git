@@ -18,8 +18,11 @@ import ui.setting_Activity
 import ui.control_Activity
 import ui.run_Activity
 import ui.error_Activity
+import comd.control_ui
 import notification.error_alert_notification
 import comd.main_cmd
+import comd.read_cmd
+import comd.bipvt_cmd
 
 # 라이브러리 자동 설치
 def restart():
@@ -100,28 +103,30 @@ class start_app(tk.Tk):
 
         # protocol setting by sqlite3
         db.sqlite_connect.setting_protocol()
-        # db.sqlite_connect.setting_schedule()
+        db.sqlite_connect.setting_schedule()
         # db.sqlite_connect.setting_system()
 
+        # comd.control_ui.set_schedule_checking()
 
         ####################################TCP / Serial 나눠야함##################################
         # # connection_check
-        bipvt_connection = comd.read_cmd.bipvt_client().connect()
+        bipvt_connection = comd.bipvt_cmd.connect_bipvt_socket()
         print('BIPVT Connection : ', bipvt_connection)
         if not bipvt_connection:
-            # notification.error_alert_notification.bipvt_connection_error()
+            notification.error_alert_notification.bipvt_connection_error()
             comd.var.bipvt_connect_status = False
         else:
             comd.var.bipvt_connect_status = True
 
         try:
-            heatpump_connection = comd.read_cmd.heatpump_client().connect()
+            heatpump_connection = comd.read_cmd.heatpump_serial_client().connect()
+
         except:
             heatpump_connection = False
 
         print('HeatPump Connection : ', heatpump_connection)
         if not heatpump_connection:
-            # notification.error_alert_notification.heatpump_connection_error()
+            notification.error_alert_notification.heatpump_connection_error()
             comd.var.heatpump_connect_status = False
         else:
             comd.var.heatpump_connect_status = True
@@ -147,8 +152,8 @@ class start_app(tk.Tk):
     def facility_connect(self):
         try:
             if not comd.var.bipvt_connect_status:
-                bipvt_connection = comd.read_cmd.connect_bipvt()
-                # print('BIPVT Connection : ', bipvt_connection)
+                bipvt_connection = comd.bipvt_cmd.connect_bipvt_socket()
+                print('BIPVT Connection : ', bipvt_connection)
                 if bipvt_connection:
                     comd.var.bipvt_connect_status = True
                     comd.var.bipvt_error = False
@@ -175,15 +180,12 @@ class start_app(tk.Tk):
         except Exception as ex:
             print('facility_connect_error ', ex)
 
-    def hot_mode_save(self):
+    def bipvt_socket(self):
         try:
-            if comd.var.hot_mode and (comd.var.auto_mode or comd.var.reserve_mode):
-                comd.var.hot_time = comd.var.hot_time + 1
-            # else:
-            # print(comd.var.hot_mode, comd.var.auto_mode, comd.var.reserve_mode)
-
+            if comd.var.bipvt_connect_status:
+                comd.bipvt_cmd.bipvt_socket_data()
         except Exception as ex:
-            print('Jesang ERR', ex)
+            print('bipvt_socket() Exception >> ', ex)
 
 
 if __name__ == '__main__':
@@ -191,7 +193,7 @@ if __name__ == '__main__':
         # database check
         db.sqlite_connect.start_check_lite()
         #
-        db.sqlite_connect.select_protocol()
+        # db.sqlite_connect.select_protocol()
         # db.sqlite_connect.schedule_select()
         # db.sqlite_connect.automode_select()
         # db.sqlite_connect.select_system()
@@ -203,7 +205,7 @@ if __name__ == '__main__':
         thread2 = threading.Thread(target=app.setInterval, args=(app.facility_connect, 1.0))
         thread2.setDaemon(True)
         thread2.start()
-        thread3 = threading.Thread(target=app.setInterval, args=(app.hot_mode_save, 1.0))
+        thread3 = threading.Thread(target=app.setInterval, args=(app.bipvt_socket, 5.0))
         thread3.setDaemon(True)
         thread3.start()
         app.mainloop()

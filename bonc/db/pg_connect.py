@@ -17,7 +17,7 @@ def db_conn():
 def data_insert(value):
     try:
         cur, conn = db_conn()
-        sql = 'insert into tems_tb values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        sql = 'insert into bipvt_tb values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
 
         cur.execute(sql, value)
         conn.commit()
@@ -27,6 +27,20 @@ def data_insert(value):
 
     except Exception as ex:
         print('data_insert Error >>', ex)
+
+
+def heatpump_insert(value):
+    try:
+        cur, conn = db_conn()
+        sql = 'insert into heatpump_tb values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+
+        cur.execute(sql, value)
+        conn.commit()
+
+        cur.close()
+        conn.close()
+    except Exception as ex:
+        print('heatpump_insert Error >> ', ex)
 
 
 def weather_insert(value):
@@ -46,7 +60,7 @@ def weather_insert(value):
 
 def weather_select():
     try:
-        cur, conn =  db_conn()
+        cur, conn = db_conn()
         sql = 'select weather, temp, humi, icon from weather_tb order by d_time desc'
         cur.execute(sql)
         row = cur.fetchone()

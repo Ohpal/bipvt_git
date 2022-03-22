@@ -146,8 +146,8 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above1_value = Label(above1_frame, text=' 79514.3 ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above1_value.pack(fill=X, pady=10)
+        detail_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        detail_Activity.above1_value.pack(fill=X, pady=10)
 
         above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -160,9 +160,9 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above2_value = Label(above2_frame, text=' 7979842.7 ', fg='#6ECEDA', bg='#2f323b',
+        detail_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above2_value.pack(fill=X, pady=10)
+        detail_Activity.above2_value.pack(fill=X, pady=10)
 
         above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -175,8 +175,8 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above3_value = Label(above3_frame, text=' 749843.4 ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
-        above3_value.pack(fill=X, pady=10)
+        detail_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        detail_Activity.above3_value.pack(fill=X, pady=10)
 
         above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
@@ -189,9 +189,9 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        above4_value = Label(above4_frame, text=' 498736.75 ', fg='#d18063', bg='#2f323b',
+        detail_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b',
                              font=('SCDream5', 25, 'bold'))
-        above4_value.pack(fill=X, pady=10)
+        detail_Activity.above4_value.pack(fill=X, pady=10)
 
         above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')

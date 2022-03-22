@@ -45,6 +45,24 @@ def heatpump_client():
         comd.var.heatpump_connect_status = False
 
 
+def heatpump_serial_client():
+    global heatpump_client
+    try:
+        serial_porting = comd.var.heatpump_serial_port
+        brate = comd.var.heatpump_brate
+        parity = 'N'
+        stopbit = comd.var.heatpump_stopbit
+
+        heatpump_client = ModbusSerialClient(port='COM3', baudrate=19200, timeout=1, stopbits=2, parity='N')
+        heatpump_client.inter_char_timeout = 3
+
+        return heatpump_client
+    except Exception as ex:
+        print('heatpump_serial_client() Exception -> ', ex)
+        comd.var.heatpump_connect_status = False
+
+
+
 def fcu_client():
     global fcu_client
     try:
@@ -67,7 +85,7 @@ def connect_bipvt():
         bipvt_connection = bipvt_client.connect()
         return bipvt_connection
     except Exception as ex:
-        # print('connect_bipvt() Exception -> ', ex)
+        print('connect_bipvt() Exception -> ', ex)
         comd.var.bipvt_connect_status = False
 
 
@@ -183,7 +201,7 @@ def buffer_off():
 def heatpump_read_data():
     global heatpump_client
     try:
-        heatpump_read_data = heatpump_client.read_input_registers(0, 11, unit=1)
+        heatpump_read_data = heatpump_client.read_holding_registers(0, 10, unit=1)
         assert (heatpump_read_data.function_code <= 0x84)
         return heatpump_read_data
     except Exception as ex:
@@ -191,10 +209,20 @@ def heatpump_read_data():
         comd.var.heatpump_connect_status = False
 
 
+def heatpump_mode_data():
+    global heatpump_client
+    try:
+        heatpump_read_mode = heatpump_client.read_holding_registers(5002, 2, unit=1)
+        assert(heatpump_read_mode.function_code <= 0x84)
+        return heatpump_read_mode
+    except Exception as ex:
+        print('heatpump_mode_data() Exception -> ', ex)
+        comd.var.heatpump_connect_status = False
+
 def heatpump_read_status():
     global heatpump_client
     try:
-        heatpump_read_status = heatpump_client.read_coils(0, 5, unit=1)
+        heatpump_read_status = heatpump_client.read_coils(1, 2, unit=1)
         assert (heatpump_read_status.function_code <= 0x84)
         return heatpump_read_status
     except Exception as ex:

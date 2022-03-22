@@ -48,7 +48,7 @@ reserve_trigger = False
 
 hot_mode = False
 hot_time = 0
-keep_mode = False
+# keep_mode = False
 
 start_hour = ''
 start_min = ''
@@ -75,7 +75,14 @@ total_load_power = []
 soc_fail_count = 0
 soc_connect_fail = False
 
-# scheudle list
-schedule_list = 3
-
 openweather = 'images/weather/01d.png'
+
+# bipvt data storage
+bipvt_temp_data = [0 for i in range(62)]
+
+bipvt_socket_client = False
+
+## 스케줄 설정
+schedule_day = [False,False,False,False,False,False,False]
+schedule_start = ['00:00','00:00','00:00','00:00','00:00','00:00','00:00']
+schedule_end = ['00:00','00:00','00:00','00:00','00:00','00:00','00:00']
