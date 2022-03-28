@@ -104,18 +104,21 @@ def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, o
 
 
 def set_heatpump_data(storage_inner_temp, storage_outer_temp, dhw_inner_temp, dhw_outer_temp, dhw_tank_temp, buffer_inner_temp, buffer_tank_temp, heatpump_mode, heatpump_status, heatpump_fault_status, heatpump_control):
-    ui.main_Activity.main_Activity.buffer_temp_value.config(text=buffer_tank_temp)
-    ui.main_Activity.main_Activity.buffer_inner_temp_value.config(text=buffer_inner_temp)
-    ui.main_Activity.main_Activity.dhw_temp_value.config(text=dhw_tank_temp)
-    ui.main_Activity.main_Activity.dhw_inner_temp_value.config(text=dhw_inner_temp)
-    ui.main_Activity.main_Activity.dhw_outer_temp_value.config(text=dhw_outer_temp)
-    ui.main_Activity.main_Activity.storage_temp_value.config(text=storage_inner_temp)
-    ui.main_Activity.main_Activity.storage_outer_temp_value.config(text=storage_outer_temp)
+    ui.main_Activity.main_Activity.buffer_temp_value.config(text=str(round(buffer_tank_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.buffer_inner_temp_value.config(text=str(round(buffer_inner_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.dhw_temp_value.config(text=str(round(dhw_tank_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.dhw_inner_temp_value.config(text=str(round(dhw_inner_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.dhw_outer_temp_value.config(text=str(round(dhw_outer_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.storage_temp_value.config(text=str(round(storage_inner_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.storage_outer_temp_value.config(text=str(round(storage_outer_temp, 1))+' ℃')
+
     ui.main_Activity.main_Activity.heatpump_mode_value.config(text=heatpump_mode)
     ui.main_Activity.main_Activity.heatpump_status_value.config(text=heatpump_status)
 
-    ui.main_Activity.main_Activity.doublecoil_status_value.config(text=heatpump_status)
-
+    if heatpump_status == '운전중' or heatpump_status == '제상운전' or heatpump_status == '급탕운전':
+        ui.main_Activity.main_Activity.doublecoil_status_value.config(text='ON')
+    else:
+        ui.main_Activity.main_Activity.doublecoil_status_value.config(text='OFF')
     # ui.main_Activity.main_Activity.dhw_status_value.config(text=dhw_status)
     # ui.main_Activity.main_Activity.dhw_temp_value.config(text=dhw_temp+'℃')
     # ui.main_Activity.main_Activity.heatpump_activepower_value.config(text=heatpump_power+'kW')
@@ -396,35 +399,43 @@ def set_schedule_checking():
     on_image = ImageTk.PhotoImage(on_img)
     off_image = ImageTk.PhotoImage(off_img)
 
-    print(comd.var.schedule_day)
-
-    if comd.var.schedule_day[0]:
-        print('1111')
+    if comd.var.schedule_checking[0]:
         ui.control_Activity.control_Activity.check_btn_1.config(image=on_image)
     else:
-        print('2222')
         ui.control_Activity.control_Activity.check_btn_1.config(image=off_image)
-    if comd.var.schedule_day[1]:
+    if comd.var.schedule_checking[1]:
         ui.control_Activity.control_Activity.check_btn_2.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_2.config(image=off_image)
-    if comd.var.schedule_day[2]:
+    if comd.var.schedule_checking[2]:
         ui.control_Activity.control_Activity.check_btn_3.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_3.config(image=off_image)
-    if comd.var.schedule_day[3]:
+    if comd.var.schedule_checking[3]:
         ui.control_Activity.control_Activity.check_btn_4.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_4.config(image=off_image)
-    if comd.var.schedule_day[4]:
+    if comd.var.schedule_checking[4]:
         ui.control_Activity.control_Activity.check_btn_5.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_5.config(image=off_image)
-    if comd.var.schedule_day[5]:
+    if comd.var.schedule_checking[5]:
         ui.control_Activity.control_Activity.check_btn_6.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_6.config(image=off_image)
-    if comd.var.schedule_day[6]:
+    if comd.var.schedule_checking[6]:
         ui.control_Activity.control_Activity.check_btn_7.config(image=on_image)
     else:
         ui.control_Activity.control_Activity.check_btn_7.config(image=off_image)
+
+
+def control_activity_data(inside_temp):
+    ui.control_Activity.control_Activity.fcu_nowTemp.config(text=round(inside_temp, 1))
+
+def setheatpump_control(heatpump_control):
+    if heatpump_control == 'ON':
+        ui.control_Activity.control_Activity.heatpump_on_btn.config(bg='#96c63e', activebackground='#96c63e')
+        ui.control_Activity.control_Activity.heatpump_off_btn.config(bg='lightgray', activebackground='lightgray')
+    else:
+        ui.control_Activity.control_Activity.heatpump_on_btn.config(bg='lightgray', activebackground='lightgray')
+        ui.control_Activity.control_Activity.heatpump_off_btn.config(bg='red', activebackground='red')

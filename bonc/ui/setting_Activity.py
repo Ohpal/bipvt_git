@@ -143,7 +143,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         setting_Activity.above1_value.pack(fill=X, pady=10)
 
-        above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
+        above1_unit = Label(above1_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
         above1_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
@@ -158,7 +158,7 @@ class setting_Activity(tk.Frame):
                              font=('SCDream5', 25, 'bold'))
         setting_Activity.above2_value.pack(fill=X, pady=10)
 
-        above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
+        above2_unit = Label(above2_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
         above2_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
@@ -172,7 +172,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         setting_Activity.above3_value.pack(fill=X, pady=10)
 
-        above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
+        above3_unit = Label(above3_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
         above3_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
@@ -187,7 +187,7 @@ class setting_Activity(tk.Frame):
                              font=('SCDream5', 25, 'bold'))
         setting_Activity.above4_value.pack(fill=X, pady=10)
 
-        above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
+        above4_unit = Label(above4_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
                             anchor='e')
         above4_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 

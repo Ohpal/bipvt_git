@@ -18,15 +18,14 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from matplotlib import pyplot as plt
 from matplotlib import animation
-# from matplotlib.text
+from matplotlib import font_manager, rc
 import matplotlib.dates as mdates
 from matplotlib import style
-import numpy as np
 import mplcursors
 from datetime import datetime, timedelta
 
 style.use("seaborn-darkgrid")
-nb_points = 60
+nb_points = 24
 
 
 class main_Activity(tk.Frame):
@@ -147,7 +146,7 @@ class main_Activity(tk.Frame):
         main_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         main_Activity.above1_value.pack(fill=X, pady=10)
 
-        above1_unit = Label(above1_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
+        above1_unit = Label(above1_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above1_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
         above2_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
@@ -160,7 +159,7 @@ class main_Activity(tk.Frame):
         main_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         main_Activity.above2_value.pack(fill=X, pady=10)
 
-        above2_unit = Label(above2_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
+        above2_unit = Label(above2_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above2_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
         above3_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
@@ -173,7 +172,7 @@ class main_Activity(tk.Frame):
         main_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         main_Activity.above3_value.pack(fill=X, pady=10)
 
-        above3_unit = Label(above3_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
+        above3_unit = Label(above3_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above3_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
         above4_frame = Frame(main_Activity.top_canvas, bg='#2f323b', height=180, width=250)
@@ -186,7 +185,7 @@ class main_Activity(tk.Frame):
         main_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b', font=('SCDream5', 25, 'bold'))
         main_Activity.above4_value.pack(fill=X, pady=10)
 
-        above4_unit = Label(above4_frame, text='kW', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
+        above4_unit = Label(above4_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), anchor='e')
         above4_unit.pack(fill=X, padx=(0, 15), pady=(0, 10))
 
         # center top frame
@@ -413,19 +412,19 @@ class main_Activity(tk.Frame):
 
         buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼탱크온도', fg='white', bg='#2f323b',
                                   font=('SCDream5', 15, 'bold'))
-        buffer_temp_label.place(x=370 - x, y=655)
+        buffer_temp_label.place(x=350 - x, y=655)
 
         main_Activity.buffer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                 font=('SCDream5', 15, 'bold'))
-        main_Activity.buffer_temp_value.place(x=490 - x, y=655)
+        main_Activity.buffer_temp_value.place(x=480 - x, y=655)
 
         buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼입구온도', fg='white', bg='#2f323b',
                                   font=('SCDream5', 15, 'bold'))
-        buffer_temp_label.place(x=370 - x, y=685)
+        buffer_temp_label.place(x=350 - x, y=685)
 
         main_Activity.buffer_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                 font=('SCDream5', 15, 'bold'))
-        main_Activity.buffer_inner_temp_value.place(x=490 - x, y=685)
+        main_Activity.buffer_inner_temp_value.place(x=480 - x, y=685)
 
         # dhw_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         # dhw_status_label.place(x=185 - x, y=780)
@@ -436,28 +435,28 @@ class main_Activity(tk.Frame):
 
         dhw_power_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
                                 font=('SCDream5', 15, 'bold'))
-        dhw_power_label.place(x=155 - x, y=780)
+        dhw_power_label.place(x=145 - x, y=780)
 
         main_Activity.dhw_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                               font=('SCDream5', 15, 'bold',))
-        main_Activity.dhw_power_value.place(x=155 - x, y=810)
+        main_Activity.dhw_power_value.place(x=145 - x, y=810)
 
         dhw_temp_label = Label(main_Activity.main_canvas, text='급탕탱크온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        dhw_temp_label.place(x=220 - x, y=855)
+        dhw_temp_label.place(x=210 - x, y=855)
 
         main_Activity.dhw_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
         main_Activity.dhw_temp_value.place(x=340 - x, y=855)
 
         dhw_inner_temp_label = Label(main_Activity.main_canvas, text='급탕입구온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        dhw_inner_temp_label.place(x=220 - x, y=885)
+        dhw_inner_temp_label.place(x=210 - x, y=885)
 
         main_Activity.dhw_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
         main_Activity.dhw_inner_temp_value.place(x=340 - x, y=885)
 
         dhw_outer_temp_label = Label(main_Activity.main_canvas, text='급탕출구온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        dhw_outer_temp_label.place(x=220 - x, y=915)
+        dhw_outer_temp_label.place(x=210 - x, y=915)
 
         main_Activity.dhw_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
@@ -469,7 +468,7 @@ class main_Activity(tk.Frame):
 
         main_Activity.heatpump_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
                                                     font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_status_value.place(x=770 - x, y=760)
+        main_Activity.heatpump_status_value.place(x=760 - x, y=760)
 
         heatpump_mode_label = Label(main_Activity.main_canvas, text='현재모드', fg='white', bg='#2f323b',
                                     font=('SCDream5', 15, 'bold'))
@@ -477,7 +476,7 @@ class main_Activity(tk.Frame):
 
         main_Activity.heatpump_mode_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                   font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_mode_value.place(x=770 - x, y=790)
+        main_Activity.heatpump_mode_value.place(x=760 - x, y=790)
 
         heatpump_activepower_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
                                            font=('SCDream5', 15, 'bold'))
@@ -485,7 +484,7 @@ class main_Activity(tk.Frame):
 
         main_Activity.heatpump_activepower_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e',
                                                          bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        main_Activity.heatpump_activepower_value.place(x=770 - x, y=820)
+        main_Activity.heatpump_activepower_value.place(x=760 - x, y=820)
 
         # storage_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         # storage_status_label.place(x=335 - x, y=980)
@@ -496,11 +495,11 @@ class main_Activity(tk.Frame):
 
         storage_power_label = Label(main_Activity.main_canvas, text='소비전력', fg='white', bg='#2f323b',
                                     font=('SCDream5', 15, 'bold'))
-        storage_power_label.place(x=300 - x, y=980)
+        storage_power_label.place(x=290 - x, y=980)
 
         main_Activity.storage_power_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                   font=('SCDream5', 15, 'bold',))
-        main_Activity.storage_power_value.place(x=300 - x, y=1010)
+        main_Activity.storage_power_value.place(x=290 - x, y=1010)
 
         storage_temp_label = Label(main_Activity.main_canvas, text='부하입구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
@@ -512,7 +511,7 @@ class main_Activity(tk.Frame):
 
         storage_outer_temp_label = Label(main_Activity.main_canvas, text='부하출구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_outer_temp_label.place(x=370 - x, y=1055)
+        storage_outer_temp_label.place(x=360 - x, y=1055)
 
         main_Activity.storage_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
@@ -535,14 +534,14 @@ class main_Activity(tk.Frame):
         main_Activity.fcu_status_value.place(x=820 - x, y=1000)
 
         fcu_temp_label = Label(main_Activity.main_canvas, text='실내온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        fcu_temp_label.place(x=690 - x, y=1055)
+        fcu_temp_label.place(x=680 - x, y=1055)
 
         main_Activity.fcu_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
         main_Activity.fcu_temp_value.place(x=775 - x, y=1055)
 
         fcu_humi_label = Label(main_Activity.main_canvas, text='실내습도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
-        fcu_humi_label.place(x=690 - x, y=1085)
+        fcu_humi_label.place(x=680 - x, y=1085)
 
         main_Activity.fcu_humi_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                              font=('SCDream5', 15, 'bold'))
@@ -557,32 +556,43 @@ class main_Activity(tk.Frame):
         main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
 
-        graph_title_frame = Frame(main_Activity.bottom_canvas, bg='#2f323b')
-        graph_title_frame.pack(fill=X)
+        # graph_title_frame = Frame(main_Activity.bottom_canvas, bg='#2f323b')
+        # graph_title_frame.pack(fill=X)
 
-        Label(graph_title_frame, text='태양광 실시간/예측 발전 현황', bg='#2f323b', font=('SCDream5', 20, 'bold'), fg='white').pack()
+        # Label(graph_title_frame, text='태양광 실시간/예측 발전 현황', bg='#2f323b', font=('SCDream5', 20, 'bold'), fg='white').pack()
 
-        self.fig = Figure(dpi=100)
+        self.fig = plt.figure()
+        # self.fig = Figure(dpi=100)
         self.fig.patch.set_facecolor('#2f323b')
 
-        # plt.rc('font', family='SCDream5')
-        # plt.xlabel('발전량')
-        # self.fig.suptitle('asdfasdf')
+        font_path = 'images/SCDream5.otf'
+        font = font_manager.FontProperties(fname=font_path).get_name()
+        plt.rc('font', family=font)
+        # plt.rc('legend', fontsize=15, color='white')
 
         self.ax = self.fig.add_subplot(111)
         self.ax.tick_params(axis='x', colors='white', labelsize=13)
         self.ax.tick_params(axis='y', colors='white', labelsize=13)
-        # self.set_ytickslables('발전량')
+        self.ax.set_title('태양광 발전량 현황/예측', color='white', fontsize=15)
+        self.ax.set_ylabel('태양광 발전량', color='white', fontsize=13)
+
 
         # format the x-axis to show the time
-        myFmt = mdates.DateFormatter("%H:%M:%S")
+        myFmt = mdates.DateFormatter("%H:%M")
         self.ax.xaxis.set_major_formatter(myFmt)
         # initial x and y data
-        dateTimeObj = datetime.now() + timedelta(seconds=-nb_points)
-        self.x_data = [dateTimeObj + timedelta(seconds=i) for i in range(nb_points)]
-        self.y_data = [0 for i in range(nb_points)]
+        dateTimeObj = datetime.now() + timedelta(hours=-nb_points) + timedelta(minutes=30)
+        self.x_data = [dateTimeObj + timedelta(hours=i) for i in range(nb_points-1)]
+        self.y_data = [0 for i in range(nb_points-1)]
+
+        self.x_pre_data = [dateTimeObj + timedelta(hours=i) for i in range(nb_points)]
+        self.y_pre_data = [0 for i in range(nb_points)]
+
         # create the plot(c:line color, markerfacecolor:marker color
-        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2)[0]
+        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2, label='실시간 발전량')[0]
+        self.pre_plot = self.ax.plot(self.x_pre_data, self.y_pre_data, c='red', markerfacecolor='red', markersize=8, marker='o', linewidth=2, label='예측 발전량')[0]
+        plt.legend(loc='upper left')
+
         self.ax.set_ylim(0, 3800)
         self.ax.set_xlim(self.x_data[0], self.x_data[-1])
 
@@ -607,13 +617,23 @@ class main_Activity(tk.Frame):
                 pv_power = 0
 
             self.x_data.append(datetime.now())
-            self.y_data.append(pv_power)
+            self.y_data.append(random.randint(0, 3000))
+
+            self.x_pre_data.append(datetime.now()+timedelta(minutes=30))
+            self.y_pre_data.append(random.randint(0, 3000))
+
             # remove oldest data point
             self.x_data = self.x_data[1:]
             self.y_data = self.y_data[1:]
+
+            self.x_pre_data = self.x_pre_data[1:]
+            self.y_pre_data = self.y_pre_data[1:]
             #  update plot data
             self.plot.set_xdata(self.x_data)
             self.plot.set_ydata(self.y_data)
+
+            self.pre_plot.set_xdata(self.x_pre_data)
+            self.pre_plot.set_ydata(self.y_pre_data)
             # set text x,y / y data
             # self.ax.text(self.x_data[-1], self.y_data[-1], '{}'.format(self.y_data[-1]), fontdict={'size': 8}, rotation=60)
             # range x data
@@ -621,7 +641,7 @@ class main_Activity(tk.Frame):
             # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
             # print(self.x_data[-1], self.y_data[-1])
             self.graph_canvas.draw_idle()  # redraw plot
-            self.after(1000*60, self.animate)  # repeat after 1s
+            self.after(1000*60*10, self.animate)  # repeat after 1s
 
             # 1 : 60 / 1000*60
         except Exception as ex:

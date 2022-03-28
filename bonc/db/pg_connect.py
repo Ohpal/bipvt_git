@@ -1,5 +1,6 @@
 import psycopg2 as pg
 import comd.var
+from datetime import date, timedelta
 
 def db_conn():
     try:
@@ -71,3 +72,27 @@ def weather_select():
         return list(row)
     except Exception as ex:
         print('weather_select Error >>', ex)
+
+
+def total_power_select():
+    try:
+        today, yesterday = today_yesterday()
+
+        cur, conn = db_conn()
+        sql = "select d_time, pv_power_total, storage_power_total, heatpump_power_total, buffer_power_total, heatline_power_total, dhw_power_total from (select *, row_number() over (PARTITION BY (to_char(d_time, 'YYYY-MM-dd hh24')) order by d_time desc) as time_rank from bipvt_tb where d_time between %s and %s) as one_time where time_rank = 1 order by d_time desc limit 1"
+        cur.execute(sql, (yesterday, today))
+        row = cur.fetchone()
+
+        cur.close()
+        conn.close()
+
+        return list(row)
+    except Exception as ex:
+        print('total_power Error', ex)
+
+
+def today_yesterday():
+    today = date.today().strftime('%Y-%m-%d')
+    yesterday = (date.today() - timedelta(1)).strftime('%Y-%m-%d')
+
+    return today, yesterday

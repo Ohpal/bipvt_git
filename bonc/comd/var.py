@@ -83,6 +83,6 @@ bipvt_temp_data = [0 for i in range(62)]
 bipvt_socket_client = False
 
 ## 스케줄 설정
-schedule_day = [False,False,False,False,False,False,False]
-schedule_start = ['00:00','00:00','00:00','00:00','00:00','00:00','00:00']
-schedule_end = ['00:00','00:00','00:00','00:00','00:00','00:00','00:00']
+schedule_checking = [False,False,False,False]
+schedule_start = ['00:00','00:00','00:00','00:00']
+schedule_end = ['00:00','00:00','00:00','00:00']

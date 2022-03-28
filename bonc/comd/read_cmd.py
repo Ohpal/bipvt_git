@@ -53,7 +53,7 @@ def heatpump_serial_client():
         parity = 'N'
         stopbit = comd.var.heatpump_stopbit
 
-        heatpump_client = ModbusSerialClient(port='COM3', baudrate=19200, timeout=1, stopbits=2, parity='N')
+        heatpump_client = ModbusSerialClient(method='rtu', port='COM3', baudrate=19200, stopbits=2, parity='N')
         heatpump_client.inter_char_timeout = 3
 
         return heatpump_client
@@ -201,7 +201,7 @@ def buffer_off():
 def heatpump_read_data():
     global heatpump_client
     try:
-        heatpump_read_data = heatpump_client.read_holding_registers(0, 10, unit=1)
+        heatpump_read_data = heatpump_client.read_holding_registers(1, 8, unit=1)
         assert (heatpump_read_data.function_code <= 0x84)
         return heatpump_read_data
     except Exception as ex:

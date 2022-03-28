@@ -368,7 +368,7 @@ def setting_schedule():
     ui.control_Activity.control_Activity.schedule_end_min_entry_1.insert('end', end_min[0])
     comd.var.schedule_start[0] = '%s:%s' % (start_hour[0], end_min[0])
     comd.var.schedule_end[0] = '%s:%s' % (end_hour[0], end_min[0])
-    comd.var.schedule_day[0] = checking[0]
+    comd.var.schedule_checking[0] = checking[0]
 
     ui.control_Activity.control_Activity.schedule_start_hour_entry_2.insert('end', start_hour[1])
     ui.control_Activity.control_Activity.schedule_start_min_entry_2.insert('end', start_min[1])
@@ -376,7 +376,7 @@ def setting_schedule():
     ui.control_Activity.control_Activity.schedule_end_min_entry_2.insert('end', end_min[1])
     comd.var.schedule_start[1] = '%s:%s' % (start_hour[1], end_min[1])
     comd.var.schedule_end[1] = '%s:%s' % (end_hour[1], end_min[1])
-    comd.var.schedule_day[1] = checking[1]
+    comd.var.schedule_checking[1] = checking[1]
 
     ui.control_Activity.control_Activity.schedule_start_hour_entry_3.insert('end', start_hour[2])
     ui.control_Activity.control_Activity.schedule_start_min_entry_3.insert('end', start_min[2])
@@ -384,7 +384,7 @@ def setting_schedule():
     ui.control_Activity.control_Activity.schedule_end_min_entry_3.insert('end', end_min[2])
     comd.var.schedule_start[2] = '%s:%s' % (start_hour[2], end_min[2])
     comd.var.schedule_end[2] = '%s:%s' % (end_hour[2], end_min[2])
-    comd.var.schedule_day[2] = checking[2]
+    comd.var.schedule_checking[2] = checking[2]
 
     ui.control_Activity.control_Activity.schedule_start_hour_entry_4.insert('end', start_hour[3])
     ui.control_Activity.control_Activity.schedule_start_min_entry_4.insert('end', start_min[3])
@@ -392,31 +392,7 @@ def setting_schedule():
     ui.control_Activity.control_Activity.schedule_end_min_entry_4.insert('end', end_min[3])
     comd.var.schedule_start[3] = '%s:%s' % (start_hour[3], end_min[3])
     comd.var.schedule_end[3] = '%s:%s' % (end_hour[3], end_min[3])
-    comd.var.schedule_day[3] = checking[3]
-
-    ui.control_Activity.control_Activity.schedule_start_hour_entry_5.insert('end', start_hour[4])
-    ui.control_Activity.control_Activity.schedule_start_min_entry_5.insert('end', start_min[4])
-    ui.control_Activity.control_Activity.schedule_end_hour_entry_5.insert('end', end_hour[4])
-    ui.control_Activity.control_Activity.schedule_end_min_entry_5.insert('end', end_min[4])
-    comd.var.schedule_start[4] = '%s:%s' % (start_hour[4], end_min[4])
-    comd.var.schedule_end[4] = '%s:%s' % (end_hour[4], end_min[4])
-    comd.var.schedule_day[4] = checking[4]
-
-    ui.control_Activity.control_Activity.schedule_start_hour_entry_6.insert('end', start_hour[5])
-    ui.control_Activity.control_Activity.schedule_start_min_entry_6.insert('end', start_min[5])
-    ui.control_Activity.control_Activity.schedule_end_hour_entry_6.insert('end', end_hour[5])
-    ui.control_Activity.control_Activity.schedule_end_min_entry_6.insert('end', end_min[5])
-    comd.var.schedule_start[5] = '%s:%s' % (start_hour[5], end_min[5])
-    comd.var.schedule_end[5] = '%s:%s' % (end_hour[5], end_min[5])
-    comd.var.schedule_day[5] = checking[5]
-
-    ui.control_Activity.control_Activity.schedule_start_hour_entry_7.insert('end', start_hour[6])
-    ui.control_Activity.control_Activity.schedule_start_min_entry_7.insert('end', start_min[6])
-    ui.control_Activity.control_Activity.schedule_end_hour_entry_7.insert('end', end_hour[6])
-    ui.control_Activity.control_Activity.schedule_end_min_entry_7.insert('end', end_min[6])
-    comd.var.schedule_start[6] = '%s:%s' % (start_hour[6], end_min[6])
-    comd.var.schedule_end[6] = '%s:%s' % (end_hour[6], end_min[6])
-    comd.var.schedule_day[6] = checking[6]
+    comd.var.schedule_checking[3] = checking[3]
 
 
 def schedule_update(idx, check, entry1, entry2, entry3, entry4):
@@ -426,7 +402,9 @@ def schedule_update(idx, check, entry1, entry2, entry3, entry4):
     cur.execute(sql, (entry1, entry2, entry3, entry4, check, idx))
     conn.commit()
 
-    if idx == '0':
+    print('Update : ', idx, check, entry1, entry2, entry3, entry4)
+
+    if idx == '1':
         ui.control_Activity.control_Activity.schedule_start_hour_entry_1.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_start_min_entry_1.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_end_hour_entry_1.delete(0, 'end')
@@ -437,8 +415,8 @@ def schedule_update(idx, check, entry1, entry2, entry3, entry4):
         ui.control_Activity.control_Activity.schedule_end_min_entry_1.insert('end', entry4)
         comd.var.schedule_start[0] = '%s:%s' % (entry1, entry2)
         comd.var.schedule_end[0] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[0] = check
-    elif idx == '1':
+        comd.var.schedule_checking[0] = check
+    elif idx == '2':
         ui.control_Activity.control_Activity.schedule_start_hour_entry_2.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_start_min_entry_2.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_end_hour_entry_2.delete(0, 'end')
@@ -449,8 +427,8 @@ def schedule_update(idx, check, entry1, entry2, entry3, entry4):
         ui.control_Activity.control_Activity.schedule_end_min_entry_2.insert('end', entry4)
         comd.var.schedule_start[1] = '%s:%s' %(entry1, entry2)
         comd.var.schedule_end[1] = '%s:%s' %(entry3, entry4)
-        comd.var.schedule_day[1] = check
-    elif idx == '2':
+        comd.var.schedule_checking[1] = check
+    elif idx == '3':
         ui.control_Activity.control_Activity.schedule_start_hour_entry_3.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_start_min_entry_3.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_end_hour_entry_3.delete(0, 'end')
@@ -461,8 +439,8 @@ def schedule_update(idx, check, entry1, entry2, entry3, entry4):
         ui.control_Activity.control_Activity.schedule_end_min_entry_3.insert('end', entry4)
         comd.var.schedule_start[2] = '%s:%s' % (entry1, entry2)
         comd.var.schedule_end[2] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[2] = check
-    elif idx == '3':
+        comd.var.schedule_checking[2] = check
+    elif idx == '4':
         ui.control_Activity.control_Activity.schedule_start_hour_entry_4.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_start_min_entry_4.delete(0, 'end')
         ui.control_Activity.control_Activity.schedule_end_hour_entry_4.delete(0, 'end')
@@ -473,43 +451,7 @@ def schedule_update(idx, check, entry1, entry2, entry3, entry4):
         ui.control_Activity.control_Activity.schedule_end_min_entry_4.insert('end', entry4)
         comd.var.schedule_start[3] = '%s:%s' % (entry1, entry2)
         comd.var.schedule_end[3] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[3] = check
-    elif idx == '4':
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_5.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_min_entry_5.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_5.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_min_entry_5.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_5.insert('end', entry1)
-        ui.control_Activity.control_Activity.schedule_start_min_entry_5.insert('end', entry2)
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_5.insert('end', entry3)
-        ui.control_Activity.control_Activity.schedule_end_min_entry_5.insert('end', entry4)
-        comd.var.schedule_start[4] = '%s:%s' % (entry1, entry2)
-        comd.var.schedule_end[4] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[4] = check
-    elif idx == '5':
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_6.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_min_entry_6.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_6.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_min_entry_6.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_6.insert('end', entry1)
-        ui.control_Activity.control_Activity.schedule_start_min_entry_6.insert('end', entry2)
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_6.insert('end', entry3)
-        ui.control_Activity.control_Activity.schedule_end_min_entry_6.insert('end', entry4)
-        comd.var.schedule_start[5] = '%s:%s' % (entry1, entry2)
-        comd.var.schedule_end[5] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[5] = check
-    elif idx == '6':
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_7.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_min_entry_7.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_7.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_end_min_entry_7.delete(0, 'end')
-        ui.control_Activity.control_Activity.schedule_start_hour_entry_7.insert('end', entry1)
-        ui.control_Activity.control_Activity.schedule_start_min_entry_7.insert('end', entry2)
-        ui.control_Activity.control_Activity.schedule_end_hour_entry_7.insert('end', entry3)
-        ui.control_Activity.control_Activity.schedule_end_min_entry_7.insert('end', entry4)
-        comd.var.schedule_start[6] = '%s:%s' % (entry1, entry2)
-        comd.var.schedule_end[6] = '%s:%s' % (entry3, entry4)
-        comd.var.schedule_day[6] = check
+        comd.var.schedule_checking[3] = check
 
 
 def automode_select():
