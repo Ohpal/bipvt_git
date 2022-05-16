@@ -261,7 +261,7 @@ def mainLoop():
 
             heatpump_read_status = comd.read_cmd.heatpump_read_status()
             heatpump_fault_status = 'Fault' if heatpump_read_status.bits[0] else 'OK'
-            # heatpump_control = 'ON' if heatpump_read_status.bits[1] else 'OFF'
+            heatpump_control = 'ON' if heatpump_read_status.bits[1] else 'OFF'
 
             heatpump_packet = [
                 d_time,
@@ -364,6 +364,24 @@ def mainLoop():
     # except Exception as ex:
     #     # print('TEMS Control ERROR >> ', ex)
     #     pass
+
+    # Damper/FAN Setting
+    try:
+        if float(insolation) >= float(comd.var.insolation_volume):
+            fan_status = 'ON'
+        else:
+            fan_status = 'OFF'
+
+        if float(bipvt_inner_temp) >= float(comd.var.damper_volume):
+            damper_status1 = 'ON'
+        else:
+            damper_status1 = 'OFF'
+
+
+
+    except Exception as ex:
+
+
 
     try:
         if comd.var.bipvt_read:
