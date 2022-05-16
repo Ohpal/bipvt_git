@@ -6,12 +6,14 @@ import tkinter.simpledialog
 import tkinter.messagebox
 from PIL import ImageTk, Image
 from time import sleep
+from datetime import datetime, timedelta
 
 if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
     os.chdir("/home/ubuntu/bipvt/smart_grid_v1/bonc")
 
 import notification.insert_keypad
 import comd.var
+import db.pg_connect
 
 # Graph Library
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -22,10 +24,10 @@ from matplotlib import font_manager, rc
 import matplotlib.dates as mdates
 from matplotlib import style
 import mplcursors
-from datetime import datetime, timedelta
+
 
 style.use("seaborn-darkgrid")
-nb_points = 24
+nb_points = 300
 
 
 class main_Activity(tk.Frame):
@@ -281,13 +283,13 @@ class main_Activity(tk.Frame):
                                                      fg='red', bg='#2f323b')
         main_Activity.heatpump_connect_value.pack(side=LEFT, padx=(5,10))
 
-        fcu_connect_label = Label(connect_frame, text='FCU통신', font=('SCDream5', 15, 'bold'), fg='white',
-                                  bg='#2f323b')
-        fcu_connect_label.pack(side=LEFT)
+        # fcu_connect_label = Label(connect_frame, text='FCU통신', font=('SCDream5', 15, 'bold'), fg='white',
+        #                           bg='#2f323b')
+        # fcu_connect_label.pack(side=LEFT)
 
-        main_Activity.fcu_connect_value = Label(connect_frame, text='●', font=('SCDream5', 30, 'bold'),
-                                                fg='red', bg='#2f323b')
-        main_Activity.fcu_connect_value.pack(side=LEFT, padx=(5,10))
+        # main_Activity.fcu_connect_value = Label(connect_frame, text='●', font=('SCDream5', 30, 'bold'),
+        #                                         fg='red', bg='#2f323b')
+        # main_Activity.fcu_connect_value.pack(side=LEFT, padx=(5,10))
 
         control_label = Label(main_Activity.main_canvas, text='운전상태', font=('SCDream5', 15, 'bold'), fg='white',
                               bg='#2f323b')
@@ -295,7 +297,7 @@ class main_Activity(tk.Frame):
 
         main_Activity.control_now = Label(main_Activity.main_canvas, text=' - ', font=('SCDream5', 15, 'bold'), fg='white',
                                           bg='#2f323b')
-        main_Activity.control_now.place(x=100, y=50)
+        main_Activity.control_now.place(x=110, y=50)
 
         system_exit_btn = Button(main_Activity.main_canvas, text='', highlightbackground='#2F323B',
                                  activebackground='#2F323B', bd=0, width=50, height=2,
@@ -503,19 +505,19 @@ class main_Activity(tk.Frame):
 
         storage_temp_label = Label(main_Activity.main_canvas, text='부하입구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_temp_label.place(x=370 - x, y=1055)
+        storage_temp_label.place(x=350 - x, y=1055)
 
         main_Activity.storage_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_temp_value.place(x=490 - x, y=1055)
+        main_Activity.storage_temp_value.place(x=480 - x, y=1055)
 
         storage_outer_temp_label = Label(main_Activity.main_canvas, text='부하출구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_outer_temp_label.place(x=360 - x, y=1055)
+        storage_outer_temp_label.place(x=350 - x, y=1085)
 
         main_Activity.storage_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_outer_temp_value.place(x=490 - x, y=1055)
+        main_Activity.storage_outer_temp_value.place(x=480 - x, y=1085)
 
         doublecoil_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
                                         font=('SCDream5', 15, 'bold'))
@@ -525,13 +527,13 @@ class main_Activity(tk.Frame):
                                                       font=('SCDream5', 15, 'bold'))
         main_Activity.doublecoil_status_value.place(x=820 - x, y=600)
 
-        fcu_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
-                                 font=('SCDream5', 15, 'bold'))
-        fcu_status_label.place(x=820 - x, y=970)
-
-        main_Activity.fcu_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
-                                               font=('SCDream5', 15, 'bold'))
-        main_Activity.fcu_status_value.place(x=820 - x, y=1000)
+        # fcu_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
+        #                          font=('SCDream5', 15, 'bold'))
+        # fcu_status_label.place(x=820 - x, y=970)
+        #
+        # main_Activity.fcu_status_value = Label(main_Activity.main_canvas, text='OFF', fg='#96c63e', bg='#2f323b',
+        #                                        font=('SCDream5', 15, 'bold'))
+        # main_Activity.fcu_status_value.place(x=820 - x, y=1000)
 
         fcu_temp_label = Label(main_Activity.main_canvas, text='실내온도', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         fcu_temp_label.place(x=680 - x, y=1055)
@@ -556,19 +558,12 @@ class main_Activity(tk.Frame):
         main_Activity.bottom_canvas = Canvas(bottom_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=400)
         main_Activity.bottom_canvas.pack(padx=15, fill=X)
 
-        # graph_title_frame = Frame(main_Activity.bottom_canvas, bg='#2f323b')
-        # graph_title_frame.pack(fill=X)
-
-        # Label(graph_title_frame, text='태양광 실시간/예측 발전 현황', bg='#2f323b', font=('SCDream5', 20, 'bold'), fg='white').pack()
-
         self.fig = plt.figure()
-        # self.fig = Figure(dpi=100)
         self.fig.patch.set_facecolor('#2f323b')
 
         font_path = 'images/SCDream5.otf'
         font = font_manager.FontProperties(fname=font_path).get_name()
         plt.rc('font', family=font)
-        # plt.rc('legend', fontsize=15, color='white')
 
         self.ax = self.fig.add_subplot(111)
         self.ax.tick_params(axis='x', colors='white', labelsize=13)
@@ -581,20 +576,22 @@ class main_Activity(tk.Frame):
         myFmt = mdates.DateFormatter("%H:%M")
         self.ax.xaxis.set_major_formatter(myFmt)
         # initial x and y data
-        dateTimeObj = datetime.now() + timedelta(hours=-nb_points) + timedelta(minutes=30)
-        self.x_data = [dateTimeObj + timedelta(hours=i) for i in range(nb_points-1)]
-        self.y_data = [0 for i in range(nb_points-1)]
+        dateTimeObj = datetime.now() + timedelta(minutes=-nb_points) + timedelta(minutes=30)
+        self.x_pre_data = [dateTimeObj + timedelta(minutes=i) for i in range(int(nb_points))]
+        self.y_pre_data = [0 for i in range(int(nb_points))]
+        print('LEN_pre', len(self.y_pre_data), len(self.x_pre_data))
 
-        self.x_pre_data = [dateTimeObj + timedelta(hours=i) for i in range(nb_points)]
-        self.y_pre_data = [0 for i in range(nb_points)]
+        self.x_data = [dateTimeObj + timedelta(minutes=i) for i in range(int(nb_points) - 30)]
+        self.y_data = [0 for i in range(int(nb_points) - 30)]
+        print('LEN', len(self.y_data))
 
         # create the plot(c:line color, markerfacecolor:marker color
-        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2, label='실시간 발전량')[0]
         self.pre_plot = self.ax.plot(self.x_pre_data, self.y_pre_data, c='red', markerfacecolor='red', markersize=8, marker='o', linewidth=2, label='예측 발전량')[0]
+        self.plot = self.ax.plot(self.x_data, self.y_data, c='#2f323b', markerfacecolor='#2f323b', markersize=8, marker='o', linewidth=2, label='실시간 발전량')[0]
         plt.legend(loc='upper left')
 
         self.ax.set_ylim(0, 3800)
-        self.ax.set_xlim(self.x_data[0], self.x_data[-1])
+        self.ax.set_xlim(self.x_pre_data[0], self.x_pre_data[-1])
 
         self.graph_canvas = FigureCanvasTkAgg(self.fig, master=main_Activity.bottom_canvas)
         self.graph_canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
@@ -605,7 +602,7 @@ class main_Activity(tk.Frame):
 
     def cursor_annotation(self, sel):
         time_data = sel.annotation._text.split('=')[1].replace('\ny', '')
-        sel.annotation.set_text('Time >> {1}\nPV >> {0} kW'.format(round(sel.target[1], 2), time_data))
+        sel.annotation.set_text('시간 >> {1}\n발전량 >> {0} W'.format(round(sel.target[1], 2), time_data))
         sel.annotation.get_bbox_patch().set(fc='lightsalmon', alpha=0.5)
 
     def animate(self):
@@ -616,28 +613,39 @@ class main_Activity(tk.Frame):
             except:
                 pv_power = 0
 
-            self.x_data.append(datetime.now())
-            self.y_data.append(random.randint(0, 3000))
+            try:
+                pv_pre_power = 0 if pv_power == 0 else db.pg_connect.pre_data_select()
+            except:
+                pv_pre_power = 0
 
-            self.x_pre_data.append(datetime.now()+timedelta(minutes=30))
-            self.y_pre_data.append(random.randint(0, 3000))
+            self.x_pre_data.append(datetime.now() + timedelta(minutes=30))
+            self.y_pre_data.append(pv_pre_power)
+            # self.y_pre_data.append(random.randint(0, 3000))
+
+            self.x_data.append(datetime.now())
+            self.y_data.append(pv_power)
+
+            print('Graph : ', self.y_pre_data, self.y_data)
+            # self.y_data.append(random.randint(0, 3000))
 
             # remove oldest data point
+            self.x_pre_data = self.x_pre_data[1:]
+            self.y_pre_data = self.y_pre_data[1:]
+
             self.x_data = self.x_data[1:]
             self.y_data = self.y_data[1:]
 
-            self.x_pre_data = self.x_pre_data[1:]
-            self.y_pre_data = self.y_pre_data[1:]
             #  update plot data
+            self.pre_plot.set_xdata(self.x_pre_data)
+            self.pre_plot.set_ydata(self.y_pre_data)
+
             self.plot.set_xdata(self.x_data)
             self.plot.set_ydata(self.y_data)
 
-            self.pre_plot.set_xdata(self.x_pre_data)
-            self.pre_plot.set_ydata(self.y_pre_data)
             # set text x,y / y data
             # self.ax.text(self.x_data[-1], self.y_data[-1], '{}'.format(self.y_data[-1]), fontdict={'size': 8}, rotation=60)
             # range x data
-            self.ax.set_xlim(self.x_data[0], self.x_data[-1])
+            self.ax.set_xlim(self.x_pre_data[0], self.x_pre_data[-1])
             # self.ax.text(self.x_data,self.y_data, '%s'.format(self.y_data))
             # print(self.x_data[-1], self.y_data[-1])
             self.graph_canvas.draw_idle()  # redraw plot

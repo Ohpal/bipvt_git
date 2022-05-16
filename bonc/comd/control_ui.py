@@ -11,6 +11,7 @@ import ui.setting_Activity
 
 import comd.var
 import datetime
+import numpy as np
 
 from PIL import Image, ImageTk
 
@@ -151,22 +152,22 @@ def set_control_mode():
 
 
 def set_heatpump_mode(val):
-    if val == 0:
+    if val == '냉방':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='#007ad1', activebackground='#007ad1')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
-    elif val == 1:
+    elif val == '난방':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='red', activebackground='red')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
-    elif val == 2:
+    elif val == '급탕':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='orange', activebackground='orange')
         ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
-    elif val == 3:
+    elif val == '제상':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
@@ -429,8 +430,9 @@ def set_schedule_checking():
         ui.control_Activity.control_Activity.check_btn_7.config(image=off_image)
 
 
-def control_activity_data(inside_temp):
-    ui.control_Activity.control_Activity.fcu_nowTemp.config(text=round(inside_temp, 1))
+# def control_activity_data(inside_temp):
+#     ui.control_Activity.control_Activity.fcu_nowTemp.config(text=round(inside_temp, 1))
+
 
 def setheatpump_control(heatpump_control):
     if heatpump_control == 'ON':
@@ -439,3 +441,153 @@ def setheatpump_control(heatpump_control):
     else:
         ui.control_Activity.control_Activity.heatpump_on_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heatpump_off_btn.config(bg='red', activebackground='red')
+
+
+def set_detail_bipvt_ui():
+    ui.detail_Activity.detail_Activity.pvt_power.config(text=round(comd.var.pv_power[-1], 2))
+    ui.detail_Activity.detail_Activity.pvt_inside_temp1.config(text=round(comd.var.pv_inside1[-1] , 2))
+    ui.detail_Activity.detail_Activity.pvt_inside_temp2.config(text=str(round(comd.var.pv_inside2[-1] , 2)))
+    ui.detail_Activity.detail_Activity.pvt_inside_temp3.config(text=str(round(comd.var.pv_inside3[-1] , 2)))
+    ui.detail_Activity.detail_Activity.pvt_inner_temp.config(text=str(round(comd.var.pv_inner_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.pvt_inner_humi.config(text=str(round(comd.var.pv_inner_humi[-1] , 2)))
+    ui.detail_Activity.detail_Activity.pvt_outer_temp.config(text=str(round(comd.var.pv_outer_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.pvt_outer_humi.config(text=str(round(comd.var.pv_outer_humi[-1] , 2)))
+    ui.detail_Activity.detail_Activity.buffer_flux.config(text=str(round(comd.var.buffer_flux[-1] , 2)))
+    ui.detail_Activity.detail_Activity.storage_inner_flux.config(text=str(round(comd.var.storage_inner_flux[-1] , 2)))
+    ui.detail_Activity.detail_Activity.storage_outer_flux.config(text=str(round(comd.var.storage_outer_flux[-1] , 2)))
+    ui.detail_Activity.detail_Activity.dhw_flux.config(text=str(round(comd.var.dhw_flux[-1] , 2)))
+    ui.detail_Activity.detail_Activity.heatpump_power.config(text=str(round(comd.var.heatpump_power[-1] , 2)))
+    ui.detail_Activity.detail_Activity.buffer_power.config(text=str(round(comd.var.buffer_power[-1] , 2)))
+    ui.detail_Activity.detail_Activity.storage_power.config(text=str(round(comd.var.storage_power[-1] , 2)))
+    ui.detail_Activity.detail_Activity.dhw_power.config(text=str(round(comd.var.dhw_power[-1] , 2)))
+    ui.detail_Activity.detail_Activity.heatline_power.config(text=str(round(comd.var.heatline_power[-1] , 2)))
+    ui.detail_Activity.detail_Activity.outside_temp.config(text=str(round(comd.var.out_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.outside_humi.config(text=str(round(comd.var.out_humi[-1] , 2)))
+    ui.detail_Activity.detail_Activity.insolation.config(text=str(round(comd.var.insolation[-1] , 2)))
+    ui.detail_Activity.detail_Activity.wind_speed.config(text=str(round(comd.var.wind_speed[-1], 2)))
+    ui.detail_Activity.detail_Activity.rainfall.config(text=str(round(comd.var.rain_fall[-1] , 2)))
+    ui.detail_Activity.detail_Activity.inside_temp.config(text=str(round(comd.var.inner_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.inside_humi.config(text=str(round(comd.var.inner_humi[-1] , 2)))
+
+    ui.detail_Activity.detail_Activity.max_pvt_power.config(text=str(round(np.max(comd.var.pv_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_inside_temp1.config(text=str(round(np.max(comd.var.pv_inside1) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_inside_temp2.config(text=str(round(np.max(comd.var.pv_inside2) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_inside_temp3.config(text=str(round(np.max(comd.var.pv_inside3) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_inner_temp.config(text=str(round(np.max(comd.var.pv_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_inner_humi.config(text=str(round(np.max(comd.var.pv_inner_humi) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_outer_temp.config(text=str(round(np.max(comd.var.pv_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_pvt_outer_humi.config(text=str(round(np.max(comd.var.pv_outer_humi) , 2)))
+    ui.detail_Activity.detail_Activity.max_buffer_flux.config(text=str(round(np.max(comd.var.buffer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.max_storage_inner_flux.config(text=str(round(np.max(comd.var.storage_inner_flux) , 2)))
+    ui.detail_Activity.detail_Activity.max_storage_outer_flux.config(text=str(round(np.max(comd.var.storage_outer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.max_dhw_flux.config(text=str(round(np.max(comd.var.dhw_flux) , 2)))
+    ui.detail_Activity.detail_Activity.max_heatpump_power.config(text=str(round(np.max(comd.var.heatpump_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_buffer_power.config(text=str(round(np.max(comd.var.buffer_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_storage_power.config(text=str(round(np.max(comd.var.storage_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_dhw_power.config(text=str(round(np.max(comd.var.dhw_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_heatline_power.config(text=str(round(np.max(comd.var.heatline_power) , 2)))
+    ui.detail_Activity.detail_Activity.max_outside_temp.config(text=str(round(np.max(comd.var.out_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_outside_humi.config(text=str(round(np.max(comd.var.out_humi) , 2)))
+    ui.detail_Activity.detail_Activity.max_insolation.config(text=str(round(np.max(comd.var.insolation) , 2)))
+    ui.detail_Activity.detail_Activity.max_wind_speed.config(text=str(round(np.max(comd.var.wind_speed) , 2)))
+    ui.detail_Activity.detail_Activity.max_rainfall.config(text=str(round(np.max(comd.var.rain_fall), 2)))
+    ui.detail_Activity.detail_Activity.max_inside_temp.config(text=str(round(np.max(comd.var.inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_inside_humi.config(text=str(round(np.max(comd.var.inner_humi) , 2)))
+
+    ui.detail_Activity.detail_Activity.min_pvt_power.config(text=str(round(np.min(comd.var.pv_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_inside_temp1.config(text=str(round(np.min(comd.var.pv_inside1) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_inside_temp2.config(text=str(round(np.min(comd.var.pv_inside2) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_inside_temp3.config(text=str(round(np.min(comd.var.pv_inside3) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_inner_temp.config(text=str(round(np.min(comd.var.pv_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_inner_humi.config(text=str(round(np.min(comd.var.pv_inner_humi) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_outer_temp.config(text=str(round(np.min(comd.var.pv_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_pvt_outer_humi.config(text=str(round(np.min(comd.var.pv_outer_humi) , 2)))
+    ui.detail_Activity.detail_Activity.min_buffer_flux.config(text=str(round(np.min(comd.var.buffer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.min_storage_inner_flux.config(text=str(round(np.min(comd.var.storage_inner_flux) , 2)))
+    ui.detail_Activity.detail_Activity.min_storage_outer_flux.config(text=str(round(np.min(comd.var.storage_outer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.min_dhw_flux.config(text=str(round(np.min(comd.var.dhw_flux) , 2)))
+    ui.detail_Activity.detail_Activity.min_heatpump_power.config(text=str(round(np.min(comd.var.heatpump_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_buffer_power.config(text=str(round(np.min(comd.var.buffer_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_storage_power.config(text=str(round(np.min(comd.var.storage_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_dhw_power.config(text=str(round(np.min(comd.var.dhw_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_heatline_power.config(text=str(round(np.min(comd.var.heatline_power) , 2)))
+    ui.detail_Activity.detail_Activity.min_outside_temp.config(text=str(round(np.min(comd.var.out_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_outside_humi.config(text=str(round(np.min(comd.var.out_humi) , 2)))
+    ui.detail_Activity.detail_Activity.min_insolation.config(text=str(round(np.min(comd.var.insolation) , 2)))
+    ui.detail_Activity.detail_Activity.min_wind_speed.config(text=str(round(np.min(comd.var.wind_speed) , 2)))
+    ui.detail_Activity.detail_Activity.min_rainfall.config(text=str(round(np.min(comd.var.rain_fall), 2)))
+    ui.detail_Activity.detail_Activity.min_inside_temp.config(text=str(round(np.min(comd.var.inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_inside_humi.config(text=str(round(np.min(comd.var.inner_humi) , 2)))
+
+    ui.detail_Activity.detail_Activity.avg_pvt_power.config(text=str(round(np.average(comd.var.pv_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_inside_temp1.config(text=str(round(np.average(comd.var.pv_inside1) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_inside_temp2.config(text=str(round(np.average(comd.var.pv_inside2) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_inside_temp3.config(text=str(round(np.average(comd.var.pv_inside3) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_inner_temp.config(text=str(round(np.average(comd.var.pv_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_inner_humi.config(text=str(round(np.average(comd.var.pv_inner_humi) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_outer_temp.config(text=str(round(np.average(comd.var.pv_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_pvt_outer_humi.config(text=str(round(np.average(comd.var.pv_outer_humi) , 2)))
+    ui.detail_Activity.detail_Activity.avg_buffer_flux.config(text=str(round(np.average(comd.var.buffer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.avg_storage_inner_flux.config(text=str(round(np.average(comd.var.storage_inner_flux) , 2)))
+    ui.detail_Activity.detail_Activity.avg_storage_outer_flux.config(text=str(round(np.average(comd.var.storage_outer_flux) , 2)))
+    ui.detail_Activity.detail_Activity.avg_dhw_flux.config(text=str(round(np.average(comd.var.dhw_flux) , 2)))
+    ui.detail_Activity.detail_Activity.avg_heatpump_power.config(text=str(round(np.average(comd.var.heatpump_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_buffer_power.config(text=str(round(np.average(comd.var.buffer_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_storage_power.config(text=str(round(np.average(comd.var.storage_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_dhw_power.config(text=str(round(np.average(comd.var.dhw_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_heatline_power.config(text=str(round(np.average(comd.var.heatline_power) , 2)))
+    ui.detail_Activity.detail_Activity.avg_outside_temp.config(text=str(round(np.average(comd.var.out_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_outside_humi.config(text=str(round(np.average(comd.var.out_humi) , 2)))
+    ui.detail_Activity.detail_Activity.avg_insolation.config(text=str(round(np.average(comd.var.insolation) , 2)))
+    ui.detail_Activity.detail_Activity.avg_wind_speed.config(text=str(round(np.average(comd.var.wind_speed) , 2)))
+    ui.detail_Activity.detail_Activity.avg_rainfall.config(text=str(round(np.average(comd.var.rain_fall), 2)))
+    ui.detail_Activity.detail_Activity.avg_inside_temp.config(text=str(round(np.average(comd.var.inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_inside_humi.config(text=str(round(np.average(comd.var.inner_humi) , 2)))
+
+
+def set_detail_heatpump_ui():
+    ui.detail_Activity.detail_Activity.buffer_temp.config(text=str(round(comd.var.buffer_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.buffer_inner_temp.config(text=str(round(comd.var.buffer_inner_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.storage_inner_temp.config(text=str(round(comd.var.storage_inner_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.storage_outer_temp.config(text=str(round(comd.var.storage_outer_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.dhw_temp.config(text=str(round(comd.var.dhw_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.dhw_inner_temp.config(text=str(round(comd.var.dhw_inner_temp[-1] , 2)))
+    ui.detail_Activity.detail_Activity.dhw_outer_temp.config(text=str(round(comd.var.dhw_outer_temp[-1] , 2)))
+
+    ui.detail_Activity.detail_Activity.max_buffer_temp.config(text=str(round(np.max(comd.var.buffer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_buffer_inner_temp.config(text=str(round(np.max(comd.var.buffer_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_storage_inner_temp.config(text=str(round(np.max(comd.var.storage_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_storage_outer_temp.config(text=str(round(np.max(comd.var.storage_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_dhw_temp.config(text=str(round(np.max(comd.var.dhw_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_dhw_inner_temp.config(text=str(round(np.max(comd.var.dhw_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.max_dhw_outer_temp.config(text=str(round(np.max(comd.var.dhw_outer_temp) , 2)))
+
+    ui.detail_Activity.detail_Activity.min_buffer_temp.config(text=str(round(np.min(comd.var.buffer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_buffer_inner_temp.config(text=str(round(np.min(comd.var.buffer_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_storage_inner_temp.config(text=str(round(np.min(comd.var.storage_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_storage_outer_temp.config(text=str(round(np.min(comd.var.storage_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_dhw_temp.config(text=str(round(np.min(comd.var.dhw_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_dhw_inner_temp.config(text=str(round(np.min(comd.var.dhw_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.min_dhw_outer_temp.config(text=str(round(np.min(comd.var.dhw_outer_temp) , 2)))
+
+    ui.detail_Activity.detail_Activity.avg_buffer_temp.config(text=str(round(np.average(comd.var.buffer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_buffer_inner_temp.config(text=str(round(np.average(comd.var.buffer_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_storage_inner_temp.config(text=str(round(np.average(comd.var.storage_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_storage_outer_temp.config(text=str(round(np.average(comd.var.storage_outer_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_dhw_temp.config(text=str(round(np.average(comd.var.dhw_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_dhw_inner_temp.config(text=str(round(np.average(comd.var.dhw_inner_temp) , 2)))
+    ui.detail_Activity.detail_Activity.avg_dhw_outer_temp.config(text=str(round(np.average(comd.var.dhw_outer_temp) , 2)))
+
+
+def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, heatpump_dhwcool_getTemp,heatpump_dhwhot_getTemp):
+    ui.control_Activity.control_Activity.heatpump_cool_temp_entry(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_cool_temp_entry('end', int(heatpump_cool_getTemp))
+
+    ui.control_Activity.control_Activity.heatpump_hot_temp_entry(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_hot_temp_entry('end', int(heatpump_hot_getTemp))
+
+    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry('end', int(heatpump_dhwcool_getTemp))
+
+    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry('end', int(heatpump_dhwhot_getTemp))

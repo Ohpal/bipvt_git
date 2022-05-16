@@ -15,7 +15,7 @@ def db_conn():
         print('DB Conn Error', ex)
 
 
-def data_insert(value):
+def bipvt_insert(value):
     try:
         cur, conn = db_conn()
         sql = 'insert into bipvt_tb values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
@@ -33,7 +33,7 @@ def data_insert(value):
 def heatpump_insert(value):
     try:
         cur, conn = db_conn()
-        sql = 'insert into heatpump_tb values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+        sql = 'insert into heatpump_tb values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
 
         cur.execute(sql, value)
         conn.commit()
@@ -96,3 +96,22 @@ def today_yesterday():
     yesterday = (date.today() - timedelta(1)).strftime('%Y-%m-%d')
 
     return today, yesterday
+
+
+def pre_data_select():
+    try:
+        cur, conn = db_conn()
+        sql = 'select pv_predict from solar_predict order by d_time desc limit 1'
+
+        cur.execute(sql)
+        row = cur.fetchone()[0]
+
+        cur.close()
+        conn.close()
+
+        return row
+    except Exception as ex:
+        print('pre_data_select Error ', ex)
+
+
+# def

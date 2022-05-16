@@ -195,14 +195,14 @@ class setting_Activity(tk.Frame):
         communication_frame = Frame(self, bg='#111111')
         communication_frame.pack(fill=BOTH, side=TOP, expand=True)
 
-        setting_Activity.communication_canvas = Canvas(communication_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=500)
-        setting_Activity.communication_canvas.pack(fill=X, padx=15, pady=15)
+        setting_Activity.communication_canvas = Canvas(communication_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=600)
+        setting_Activity.communication_canvas.pack(fill=BOTH, padx=15, pady=15, expand=True, side=TOP)
 
         communication_title_frame = Frame(setting_Activity.communication_canvas, bg='#2f323b')
-        communication_title_frame.pack(fill=X, expand=True)
+        communication_title_frame.pack(fill=X)
 
         communication_title = Label(communication_title_frame, text='통신 설정', font=('SCDream5', 20, 'bold'), fg='#96c63e', bg='#2f323b')
-        communication_title.pack(pady=10)
+        communication_title.pack(pady=20)
 
         # BIPVT 캔버스
         bipvt_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
@@ -260,7 +260,7 @@ class setting_Activity(tk.Frame):
 
         # bipvt serial frame
         setting_Activity.bipvt_serial_frame = Frame(bipvt_labelframe, bg='#2f323b')
-        setting_Activity.bipvt_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
+        setting_Activity.bipvt_serial_frame.pack(fill=X, padx=(50, 0), pady=30)
 
         Label(setting_Activity.bipvt_serial_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
 
@@ -292,7 +292,7 @@ class setting_Activity(tk.Frame):
 
         # 히트펌프 캔버스
         heatpump_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
-        heatpump_canvas.pack(fill=X, pady=(20, 30), padx=30)
+        heatpump_canvas.pack(fill=X, pady=(80, 50), padx=30)
         
         heatpump_labelframe = LabelFrame(heatpump_canvas, bg='#2f323b', text='히트펌프 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
         heatpump_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
@@ -301,7 +301,7 @@ class setting_Activity(tk.Frame):
         heatpump_frame.pack(fill=X, padx=50, pady=20)
 
         heatpump_label = Label(heatpump_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-        heatpump_label.pack(side=LEFT, padx=(0, 20))
+        heatpump_label.pack(side=LEFT, padx=(0, 40))
 
         setting_Activity.heatpump_combo = ttk.Combobox(heatpump_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
         self.option_add('*TCombobox*Listbox.font', ('SCDream5', 15, 'bold'))
@@ -309,7 +309,7 @@ class setting_Activity(tk.Frame):
         setting_Activity.heatpump_combo.pack(side=LEFT)
 
         setting_Activity.heatpump_tcp_frame = Frame(heatpump_labelframe, bg='#2f323b')
-        setting_Activity.heatpump_tcp_frame.pack(fill=X, padx=(50, 0), pady=10)
+        setting_Activity.heatpump_tcp_frame.pack(fill=X, padx=(50, 0), pady=30)
 
         Label(setting_Activity.heatpump_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
 
@@ -346,7 +346,7 @@ class setting_Activity(tk.Frame):
 
         # heatpump serial frame
         setting_Activity.heatpump_serial_frame = Frame(heatpump_labelframe, bg='#2f323b')
-        setting_Activity.heatpump_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
+        setting_Activity.heatpump_serial_frame.pack(fill=X, padx=(50, 0), pady=30)
         # setting_Activity.heatpump_serial_frame.pack_forget()
 
         Label(setting_Activity.heatpump_serial_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
@@ -377,320 +377,209 @@ class setting_Activity(tk.Frame):
                              command=lambda: self.heatpump_serial_apply_btn())
         heatpump_serial_apply.pack(side=LEFT, padx=(30, 0))
 
-        # FCU 통신 설정
-        fcu_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
-        fcu_canvas.pack(fill=X, padx=30, pady=(30, 0))
-
-        fcu_labelframe = LabelFrame(fcu_canvas, bg='#2f323b', text='FCU 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
-        fcu_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
-
-        fcu_frame = Frame(fcu_labelframe, bg='#2f323b')
-        fcu_frame.pack(fill=X, padx=50, pady=20)
-
-        fcu_label = Label(fcu_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
-        fcu_label.pack(side=LEFT, padx=(0, 20))
-
-        setting_Activity.fcu_combo = ttk.Combobox(fcu_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
-        self.option_add('*TCombobox*Listbox.font', ('SCDream5', 15, 'bold'))
-        setting_Activity.fcu_combo.bind('<<ComboboxSelected>>', self.fcu_selected)
-        setting_Activity.fcu_combo.pack(side=LEFT)
-
-        setting_Activity.fcu_tcp_frame = Frame(fcu_labelframe, bg='#2f323b')
-        setting_Activity.fcu_tcp_frame.pack(fill=X, padx=(50, 0), pady=10)
-
-        Label(setting_Activity.fcu_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
-
-        setting_Activity.fcu_entry1 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_entry1.pack(side=LEFT, padx=(10, 0))
-        setting_Activity.fcu_entry1.bind('<FocusIn>', self.insert_fcu_ip1)
-
-        Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
-
-        setting_Activity.fcu_entry2 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_entry2.pack(side=LEFT)
-        setting_Activity.fcu_entry2.bind('<FocusIn>', self.insert_fcu_ip2)
-
-        Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
-
-        setting_Activity.fcu_entry3 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_entry3.pack(side=LEFT)
-        setting_Activity.fcu_entry3.bind('<FocusIn>', self.insert_fcu_ip3)
-
-        Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
-
-        setting_Activity.fcu_entry4 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_entry4.pack(side=LEFT)
-        setting_Activity.fcu_entry4.bind('<FocusIn>', self.insert_fcu_ip4)
-
-        Label(setting_Activity.fcu_tcp_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold'), width=7, anchor='e').pack(side=LEFT, padx=(10,30))
-
-        setting_Activity.fcu_entry5 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_entry5.pack(side=LEFT)
-        setting_Activity.fcu_entry5.bind('<FocusIn>', self.insert_fcu_port)
-
-        fcu_apply = Button(setting_Activity.fcu_tcp_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용', command=lambda: self.fcu_apply_btn())
-        fcu_apply.pack(side=LEFT, padx=(30, 0))
-
-        # fcu serial frame
-        setting_Activity.fcu_serial_frame = Frame(fcu_labelframe, bg='#2f323b')
-        setting_Activity.fcu_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
-        # setting_Activity.fcu_serial_frame.pack_forget()
-
-        Label(setting_Activity.fcu_serial_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
-
-        setting_Activity.fcu_serial_entry1 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_serial_entry1.pack(side=LEFT, padx=(10, 20))
-        setting_Activity.fcu_serial_entry1.bind('<FocusIn>', self.insert_fcu_serial1)
-
-        Label(setting_Activity.fcu_serial_frame, text='BRATE', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
-
-        setting_Activity.fcu_serial_entry2 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_serial_entry2.pack(side=LEFT, padx=(10, 20))
-        setting_Activity.fcu_serial_entry2.bind('<FocusIn>', self.insert_fcu_serial2)
-
-        Label(setting_Activity.fcu_serial_frame, text='PARITY', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
-
-        setting_Activity.fcu_serial_entry3 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_serial_entry3.pack(side=LEFT, padx=(10, 20))
-        setting_Activity.fcu_serial_entry3.bind('<FocusIn>', self.insert_fcu_serial3)
-
-        Label(setting_Activity.fcu_serial_frame, text='STOPBIT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
-
-        setting_Activity.fcu_serial_entry4 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
-        setting_Activity.fcu_serial_entry4.pack(side=LEFT, padx=(10, 0))
-        setting_Activity.fcu_serial_entry4.bind('<FocusIn>', self.insert_fcu_serial4)
-
-        fcu_serial_apply = Button(setting_Activity.fcu_serial_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용',
-                             command=lambda: self.fcu_serial_apply_btn())
-        fcu_serial_apply.pack(side=LEFT, padx=(30, 0))
+        # # FCU 통신 설정
+        # fcu_canvas = Canvas(setting_Activity.communication_canvas, bg='#2f323b', highlightbackground='#2f323b')
+        # fcu_canvas.pack(fill=X, padx=30, pady=(0, 40))
+        #
+        # fcu_labelframe = LabelFrame(fcu_canvas, bg='#2f323b', text='FCU 통신설정', font=('SCDream5', 20, 'bold'), fg='white')
+        # fcu_labelframe.pack(fill=X, padx=5, pady=5, ipady=5)
+        #
+        # fcu_frame = Frame(fcu_labelframe, bg='#2f323b')
+        # fcu_frame.pack(fill=X, padx=50, pady=20)
+        #
+        # fcu_label = Label(fcu_frame, text='통신 방식', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b')
+        # fcu_label.pack(side=LEFT, padx=(0, 20))
+        #
+        # setting_Activity.fcu_combo = ttk.Combobox(fcu_frame, values=['Socket 통신', 'Modbus-TCP 통신', 'Modbus-RTU 통신'], font=('SCDream5', 15, 'bold'), state='readonly', justify='center')
+        # self.option_add('*TCombobox*Listbox.font', ('SCDream5', 15, 'bold'))
+        # setting_Activity.fcu_combo.bind('<<ComboboxSelected>>', self.fcu_selected)
+        # setting_Activity.fcu_combo.pack(side=LEFT)
+        #
+        # setting_Activity.fcu_tcp_frame = Frame(fcu_labelframe, bg='#2f323b')
+        # setting_Activity.fcu_tcp_frame.pack(fill=X, padx=(50, 0), pady=10)
+        #
+        # Label(setting_Activity.fcu_tcp_frame, text='IP', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
+        #
+        # setting_Activity.fcu_entry1 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_entry1.pack(side=LEFT, padx=(10, 0))
+        # setting_Activity.fcu_entry1.bind('<FocusIn>', self.insert_fcu_ip1)
+        #
+        # Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
+        #
+        # setting_Activity.fcu_entry2 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_entry2.pack(side=LEFT)
+        # setting_Activity.fcu_entry2.bind('<FocusIn>', self.insert_fcu_ip2)
+        #
+        # Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
+        #
+        # setting_Activity.fcu_entry3 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_entry3.pack(side=LEFT)
+        # setting_Activity.fcu_entry3.bind('<FocusIn>', self.insert_fcu_ip3)
+        #
+        # Label(setting_Activity.fcu_tcp_frame, text='.', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT, padx=3)
+        #
+        # setting_Activity.fcu_entry4 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_entry4.pack(side=LEFT)
+        # setting_Activity.fcu_entry4.bind('<FocusIn>', self.insert_fcu_ip4)
+        #
+        # Label(setting_Activity.fcu_tcp_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold'), width=7, anchor='e').pack(side=LEFT, padx=(10,30))
+        #
+        # setting_Activity.fcu_entry5 = Entry(setting_Activity.fcu_tcp_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_entry5.pack(side=LEFT)
+        # setting_Activity.fcu_entry5.bind('<FocusIn>', self.insert_fcu_port)
+        #
+        # fcu_apply = Button(setting_Activity.fcu_tcp_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용', command=lambda: self.fcu_apply_btn())
+        # fcu_apply.pack(side=LEFT, padx=(30, 0))
+        #
+        # # fcu serial frame
+        # setting_Activity.fcu_serial_frame = Frame(fcu_labelframe, bg='#2f323b')
+        # setting_Activity.fcu_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
+        # # setting_Activity.fcu_serial_frame.pack_forget()
+        #
+        # Label(setting_Activity.fcu_serial_frame, text='PORT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
+        #
+        # setting_Activity.fcu_serial_entry1 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_serial_entry1.pack(side=LEFT, padx=(10, 20))
+        # setting_Activity.fcu_serial_entry1.bind('<FocusIn>', self.insert_fcu_serial1)
+        #
+        # Label(setting_Activity.fcu_serial_frame, text='BRATE', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
+        #
+        # setting_Activity.fcu_serial_entry2 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_serial_entry2.pack(side=LEFT, padx=(10, 20))
+        # setting_Activity.fcu_serial_entry2.bind('<FocusIn>', self.insert_fcu_serial2)
+        #
+        # Label(setting_Activity.fcu_serial_frame, text='PARITY', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
+        #
+        # setting_Activity.fcu_serial_entry3 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_serial_entry3.pack(side=LEFT, padx=(10, 20))
+        # setting_Activity.fcu_serial_entry3.bind('<FocusIn>', self.insert_fcu_serial3)
+        #
+        # Label(setting_Activity.fcu_serial_frame, text='STOPBIT', bg='#2f323b', fg='white', font=('SCDream5', 15, 'bold')).pack(side=LEFT)
+        #
+        # setting_Activity.fcu_serial_entry4 = Entry(setting_Activity.fcu_serial_frame, bg='white', fg='#2E2F31', font=('SCDream5', 15, 'bold'), width=8, justify='center')
+        # setting_Activity.fcu_serial_entry4.pack(side=LEFT, padx=(10, 0))
+        # setting_Activity.fcu_serial_entry4.bind('<FocusIn>', self.insert_fcu_serial4)
+        #
+        # fcu_serial_apply = Button(setting_Activity.fcu_serial_frame, font=('SCDream5', 15, 'bold'), width=6, text='적용',
+        #                      command=lambda: self.fcu_serial_apply_btn())
+        # fcu_serial_apply.pack(side=LEFT, padx=(30, 0))
 
         # communication canvas
-        schedule_frame = Frame(self, bg='#2f323b')
-        schedule_frame.pack(fill=BOTH, side=TOP, expand=True)
+        setting_frame = Frame(self, bg='#111111')
+        setting_frame.pack(fill=BOTH, side=TOP, expand=True)
+
+        setting_canvas = Canvas(setting_frame, bg='#2f323b', highlightbackground='#2f323b', width=870, height=600)
+        setting_canvas.pack(padx=15, fill=BOTH, expand=True, pady=15)
+
+        setting_title_frame = Frame(setting_canvas, bg='#2f323b')
+        setting_title_frame.pack(fill=X, pady=20)
+
+        Label(setting_title_frame, text='시스템 설정', bg='#2f323b', fg='#96c63e', font=('SCDream5', 20, 'bold')).pack()
+
+        setting_left_canvas = Canvas(setting_canvas, width=870, height=500, bg='#2f323b', highlightbackground='#2f323b')
+        setting_left_canvas.pack(side=LEFT, fill=X, expand=True, ipadx=15, ipady=15)
+
+        # setting_right_canvas = Canvas(setting_canvas, width=435, height=500, bg='#2f323b', highlightbackground='#2f323b')
+        # setting_right_canvas.pack(side=RIGHT, fill=X, expand=True, ipadx=15, ipady=15)
+
+        pvt_frame = Frame(setting_left_canvas, bg='#2f323b')
+        pvt_frame.pack(fill=X, pady=(0, 20))
+
+        pvt_title = Label(pvt_frame, text='태양광 용량(W)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        pvt_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.pvt_value = Entry(pvt_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.pvt_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.pvt_value.bind('<FocusIn>', self.insert_pvt_value)
+
+        pvt_btn = Button(pvt_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.pvt_value_btn())
+        pvt_btn.pack(side=LEFT)
+
+        load_frame = Frame(setting_left_canvas, bg='#2f323b')
+        load_frame.pack(fill=X, pady=20)
+
+        load_title = Label(load_frame, text='최대 부하 사용량(W)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        load_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.load_value = Entry(load_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.load_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.load_value.bind('<FocusIn>', self.insert_load_value)
+
+        load_btn = Button(load_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.load_value_btn())
+        load_btn.pack(side=LEFT)
+
+        insolation_frame = Frame(setting_left_canvas, bg='#2f323b')
+        insolation_frame.pack(fill=X, pady=20)
+
+        insolation_title = Label(insolation_frame, text='Fan 제어 일사량설정(W/m²)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        insolation_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.insolation_value = Entry(insolation_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.insolation_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.insolation_value.bind('<FocusIn>', self.insert_insolation_value)
+
+        insolation_btn = Button(insolation_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.insolation_value_btn())
+        insolation_btn.pack(side=LEFT)
+
+        damper_frame = Frame(setting_left_canvas, bg='#2f323b')
+        damper_frame.pack(fill=X, pady=20)
+
+        damper_title = Label(damper_frame, text='댐퍼 제어 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        damper_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.damper_value = Entry(damper_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.damper_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.damper_value.bind('<FocusIn>', self.insert_damper_value)
+
+        damper_btn = Button(damper_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.damper_value_btn())
+        damper_btn.pack(side=LEFT)
+
+        # cooling_frame = Frame(setting_right_canvas, bg='#2f323b')
+        # cooling_frame.pack(fill=X, pady=20)
+        #
+        # cooling_title = Label(cooling_frame, text='냉방모드 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=17, anchor='e')
+        # cooling_title.pack(side=LEFT, padx=(15, 0))
+        #
+        # setting_Activity.cooling_value = Entry(cooling_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        # setting_Activity.cooling_value.pack(side=LEFT, padx=(20, 20))
+        # setting_Activity.cooling_value.bind('<FocusIn>', self.insert_cooling_value)
+        #
+        # cooling_btn = Button(cooling_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.cooling_value_btn())
+        # cooling_btn.pack(side=LEFT)
+        #
+        # heating_frame = Frame(setting_right_canvas, bg='#2f323b')
+        # heating_frame.pack(fill=X, pady=20)
+        #
+        # heating_title = Label(heating_frame, text='난방모드 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=17, anchor='e')
+        # heating_title.pack(side=LEFT, padx=(15, 0))
+        #
+        # setting_Activity.heating_value = Entry(heating_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        # setting_Activity.heating_value.pack(side=LEFT, padx=(20, 20))
+        # setting_Activity.heating_value.bind('<FocusIn>', self.insert_heating_value)
+        #
+        # heating_btn = Button(heating_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.heating_value_btn())
+        # heating_btn.pack(side=LEFT)
+        #
+        # dhw_frame = Frame(setting_right_canvas, bg='#2f323b')
+        # dhw_frame.pack(fill=X, pady=20)
+        #
+        # dhw_title = Label(dhw_frame, text='급탕모드 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=17, anchor='e')
+        # dhw_title.pack(side=LEFT, padx=(15, 0))
+        #
+        # setting_Activity.dhw_value = Entry(dhw_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        # setting_Activity.dhw_value.pack(side=LEFT, padx=(20, 20))
+        # setting_Activity.dhw_value.bind('<FocusIn>', self.insert_dhw_value)
+        #
+        # dhw_btn = Button(dhw_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.dhw_value_btn())
+        # dhw_btn.pack(side=LEFT)
+        #
+        # empty_frame = Frame(setting_right_canvas, bg='#2f323b')
+        # empty_frame.pack(fill=X, pady=20)
+        #
+        # empty_value = Label(empty_frame, text='', font=('SCDream5', 20, 'bold',), justify='center', width=9, bg='#2f323b')
+        # empty_value.pack(side=LEFT, padx=(20, 20))
 
 
-
-    #     # left frame
-    #     center_frame = Frame(self, bg='#2f323b')
-    #     center_frame.pack(fill=BOTH, side=TOP, expand=True)
-    #
-    #     label1 = Label(center_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     # 내부 Frame
-    #     top_set_contents_frame = Frame(center_frame, bg="#2f323b")
-    #     top_set_contents_frame.pack(side=TOP, ipadx=30, ipady=20, fill=BOTH, padx=10)
-    #
-    #     system_title_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     system_title_frame.pack(fill=X)
-    #
-    #     system_title_label = Label(system_title_frame, bg='#2f323b', text='시스템 설정', font=('arial', 15, 'bold'), fg='#23A96E')
-    #     system_title_label.pack()
-    #
-    #     # system_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     # system_frame.pack(fill=X)
-    #
-    #     setting_apply = Button(system_title_frame, font=('arial', 13), text='적용', command=lambda: self.system_apply_btn())
-    #     setting_apply.place(x=980, y=0)
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     set1_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     set1_frame.pack(pady=5)
-    #
-    #     insolation_text = Label(set1_frame, width=20, text='BIPVT 조도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     insolation_text.pack(side=LEFT)
-    #
-    #     setting_Activity.insolation_value = Entry(set1_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.insolation_value.pack(side=LEFT)
-    #     setting_Activity.insolation_value.bind('<FocusIn>', self.insert_insolation_value)
-    #
-    #     insolation_unit = Label(set1_frame, width=7, text=' W/m³ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     insolation_unit.pack(side=LEFT)
-    #
-    #     bipvt_inner_temp_text = Label(set1_frame, width=20, text='BIPVT 입구온도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     bipvt_inner_temp_text.pack(side=LEFT)
-    #
-    #     setting_Activity.bipvt_inner_temp_value = Entry(set1_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.bipvt_inner_temp_value.pack(side=LEFT)
-    #     setting_Activity.bipvt_inner_temp_value.bind('<FocusIn>', self.insert_bipvt_inner_temp_value)
-    #
-    #     bipvt_inner_temp_unit = Label(set1_frame, width=7, text=' ℃ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     bipvt_inner_temp_unit.pack(side=LEFT)
-    #
-    #     set2_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     set2_frame.pack(pady=5)
-    #
-    #     cool_text = Label(set2_frame, width=20, text='냉방온도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     cool_text.pack(side=LEFT)
-    #
-    #     setting_Activity.cool_value = Entry(set2_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.cool_value.pack(side=LEFT)
-    #     setting_Activity.cool_value.bind('<FocusIn>', self.insert_cool_value)
-    #
-    #     cool_unit = Label(set2_frame, width=7, text=' ℃ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     cool_unit.pack(side=LEFT)
-    #
-    #     hot_text = Label(set2_frame, width=20, text='난방온도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     hot_text.pack(side=LEFT)
-    #
-    #     setting_Activity.hot_value = Entry(set2_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.hot_value.pack(side=LEFT)
-    #     setting_Activity.hot_value.bind('<FocusIn>', self.insert_hot_value)
-    #
-    #     hot_unit = Label(set2_frame, width=7, text=' ℃ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     hot_unit.pack(side=LEFT)
-    #
-    #     set3_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     set3_frame.pack(pady=5)
-    #
-    #     dhw_text = Label(set3_frame, width=20, text='급탕온도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     dhw_text.pack(side=LEFT)
-    #
-    #     setting_Activity.dhw_value = Entry(set3_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.dhw_value.pack(side=LEFT)
-    #     setting_Activity.dhw_value.bind('<FocusIn>', self.insert_dhw_value)
-    #
-    #     dhw_unit = Label(set3_frame, width=7, text=' ℃ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     dhw_unit.pack(side=LEFT)
-    #
-    #     doublecoil_text = Label(set3_frame, width=20, text='이중코일 동작온도 ', font=('arial', 15), anchor='e', fg='white', bg='#2f323b')
-    #     doublecoil_text.pack(side=LEFT)
-    #
-    #     setting_Activity.doublecoil_value = Entry(set3_frame, width=15, textvariable=str, font=('arial', 15), justify='center')
-    #     setting_Activity.doublecoil_value.pack(side=LEFT)
-    #     setting_Activity.doublecoil_value.bind('<FocusIn>', self.insert_doublecoil_value)
-    #
-    #     doublecoil_unit = Label(set3_frame, width=7, text=' ℃ ', font=('arial', 15), bg='#2f323b', fg='white')
-    #     doublecoil_unit.pack(side=LEFT)
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     title_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     title_frame.pack(fill=X)
-    #
-    #     title_label = Label(title_frame, bg='#2f323b', text='통신 설정', font=('arial', 15, 'bold'), fg='#23A96E')
-    #     title_label.pack()
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     # BMS 통신 설정
-    #     bipvt_label_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     bipvt_label_frame.pack(fill=X, padx=50)
-    #
-    #     bipvt_label = Label(bipvt_label_frame, bg='#2f323b', fg='white', font=('arial', 15, 'bold'),
-    #                       text='BIPVT', width=15, anchor='w')
-    #     bipvt_label.pack(side=LEFT)
-    #
-    #     Label(bipvt_label_frame, text='IP', bg='#2f323b', fg='white', font=('arial', 15, 'bold')).pack(side=LEFT)
-    #
-    #     setting_Activity.bipvt_entry1 = Entry(bipvt_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.bipvt_entry1.pack(side=LEFT, padx=(30, 0))
-    #     setting_Activity.bipvt_entry1.bind('<FocusIn>', self.insert_bipvt_ip1)
-    #
-    #     Label(bipvt_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.bipvt_entry2 = Entry(bipvt_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.bipvt_entry2.pack(side=LEFT)
-    #     setting_Activity.bipvt_entry2.bind('<FocusIn>', self.insert_bipvt_ip2)
-    #
-    #     Label(bipvt_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.bipvt_entry3 = Entry(bipvt_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.bipvt_entry3.pack(side=LEFT)
-    #     setting_Activity.bipvt_entry3.bind('<FocusIn>', self.insert_bipvt_ip3)
-    #
-    #     Label(bipvt_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.bipvt_entry4 = Entry(bipvt_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.bipvt_entry4.pack(side=LEFT)
-    #     setting_Activity.bipvt_entry4.bind('<FocusIn>', self.insert_bipvt_ip4)
-    #
-    #     Label(bipvt_label_frame, text='PORT', bg='#2f323b', fg='white', font=('arial', 15, 'bold'), width=7, anchor='e').pack(side=LEFT, padx=(20,30))
-    #
-    #     setting_Activity.bipvt_entry5 = Entry(bipvt_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.bipvt_entry5.pack(side=LEFT)
-    #     setting_Activity.bipvt_entry5.bind('<FocusIn>', self.insert_bipvt_port)
-    #
-    #     bipvt_apply = Button(bipvt_label_frame, font=('arial', 15), text='적용', command=lambda: self.bipvt_apply_btn())
-    #     bipvt_apply.pack(side=LEFT, padx=30)
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     # heatpump 통신 설정
-    #     heatpump_label_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     heatpump_label_frame.pack(fill=X, padx=50)
-    #
-    #     heatpump_label = Label(heatpump_label_frame, bg='#2f323b', fg='white', font=('arial', 15, 'bold'),
-    #                       text='HeatPump', width=15, anchor='w')
-    #     heatpump_label.pack(side=LEFT)
-    #
-    #     Label(heatpump_label_frame, text='IP', bg='#2f323b', fg='white', font=('arial', 15, 'bold')).pack(side=LEFT)
-    #
-    #     setting_Activity.heatpump_entry1 = Entry(heatpump_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.heatpump_entry1.pack(side=LEFT, padx=(30, 0))
-    #     setting_Activity.heatpump_entry1.bind('<FocusIn>', self.insert_heatpump_ip1)
-    #
-    #     Label(heatpump_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.heatpump_entry2 = Entry(heatpump_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.heatpump_entry2.pack(side=LEFT)
-    #     setting_Activity.heatpump_entry2.bind('<FocusIn>', self.insert_heatpump_ip2)
-    #
-    #     Label(heatpump_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.heatpump_entry3 = Entry(heatpump_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.heatpump_entry3.pack(side=LEFT)
-    #     setting_Activity.heatpump_entry3.bind('<FocusIn>', self.insert_heatpump_ip3)
-    #
-    #     Label(heatpump_label_frame, text='.', bg='#2f323b', fg='white', font=('arial', 15)).pack(side=LEFT, padx=3)
-    #
-    #     setting_Activity.heatpump_entry4 = Entry(heatpump_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.heatpump_entry4.pack(side=LEFT)
-    #     setting_Activity.heatpump_entry4.bind('<FocusIn>', self.insert_heatpump_ip4)
-    #
-    #     Label(heatpump_label_frame, text='PORT', bg='#2f323b', fg='white', font=('arial', 15, 'bold'), width=7, anchor='e').pack(side=LEFT, padx=(20,30))
-    #
-    #     setting_Activity.heatpump_entry5 = Entry(heatpump_label_frame, bg='white', fg='#2E2F31', font=('arial', 15), width=8, justify='center')
-    #     setting_Activity.heatpump_entry5.pack(side=LEFT)
-    #     setting_Activity.heatpump_entry5.bind('<FocusIn>', self.insert_heatpump_port)
-    #
-    #     heatpump_apply = Button(heatpump_label_frame, font=('arial', 15), text='적용', command=lambda: self.heatpump_apply_btn())
-    #     heatpump_apply.pack(side=LEFT, padx=30)
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     # Downloads
-    #     down_title_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     down_title_frame.pack(fill=X)
-    #
-    #     down_title_label = Label(down_title_frame, bg='#2f323b', text='매뉴얼 다운로드', font=('arial', 15, 'bold'), fg='#23A96E')
-    #     down_title_label.pack()
-    #
-    #     label1 = Label(top_set_contents_frame, bg='#2f323b')
-    #     label1.pack()
-    #
-    #     down_frame = Frame(top_set_contents_frame, bg='#2f323b')
-    #     down_frame.pack()
-    #
-    #     catalog_btn = Button(down_frame, text='카탈로그\n다운로드', width=15,  fg='white', bg='#96c63e', font=('arial', 20, 'bold'), command=lambda : self.file_downloading("스마트그리드제어시스템v1.0_카탈로그.pdf"))
-    #     catalog_btn.pack(side=LEFT, padx=(0, 50))
-    #
-    #     manual_btn = Button(down_frame, text='사용자취급설명서\n다운로드', width=15, fg='white', bg='#007ad1', font=('arial', 20, 'bold'), command=lambda : self.file_downloading("스마트그리드제어시스템v1.0_사용자취급설명서.pdf"))
-    #     manual_btn.pack(side=LEFT)
-    #
-    #
     # BIPVT TCP 통신 적용 버튼 클릭시
     def bipvt_apply_btn(self):
         if self.bipvt_entry1.get() == '' or self.bipvt_entry2.get() == '' or self.bipvt_entry3.get() == '' or self.bipvt_entry4.get() == '' or self.bipvt_entry5.get() == '':
@@ -774,16 +663,76 @@ class setting_Activity(tk.Frame):
                 set_data = [set_port, set_brate, set_parity, set_stopbit]
                 db.sqlite_connect.protocol_update('fcu', setting_Activity.fcu_combo.get(), set_data)
                 self.fcu_client()
-    #
-    # def system_apply_btn(self):
-    #     if self.insolation_value.get() == '' or self.bipvt_inner_temp_value.get() == '' or self.cool_value.get() == '' or self.hot_value.get() == '' or self.dhw_value.get() == '' or self.doublecoil_value.get() == '':
-    #         tkinter.messagebox.showwarning('설정오류', '시스템 설정값을 입력하세요')
+
+    def pvt_value_btn(self):
+        if self.pvt_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.pvt_value.get()
+                db.sqlite_connect.system_update('pvt', get_data)
+
+    def insolation_value_btn(self):
+        if self.insolation_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.insolation_value.get()
+                db.sqlite_connect.system_update('insolation', get_data)
+
+    def damper_value_btn(self):
+        if self.damper_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.damper_value.get()
+                db.sqlite_connect.system_update('damper', get_data)
+
+    def load_value_btn(self):
+        if self.load_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.load_value.get()
+                db.sqlite_connect.system_update('load', get_data)
+
+    # def cooling_value_btn(self):
+    #     if self.cooling_value.get() == '':
+    #         tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
     #     else:
     #         res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
     #
     #         if res_msg:
-    #             db.sqlite_connect.system_update(self.insolation_value.get(), self.bipvt_inner_temp_value.get(),self.cool_value.get(), self.hot_value.get(), self.dhw_value.get(), self.doublecoil_value.get())
+    #             get_data = self.cooling_value.get()
+    #             db.sqlite_connect.system_update('cooling', get_data)
 
+    # def heating_value_btn(self):
+    #     if self.heating_value.get() == '':
+    #         tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+    #     else:
+    #         res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+    #
+    #         if res_msg:
+    #             get_data = self.heating_value.get()
+    #             db.sqlite_connect.system_update('heating', get_data)
+
+    # def dhw_value_btn(self):
+    #     if self.dhw_value.get() == '':
+    #         tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+    #     else:
+    #         res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+    #
+    #         if res_msg:
+    #             get_data = self.dhw_value.get()
+    #             db.sqlite_connect.system_update('dhw', get_data)
 
     # 통신설정 변경시 BIPVT 클라이언트 재실행
     def bipvt_client(self):
@@ -805,25 +754,28 @@ class setting_Activity(tk.Frame):
             parity = 'N'
             stopbit = comd.var.heatpump_stopbit
 
-            comd.read_cmd.heatpump_client = ModbusSerialClient(port=serial_porting, baudrate=brate, timeout=1, stopbits=stopbit, parity=parity)
+            comd.read_cmd.heatpump_client = ModbusSerialClient(method='rtu', port=serial_porting, baudrate=int(brate), stopbits=int(stopbit), parity=parity)
             comd.read_cmd.heatpump_client.inter_char_timeout = 3
         except Exception as ex:
-            print('heatpump_reclinet() Exception -> ', ex)
+            print('heatpump_reclient() Exception -> ', ex)
             comd.var.heatpump_connect_status = False
 
-    # def insert_insolation_value(self, event):
-    #     notification.insert_keypad.put_insolation_value(self, '값 입력')
-    # def insert_bipvt_inner_temp_value(self, event):
-    #     notification.insert_keypad.put_bipvt_inner_temp_value(self, '값 입력')
-    # def insert_cool_value(self, event):
-    #     notification.insert_keypad.put_cool_value(self, '값 입력')
-    # def insert_hot_value(self, event):
-    #     notification.insert_keypad.put_hot_value(self, '값 입력')
-    # def insert_dhw_value(self, event):
-    #     notification.insert_keypad.put_dhw_value(self, '값 입력')
-    # def insert_doublecoil_value(self, event):
-    #     notification.insert_keypad.put_doublecoil_value(self, '값 입력')
-    #
+    def insert_pvt_value(self, event):
+        notification.insert_keypad.put_pvt_value(self, '값 입력')
+    def insert_insolation_value(self, event):
+        notification.insert_keypad.put_insolation_value(self, '값 입력')
+    def insert_damper_value(self, event):
+        notification.insert_keypad.put_damper_value(self, '값 입력')
+    def insert_load_value(self, event):
+        notification.insert_keypad.put_load_value(self, '값 입력')
+    def insert_cooling_value(self, event):
+        notification.insert_keypad.put_cool_value(self, '값 입력')
+    def insert_heating_value(self, event):
+        notification.insert_keypad.put_hot_value(self, '값 입력')
+    def insert_dhw_value(self, event):
+        notification.insert_keypad.put_dhw_value(self, '값 입력')
+
+
     def insert_bipvt_ip1(self, event):
         notification.insert_keypad.put_bipvt_ip_value1(self, '값 입력')
     def insert_bipvt_ip2(self, event):
@@ -911,99 +863,3 @@ class setting_Activity(tk.Frame):
         else:
             setting_Activity.fcu_tcp_frame.pack_forget()
             setting_Activity.fcu_serial_frame.pack(fill=X, padx=(50, 0), pady=10)
-
-    # 스케줄 추가하기 버튼 클릭시
-    def schedule_add(self):
-        if comd.var.schedule_list == 3:
-            tk.messagebox.showinfo('스케줄 설정', '스케줄 설정은 최대 3개까지 가능합니다.')
-        else:
-            comd.var.schedule_list += 1
-            sc_list = comd.var.schedule_list
-
-            setting_Activity.schedule_subframe.append(Frame(setting_Activity.schedule_merge_frame, bg='#2f323b', highlightthickness=0,highlightbackground='#2f323b'))
-            setting_Activity.schedule_subtitle.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='스케줄설정%d' % (sc_list), font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            setting_Activity.schedule_start_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-            setting_Activity.hour_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            setting_Activity.schedule_start_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-            setting_Activity.min_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            setting_Activity.tilde_label.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='~', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            setting_Activity.schedule_end_hour_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-            setting_Activity.hour_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='시', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            setting_Activity.schedule_end_min_entry.append(Entry(setting_Activity.schedule_subframe[sc_list-1], width=8, font=('SCDream5', 15, 'bold'), justify='center'))
-            setting_Activity.min_label2.append(Label(setting_Activity.schedule_subframe[sc_list-1], text='분', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b'))
-            # setting_Activity.schedule_apply_btn.append(Button(setting_Activity.schedule_subframe[sc_list-1], text='적용', font=('SCDream5', 15, 'bold'), width=6))
-
-            setting_Activity.schedule_subframe[sc_list-1].pack(pady=15)
-            setting_Activity.schedule_subtitle[sc_list-1].pack(side=LEFT, padx=(0, 30))
-            setting_Activity.schedule_start_hour_entry[sc_list-1].pack(side=LEFT)
-            setting_Activity.hour_label[sc_list-1].pack(side=LEFT, padx=(5, 20))
-            setting_Activity.schedule_start_min_entry[sc_list-1].pack(side=LEFT)
-            setting_Activity.min_label[sc_list-1].pack(side=LEFT, padx=(5, 10))
-            setting_Activity.tilde_label[sc_list-1].pack(side=LEFT, padx=(15, 25))
-            setting_Activity.schedule_end_hour_entry[sc_list-1].pack(side=LEFT)
-            setting_Activity.hour_label2[sc_list-1].pack(side=LEFT, padx=(5, 20))
-            setting_Activity.schedule_end_min_entry[sc_list-1].pack(side=LEFT)
-            setting_Activity.min_label2[sc_list-1].pack(side=LEFT, padx=(5, 10))
-            # setting_Activity.schedule_apply_btn[sc_list-1].pack(side=LEFT, padx=(30, 0))
-
-    # 스케줄 삭제하기 버튼 클릭시
-    def schedule_remove(self):
-        if comd.var.schedule_list == 1:
-            tk.messagebox.showinfo('스케줄 삭제', '스케줄은 최소 1개이상 있어야 합니다.')
-        else:
-            comd.var.schedule_list -= 1
-            sc_list = comd.var.schedule_list
-
-            setting_Activity.schedule_subframe[sc_list].pack_forget()
-            setting_Activity.schedule_subtitle[sc_list].pack_forget()
-            setting_Activity.schedule_start_hour_entry[sc_list].pack_forget()
-            setting_Activity.hour_label[sc_list].pack_forget()
-            setting_Activity.schedule_start_min_entry[sc_list].pack_forget()
-            setting_Activity.min_label[sc_list].pack_forget()
-            setting_Activity.tilde_label[sc_list].pack_forget()
-            setting_Activity.schedule_end_hour_entry[sc_list].pack_forget()
-            setting_Activity.hour_label2[sc_list].pack_forget()
-            setting_Activity.schedule_end_min_entry[sc_list].pack_forget()
-            setting_Activity.min_label2[sc_list].pack_forget()
-            # setting_Activity.schedule_apply_btn[sc_list].pack_forget()
-
-            del setting_Activity.schedule_subframe[-1]
-            del setting_Activity.schedule_subtitle[-1]
-            del setting_Activity.schedule_start_hour_entry[-1]
-            del setting_Activity.hour_label[-1]
-            del setting_Activity.schedule_start_min_entry[-1]
-            del setting_Activity.min_label[-1]
-            del setting_Activity.tilde_label[-1]
-            del setting_Activity.schedule_end_hour_entry[-1]
-            del setting_Activity.hour_label2[-1]
-            del setting_Activity.schedule_end_min_entry[-1]
-            del setting_Activity.min_label2[-1]
-            # del setting_Activity.schedule_apply_btn[-1]
-
-    # 스케줄 적용
-    def schedule_apply(self):
-        schedule_list = comd.var.schedule_list
-        start_time = list(range(schedule_list))
-        end_time = list(range(schedule_list))
-        time_check = [False for idx in range(schedule_list)]
-        same_check = [False for jdx in range(schedule_list)]
-        for i in range(schedule_list):
-            start_time[i] = ('%s:%s' % (setting_Activity.schedule_start_hour_entry[i].get(), setting_Activity.schedule_start_min_entry[i].get()))
-            end_time[i] = ('%s:%s' % (setting_Activity.schedule_end_hour_entry[i].get(), setting_Activity.schedule_end_min_entry[i].get()))
-
-            if not (setting_Activity.schedule_start_hour_entry[i].get() == '' or setting_Activity.schedule_start_min_entry[i] == '' or setting_Activity.schedule_end_hour_entry[i] == '' or setting_Activity.schedule_end_min_entry[i] == ''):
-                time_check[i] = True
-            if not (start_time[i] == end_time[i] or setting_Activity.schedule_start_hour_entry[i].get() == '' or setting_Activity.schedule_start_min_entry[i] == '' or setting_Activity.schedule_end_hour_entry[i] == '' or setting_Activity.schedule_end_min_entry[i] == ''):
-                same_check[i] = True
-
-        if False in time_check:
-            tkinter.messagebox.showwarning('설정오류', '스케줄설정%s의 설정 시간을 입력하세요' % str(time_check.index(False)+1))
-        if False in same_check:
-            tkinter.messagebox.showwarning('설정오류', '스케줄설정%s을 동일한 시간으로 설정할 수 없습니다.' % str(same_check.index(False)+1))
-        # else:
-        else:
-            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
-
-            if res_msg:
-                # db.sqlite_connect.schedule_update(schedule_list, start_time, end_time)
-                print('미개발')

@@ -55,12 +55,14 @@ start_min = ''
 end_hour = ''
 end_min = ''
 
-insolation_value = ''
-inner_temp_value = ''
-cool_value = ''
-hot_value = ''
-dhw_value = ''
-doublecoil_value = ''
+pv_volume = ''
+load_volume = ''
+insolation_volume = ''
+damper_volume = ''
+cool_volume = ''
+heat_volume = ''
+dhw_volume = ''
+
 
 bipvt_read = False
 heatpump_read = False
@@ -86,3 +88,41 @@ bipvt_socket_client = False
 schedule_checking = [False,False,False,False]
 schedule_start = ['00:00','00:00','00:00','00:00']
 schedule_end = ['00:00','00:00','00:00','00:00']
+
+# 상세정보 저장 리스트
+pv_power = []
+pv_inside1 = []
+pv_inside2 = []
+pv_inside3 = []
+pv_inner_temp = []
+pv_inner_humi = []
+pv_outer_temp = []
+pv_outer_humi = []
+buffer_temp = []
+buffer_inner_temp = []
+buffer_flux = []
+storage_inner_temp = []
+storage_outer_temp = []
+storage_inner_flux = []
+storage_outer_flux = []
+dhw_temp = []
+dhw_inner_temp = []
+dhw_outer_temp = []
+dhw_flux = []
+heatpump_power = []
+buffer_power = []
+storage_power = []
+dhw_power = []
+heatline_power = []
+out_temp = []
+out_humi = []
+insolation = []
+wind_speed = []
+rain_fall = []
+inner_temp = []
+inner_humi = []
+
+pv_pre_power = ''
+
+bipvt_packet_data = []
+heatpump_packet_data = []

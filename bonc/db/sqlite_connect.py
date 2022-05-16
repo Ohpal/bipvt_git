@@ -64,9 +64,6 @@ setting_table_query = "CREATE TABLE IF NOT EXISTS setting(" \
                       "doublecoil VARcHAR(30))"
 
 
-
-
-
 ## PMS Inner Database - sqlLite
 def lite_conn():
     try:
@@ -208,33 +205,33 @@ def setting_protocol():
         comd.var.heatpump_stopbit = protocol_rows[14]
 
     # FCU IP 통신인 경우
-    if fcu_type == 'Socket 통신' or fcu_type == 'Modbus-TCP 통신':
-        ui.setting_Activity.setting_Activity.fcu_serial_frame.pack_forget()
-        ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack()
-
-        fcu_ip = protocol_rows[3].split('.')
-        ui.setting_Activity.setting_Activity.fcu_entry1.insert('end', fcu_ip[0])
-        ui.setting_Activity.setting_Activity.fcu_entry2.insert('end', fcu_ip[1])
-        ui.setting_Activity.setting_Activity.fcu_entry3.insert('end', fcu_ip[2])
-        ui.setting_Activity.setting_Activity.fcu_entry4.insert('end', fcu_ip[3])
-        ui.setting_Activity.setting_Activity.fcu_entry5.insert('end', protocol_rows[2])
-
-        comd.var.fcu_ip = protocol_rows[3]
-        comd.var.fcu_port = protocol_rows[4]
-    else:
-        # FCU Serial 통신인 경우
-        ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack_forget()
-        ui.setting_Activity.setting_Activity.fcu_serial_frame.pack()
-
-        ui.setting_Activity.setting_Activity.fcu_serial_entry1.insert('end', protocol_rows[17])
-        ui.setting_Activity.setting_Activity.fcu_serial_entry2.insert('end', protocol_rows[18])
-        ui.setting_Activity.setting_Activity.fcu_serial_entry3.insert('end', protocol_rows[19])
-        ui.setting_Activity.setting_Activity.fcu_serial_entry4.insert('end', protocol_rows[20])
-
-        comd.var.fcu_serial_port = protocol_rows[11]
-        comd.var.fcu_brate = protocol_rows[12]
-        comd.var.fcu_parity = protocol_rows[13]
-        comd.var.fcu_stopbit = protocol_rows[14]
+    # if fcu_type == 'Socket 통신' or fcu_type == 'Modbus-TCP 통신':
+    #     ui.setting_Activity.setting_Activity.fcu_serial_frame.pack_forget()
+    #     ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack()
+    #
+    #     fcu_ip = protocol_rows[3].split('.')
+    #     ui.setting_Activity.setting_Activity.fcu_entry1.insert('end', fcu_ip[0])
+    #     ui.setting_Activity.setting_Activity.fcu_entry2.insert('end', fcu_ip[1])
+    #     ui.setting_Activity.setting_Activity.fcu_entry3.insert('end', fcu_ip[2])
+    #     ui.setting_Activity.setting_Activity.fcu_entry4.insert('end', fcu_ip[3])
+    #     ui.setting_Activity.setting_Activity.fcu_entry5.insert('end', protocol_rows[2])
+    #
+    #     comd.var.fcu_ip = protocol_rows[3]
+    #     comd.var.fcu_port = protocol_rows[4]
+    # else:
+    #     # FCU Serial 통신인 경우
+    #     ui.setting_Activity.setting_Activity.fcu_tcp_frame.pack_forget()
+    #     ui.setting_Activity.setting_Activity.fcu_serial_frame.pack()
+    #
+    #     ui.setting_Activity.setting_Activity.fcu_serial_entry1.insert('end', protocol_rows[17])
+    #     ui.setting_Activity.setting_Activity.fcu_serial_entry2.insert('end', protocol_rows[18])
+    #     ui.setting_Activity.setting_Activity.fcu_serial_entry3.insert('end', protocol_rows[19])
+    #     ui.setting_Activity.setting_Activity.fcu_serial_entry4.insert('end', protocol_rows[20])
+    #
+    #     comd.var.fcu_serial_port = protocol_rows[11]
+    #     comd.var.fcu_brate = protocol_rows[12]
+    #     comd.var.fcu_parity = protocol_rows[13]
+    #     comd.var.fcu_stopbit = protocol_rows[14]
 
 # 프로토콜 변경시 저장하는 쿼리문
 def protocol_update(facility, types, data):
@@ -490,12 +487,13 @@ def select_system():
     system_rows = cur.fetchall()
     system_rows = system_rows[0]
 
-    comd.var.insolation_value = system_rows[1]
-    comd.var.inner_temp_value = system_rows[2]
-    comd.var.cool_value = system_rows[3]
-    comd.var.hot_value = system_rows[4]
-    comd.var.dhw_value = system_rows[5]
-    comd.var.doublecoil_value = system_rows[6]
+    comd.var.pv_volume = system_rows[1]
+    comd.var.load_volume = system_rows[2]
+    comd.var.insolation_volume = system_rows[3]
+    comd.var.damper_volume = system_rows[4]
+    # comd.var.cool_volume = system_rows[5]
+    # comd.var.heat_volume = system_rows[6]
+    # comd.var.dhw_volume = system_rows[7]
 
 
 def setting_system():
@@ -505,50 +503,66 @@ def setting_system():
     system_rows = cur.fetchall()
     system_rows = system_rows[0]
 
-    ui.setting_Activity.setting_Activity.insolation_value.insert('end', system_rows[1])
-    ui.setting_Activity.setting_Activity.bipvt_inner_temp_value.insert('end', system_rows[2])
-    ui.setting_Activity.setting_Activity.cool_value.insert('end', system_rows[3])
-    ui.setting_Activity.setting_Activity.hot_value.insert('end', system_rows[4])
-    ui.setting_Activity.setting_Activity.dhw_value.insert('end', system_rows[5])
-    ui.setting_Activity.setting_Activity.doublecoil_value.insert('end', system_rows[6])
+    ui.setting_Activity.setting_Activity.pvt_value.insert('end', system_rows[1])
+    ui.setting_Activity.setting_Activity.load_value.insert('end', system_rows[2])
+    ui.setting_Activity.setting_Activity.insolation_value.insert('end', system_rows[3])
+    ui.setting_Activity.setting_Activity.damper_value.insert('end', system_rows[4])
+    # ui.setting_Activity.setting_Activity.cooling_value.insert('end', system_rows[5])
+    # ui.setting_Activity.setting_Activity.heating_value.insert('end', system_rows[6])
+    # ui.setting_Activity.setting_Activity.dhw_value.insert('end', system_rows[7])
 
-    comd.var.insolation_value = system_rows[1]
-    comd.var.inner_temp_value = system_rows[2]
-    comd.var.cool_value = system_rows[3]
-    comd.var.hot_value = system_rows[4]
-    comd.var.dhw_value = system_rows[5]
-    comd.var.doublecoil_value = system_rows[6]
+    comd.var.pv_volume = system_rows[1]
+    comd.var.load_volume = system_rows[2]
+    comd.var.insolation_volume = system_rows[3]
+    comd.var.damper_volume = system_rows[4]
+    # comd.var.cool_volume = system_rows[5]
+    # comd.var.heat_volume = system_rows[6]
+    # comd.var.dhw_volume = system_rows[7]
 
 
-def system_update(insolation, bipvt_inner_temp, cool, hot, dhw, doublecoil):
+def system_update(volume, value):
     cur, conn = lite_conn()
 
     print('Update System Setting')
+    sql = ''
+    if volume == 'pvt':
+        sql = 'Update setting SET pv_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.pvt_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.pvt_value.insert('end', value)
+        comd.var.pv_volume = value
+    elif volume == 'insolation':
+        sql = 'Update setting SET insolation_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.insolation_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.insolation_value.insert('end', value)
+        comd.var.insolation_volume = value
+    elif volume == 'damper':
+        sql = 'Update setting SET damper_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.damper_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.damper_value.insert('end', value)
+        comd.var.damper_volume = value
+    elif volume == 'load':
+        sql = 'Update setting SET load_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.load_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.load_value.insert('end', value)
+        comd.var.load_volume = value
+    elif volume == 'cooling':
+        sql = 'Update setting SET cool_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.cooling_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.cooling_value.insert('end', value)
+        comd.var.cool_volume = value
+    elif volume == 'heating':
+        sql = 'Update setting SET heat_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.heating_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.heating_value.insert('end', value)
+        comd.var.heat_volume = value
+    elif volume == 'dhw':
+        sql = 'Update setting SET dhw_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.dhw_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.dhw_value.insert('end', value)
+        comd.var.dhw_volume = value
 
-    sql = 'UPDATE setting SET insolation=?, inner_temp=?,cool_temp=?, hot_temp=?,dhw_temp=?,doublecoil=? where id=1'
-    cur.execute(sql, (insolation, bipvt_inner_temp, cool, hot, dhw, doublecoil))
+    cur.execute(sql, (value,))
     conn.commit()
-
-    ui.setting_Activity.setting_Activity.insolation_value.delete(0, "end")
-    ui.setting_Activity.setting_Activity.bipvt_inner_temp_value.delete(0, "end")
-    ui.setting_Activity.setting_Activity.cool_value.delete(0, "end")
-    ui.setting_Activity.setting_Activity.hot_value.delete(0, "end")
-    ui.setting_Activity.setting_Activity.dhw_value.delete(0, "end")
-    ui.setting_Activity.setting_Activity.doublecoil_value.delete(0, "end")
-
-    ui.setting_Activity.setting_Activity.insolation_value.insert('end', insolation)
-    ui.setting_Activity.setting_Activity.bipvt_inner_temp_value.insert('end', bipvt_inner_temp)
-    ui.setting_Activity.setting_Activity.cool_value.insert('end', cool)
-    ui.setting_Activity.setting_Activity.hot_value.insert('end', hot)
-    ui.setting_Activity.setting_Activity.dhw_value.insert('end', dhw)
-    ui.setting_Activity.setting_Activity.doublecoil_value.insert('end', doublecoil)
-
-    comd.var.insolation_value = insolation
-    comd.var.inner_temp_value = bipvt_inner_temp
-    comd.var.cool_value = cool
-    comd.var.hot_value = hot
-    comd.var.dhw_value = dhw
-    comd.var.doublecoil_value = doublecoil
 
 
 def automode_update(val):

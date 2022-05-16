@@ -53,14 +53,13 @@ def heatpump_serial_client():
         parity = 'N'
         stopbit = comd.var.heatpump_stopbit
 
-        heatpump_client = ModbusSerialClient(method='rtu', port='COM3', baudrate=19200, stopbits=2, parity='N')
+        heatpump_client = ModbusSerialClient(method='rtu', port=serial_porting, baudrate=int(brate), stopbits=int(stopbit), parity=parity)
         heatpump_client.inter_char_timeout = 3
 
         return heatpump_client
     except Exception as ex:
         print('heatpump_serial_client() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
-
 
 
 def fcu_client():
@@ -201,7 +200,7 @@ def buffer_off():
 def heatpump_read_data():
     global heatpump_client
     try:
-        heatpump_read_data = heatpump_client.read_holding_registers(1, 8, unit=1)
+        heatpump_read_data = heatpump_client.read_input_registers(1, 8, unit=1)
         assert (heatpump_read_data.function_code <= 0x84)
         return heatpump_read_data
     except Exception as ex:
@@ -212,21 +211,75 @@ def heatpump_read_data():
 def heatpump_mode_data():
     global heatpump_client
     try:
-        heatpump_read_mode = heatpump_client.read_holding_registers(5002, 2, unit=1)
+        heatpump_read_mode = heatpump_client.read_holding_registers(9, 2, unit=1)
         assert(heatpump_read_mode.function_code <= 0x84)
         return heatpump_read_mode
     except Exception as ex:
         print('heatpump_mode_data() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
 
+
 def heatpump_read_status():
     global heatpump_client
     try:
-        heatpump_read_status = heatpump_client.read_coils(1, 2, unit=1)
+        heatpump_read_status = heatpump_client.read_coils(1, 1, unit=1)
         assert (heatpump_read_status.function_code <= 0x84)
         return heatpump_read_status
     except Exception as ex:
         print('heatpump_read_status() Exception -> ', ex)
+
+
+def heatpump_temp_setting():
+    global heatpump_client
+    try:
+        heatpump_read_setting = heatpump_client.read_holding_registers(11, 7, unit=1)
+        assert (heatpump_read_setting.function_code <= 0x84)
+        return heatpump_read_setting
+    except Exception as ex:
+        print('heatpump_temp_setting() Exception -> ', ex)
+
+def heatpump_cool_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(11, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_cool_setTemp() Exception -> ', ex)
+
+def heatpump_hot_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(12, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_hot_setTemp() Exception -> ', ex)
+
+def heatpump_dhwcool_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(14, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_dhwcool_setTemp() Exception -> ', ex)
+
+def heatpump_dhwhot_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(15, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_dhwhot_setTemp() Exception -> ', ex)
+
+def heatpump_on():
+    global heatpump_client
+    try:
+        heatpump_client.write_coil(2, 1, unit=1)
+    except Exception as ex:
+        print('heatpump_on() Exception -> ', ex)
+
+
+def heatpump_off():
+    global heatpump_client
+    try:
+        heatpump_client.write_coil(2, 0, unit=1)
+    except Exception as ex:
+        print('heatpump_off() Exception -> ', ex)
 
 
 def doublecoil_on():
@@ -275,22 +328,6 @@ def storage_off():
         heatpump_client.write_coil(3, 0, unit=1)
     except Exception as ex:
         print('storage_off() Exception -> ', ex)
-
-
-def heatpump_on():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(1, 1, unit=1)
-    except Exception as ex:
-        print('heatpump_on() Exception -> ', ex)
-
-
-def heatpump_off():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(1, 0, unit=1)
-    except Exception as ex:
-        print('heatpump_off() Exception -> ', ex)
 
 
 def drive_on():

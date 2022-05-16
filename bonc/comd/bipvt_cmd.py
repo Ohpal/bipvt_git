@@ -64,7 +64,7 @@ def bipvt_socket_data():
             bipvt_data[32] = True if bipvt_casting(bipvt_data[32]) == 10 else False
             bipvt_data[33] = bipvt_casting(bipvt_data[33], 0.1)
             bipvt_data[34] = True if bipvt_casting(bipvt_data[34]) == 10 else False
-            bipvt_data[35] = 0 if '-' in bipvt_data[35] else int(bipvt_data[35]) * 0.1
+            bipvt_data[35] = bipvt_casting(bipvt_data[35], 0.1)
             bipvt_data[36] = bipvt_casting(bipvt_data[36])
             bipvt_data[37] = bipvt_casting(bipvt_data[37])
             bipvt_data[38] = bipvt_casting(bipvt_data[38])

@@ -9,6 +9,7 @@ import datetime
 from time import sleep
 from subprocess import run
 
+import db.pg_connect
 import db.sqlite_connect
 import comd.var
 
@@ -52,6 +53,9 @@ except:
 
     restart()
 
+
+bipvt_before_time = ''
+heatpump_before_time = ''
 
 def now_time():
     now = datetime.datetime.now()
@@ -104,7 +108,7 @@ class start_app(tk.Tk):
         # protocol setting by sqlite3
         db.sqlite_connect.setting_protocol()
         db.sqlite_connect.setting_schedule()
-        # db.sqlite_connect.setting_system()
+        db.sqlite_connect.setting_system()
 
         # comd.control_ui.set_schedule_checking()
 
@@ -187,11 +191,36 @@ class start_app(tk.Tk):
         except Exception as ex:
             print('bipvt_socket() Exception >> ', ex)
 
+    def data_insert(self):
+        try:
+            try:
+                global bipvt_before_time
+                if comd.var.bipvt_read and comd.var.bipvt_packet_data[1] != 0 and comd.var.bipvt_packet_data[2] != 0 and comd.var.bipvt_packet_data[3] != 0 and comd.var.bipvt_packet_data[0] != bipvt_before_time:
+                    db.pg_connect.bipvt_insert(comd.var.bipvt_packet_data)
+                    bipvt_before_time = comd.var.bipvt_packet_data[0]
+                else:
+                    pass
+            except Exception as ex1:
+                print('bipvt_insert error', ex1)
+
+            try:
+                global heatpump_before_time
+                if comd.var.heatpump_read and heatpump_before_time != comd.var.heatpump_packet_data[0]:
+                    db.pg_connect.heatpump_insert(comd.var.heatpump_packet_data)
+                    heatpump_before_time = comd.var.heatpump_packet_data[0]
+                else:
+                    pass
+            except Exception as ex2:
+                print('heatpump_insert error', ex2)
+        except Exception as ex:
+            print('Data Insert Error >> ', ex)
+
+
 
 if __name__ == '__main__':
     try:
         # database check
-        db.sqlite_connect.start_check_lite()
+        # db.sqlite_connect.start_check_lite()
         #
         # db.sqlite_connect.select_protocol()
         # db.sqlite_connect.schedule_select()
@@ -208,6 +237,9 @@ if __name__ == '__main__':
         thread3 = threading.Thread(target=app.setInterval, args=(app.bipvt_socket, 5.0))
         thread3.setDaemon(True)
         thread3.start()
+        thread4 = threading.Thread(target=app.setInterval, args=(app.data_insert, 1.0))
+        thread4.setDaemon(True)
+        thread4.start()
         app.mainloop()
 
     except Exception as ex:

@@ -18,7 +18,7 @@ import ui.error_Activity
 import comd.var
 
 
-def setFont(size=17):
+def setFont(size=15):
     font = 'SCDream5', size, 'bold'
     return font
 
@@ -146,7 +146,8 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above1_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        detail_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        detail_Activity.above1_value = Label(above1_frame, text=' - ', fg='#CFDD8E', bg='#2f323b',
+                                             font=('SCDream5', 25, 'bold'))
         detail_Activity.above1_value.pack(fill=X, pady=10)
 
         above1_unit = Label(above1_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
@@ -161,7 +162,7 @@ class detail_Activity(tk.Frame):
         above2_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         detail_Activity.above2_value = Label(above2_frame, text=' - ', fg='#6ECEDA', bg='#2f323b',
-                             font=('SCDream5', 25, 'bold'))
+                                             font=('SCDream5', 25, 'bold'))
         detail_Activity.above2_value.pack(fill=X, pady=10)
 
         above2_unit = Label(above2_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
@@ -175,7 +176,8 @@ class detail_Activity(tk.Frame):
                              anchor='w')
         above3_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
-        detail_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b', font=('SCDream5', 25, 'bold'))
+        detail_Activity.above3_value = Label(above3_frame, text=' - ', fg='#B97687', bg='#2f323b',
+                                             font=('SCDream5', 25, 'bold'))
         detail_Activity.above3_value.pack(fill=X, pady=10)
 
         above3_unit = Label(above3_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
@@ -190,7 +192,7 @@ class detail_Activity(tk.Frame):
         above4_title.pack(fill=X, padx=(10, 0), pady=(10, 0))
 
         detail_Activity.above4_value = Label(above4_frame, text=' - ', fg='#d18063', bg='#2f323b',
-                             font=('SCDream5', 25, 'bold'))
+                                             font=('SCDream5', 25, 'bold'))
         detail_Activity.above4_value.pack(fill=X, pady=10)
 
         above4_unit = Label(above4_frame, text='kWh', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'),
@@ -216,10 +218,14 @@ class detail_Activity(tk.Frame):
         self.line_image = tk.PhotoImage(file='images/line.png')
         self.line_image2 = tk.PhotoImage(file='images/line2.png')
         Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=120)
-        Label(detail_canvas, image=self.line_image2, height=1240).place(x=415, y=80)
+        Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=470)
+        Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=600)
+        Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=780)
+        Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=955)
+        Label(detail_canvas, image=self.line_image, width=960).place(x=65, y=1175)
+        Label(detail_canvas, image=self.line_image2, height=1440).place(x=415, y=80)
 
         data_header_item = Label(data_header_frame, text='위치', font=setFont(20), fg='white', bg='#2f323b', width=15)
-        # data_header_item.pack(side=LEFT, padx=(20, 0))
         data_header_item.grid(row=0, column=0)
 
         data_header_loc = Label(data_header_frame, text='항목', font=setFont(20), fg='white', bg='#2f323b', width=8)
@@ -240,431 +246,670 @@ class detail_Activity(tk.Frame):
         data_header_unit = Label(data_header_frame, text='단위', font=setFont(20), fg='white', bg='#2f323b', width=4)
         data_header_unit.grid(row=0, column=6)
 
-        Label(data_header_frame, text='PVT 컬렉터 입구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=1, column=0, pady=(10, 5))
-        Label(data_header_frame, text='PVT 컬렉터 입구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=2, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터 입구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=3, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=4, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=5, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터 내부', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=6, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=7, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=8, column=0, pady=5)
-        Label(data_header_frame, text='PVT 컬렉터', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=9, column=0, pady=5)
-        Label(data_header_frame, text='열교환기 입구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=10, column=0, pady=5)
-        Label(data_header_frame, text='열교환기 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=11, column=0, pady=5)
-        Label(data_header_frame, text='열교환기 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=12, column=0, pady=5)
-        Label(data_header_frame, text='열교환기 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=13, column=0, pady=5)
-        Label(data_header_frame, text='열교환기 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=14, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 입구(축열)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=15, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 출구(축열)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=16, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 출구(축열)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=17, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 입구(Smart)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=18, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 출구(Smart)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=19, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프 출구(Smart)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=20, column=0, pady=5)
-        Label(data_header_frame, text='버퍼탱크 내부', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=21, column=0, pady=5)
-        Label(data_header_frame, text='축열탱크 내부', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=22, column=0, pady=5)
-        Label(data_header_frame, text='Smart탱크 내부', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=23, column=0, pady=5)
-        Label(data_header_frame, text='히트펌프', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=24, column=0, pady=5)
-        Label(data_header_frame, text='실내', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=25, column=0, pady=5)
-        Label(data_header_frame, text='실내 입구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=26, column=0, pady=5)
-        Label(data_header_frame, text='실내 출구', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=27, column=0, pady=5)
-        Label(data_header_frame, text='실내 출구(축열)', font=setFont(), fg='white', bg='#2f323b', width=15).grid(row=28, column=0, pady=5)
+        Label(data_header_frame, text='PVT 컬렉터', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=1,
+                                                                                                          column=0,
+                                                                                                          pady=(10, 5),
+                                                                                                          rowspan=8)
+        Label(data_header_frame, text='버퍼 탱크', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=9, column=0,
+                                                                                                        pady=7,
+                                                                                                        rowspan=3)
+        Label(data_header_frame, text='저장 탱크', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=12,
+                                                                                                        column=0,
+                                                                                                        pady=7,
+                                                                                                        rowspan=4)
+        Label(data_header_frame, text='급탕 탱크', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=16,
+                                                                                                        column=0,
+                                                                                                        pady=7,
+                                                                                                        rowspan=4)
+        Label(data_header_frame, text='부하 전력', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=20,
+                                                                                                        column=0,
+                                                                                                        pady=7,
+                                                                                                        rowspan=5)
+        Label(data_header_frame, text='웨더스테이션', font=setFont(), fg='white', bg='#2f323b', width=12).grid(row=25,
+                                                                                                         column=0,
+                                                                                                         pady=7,
+                                                                                                         rowspan=8)
 
-        Label(data_header_frame, text='공기온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=1, column=1)
-        Label(data_header_frame, text='공기습도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=2, column=1)
-        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=3, column=1)
-        Label(data_header_frame, text='공기온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=4, column=1)
-        Label(data_header_frame, text='공기습도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=5, column=1)
-        Label(data_header_frame, text='내부온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=6, column=1)
-        Label(data_header_frame, text='발전전력', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=7, column=1)
-        Label(data_header_frame, text='발전전압', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=8, column=1)
-        Label(data_header_frame, text='발전전류', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=9, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=10, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=11, column=1)
-        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=12, column=1)
-        Label(data_header_frame, text='공기온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=13, column=1)
-        Label(data_header_frame, text='공기습도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=14, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=15, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=16, column=1)
-        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=17, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=18, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=19, column=1)
-        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=20, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=21, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=22, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=23, column=1)
-        Label(data_header_frame, text='전력사용량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=24, column=1)
-        Label(data_header_frame, text='공기온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=25, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=26, column=1)
-        Label(data_header_frame, text='유체온도', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=27, column=1)
-        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=28, column=1)
+        # PVT 컬렉터
+        Label(data_header_frame, text='발전량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=1, column=1,
+                                                                                                      pady=(10, 5))
+        Label(data_header_frame, text='내부온도1', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=2, column=1,
+                                                                                                        pady=7)
+        Label(data_header_frame, text='내부온도2', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=3, column=1,
+                                                                                                        pady=7)
+        Label(data_header_frame, text='내부온도3', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=4, column=1,
+                                                                                                        pady=7)
+        Label(data_header_frame, text='입구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=5, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='입구습도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=6, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='출구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=7, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='출구습도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=8, column=1,
+                                                                                                       pady=7)
+        # 버퍼탱크
+        Label(data_header_frame, text='탱크온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=9, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='입구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=10, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=11, column=1,
+                                                                                                       pady=7)
+        # 저장탱크
+        Label(data_header_frame, text='입구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=12, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='출구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=13, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='입구유량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=14, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='출구유량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=15, column=1,
+                                                                                                       pady=7)
+        # 급탕탱크
+        Label(data_header_frame, text='탱크온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=16, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='입구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=17, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='출구온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=18, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='유체유량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=19, column=1,
+                                                                                                       pady=7)
+        # 부하 전력
+        Label(data_header_frame, text='히트펌프', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=20, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='버퍼탱크', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=21, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='저장탱크', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=22, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='급탕탱크', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=23, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='열   선', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=24,
+                                                                                                        column=1,
+                                                                                                        pady=7)
+        # 웨더스테이션
+        Label(data_header_frame, text='외기온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=25, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='외기습도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=26, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='일 사 량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=27,
+                                                                                                        column=1,
+                                                                                                        pady=7)
+        Label(data_header_frame, text='풍    속', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=28,
+                                                                                                         column=1,
+                                                                                                         pady=7)
+        Label(data_header_frame, text='강 수 량', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=29,
+                                                                                                        column=1,
+                                                                                                        pady=7)
+        Label(data_header_frame, text='실내온도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=30, column=1,
+                                                                                                       pady=7)
+        Label(data_header_frame, text='실내습도', font=setFont(), fg='white', bg='#2f323b', width=10).grid(row=31, column=1,
+                                                                                                       pady=7)
 
         # 실시간 데이터
-        detail_Activity.pvt_in_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_in_temp.grid(row=1, column=2)
+        detail_Activity.pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                          width=7)
+        detail_Activity.pvt_power.grid(row=1, column=2)
 
-        detail_Activity.pvt_in_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_in_humi.grid(row=2, column=2)
+        detail_Activity.pvt_inside_temp1 = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.pvt_inside_temp1.grid(row=2, column=2)
 
-        detail_Activity.pvt_in_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_in_flux.grid(row=3, column=2)
+        detail_Activity.pvt_inside_temp2 = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.pvt_inside_temp2.grid(row=3, column=2)
 
-        detail_Activity.pvt_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_out_temp.grid(row=4, column=2)
+        detail_Activity.pvt_inside_temp3 = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.pvt_inside_temp3.grid(row=4, column=2)
 
-        detail_Activity.pvt_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_out_humi.grid(row=5, column=2)
+        detail_Activity.pvt_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.pvt_inner_temp.grid(row=5, column=2)
 
-        detail_Activity.pvt_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_inside_temp.grid(row=6, column=2)
+        detail_Activity.pvt_inner_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.pvt_inner_humi.grid(row=6, column=2)
 
-        detail_Activity.pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_power.grid(row=7, column=2)
+        detail_Activity.pvt_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.pvt_outer_temp.grid(row=7, column=2)
 
-        detail_Activity.pvt_voltage = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_voltage.grid(row=8, column=2)
+        detail_Activity.pvt_outer_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.pvt_outer_humi.grid(row=8, column=2)
 
-        detail_Activity.pvt_current = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.pvt_current.grid(row=9, column=2)
+        detail_Activity.buffer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                            width=7)
+        detail_Activity.buffer_temp.grid(row=9, column=2)
 
-        detail_Activity.changer_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.changer_in_wtemp.grid(row=10, column=2)
+        detail_Activity.buffer_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                  width=7)
+        detail_Activity.buffer_inner_temp.grid(row=10, column=2)
 
-        detail_Activity.changer_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.changer_out_wtemp.grid(row=11, column=2)
+        detail_Activity.buffer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                            width=7)
+        detail_Activity.buffer_flux.grid(row=11, column=2)
 
-        detail_Activity.changer_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.changer_out_flux.grid(row=12, column=2)
+        detail_Activity.storage_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b', width=7)
+        detail_Activity.storage_inner_temp.grid(row=12, column=2)
 
-        detail_Activity.changer_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.changer_out_temp.grid(row=13, column=2)
+        detail_Activity.storage_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b', width=7)
+        detail_Activity.storage_outer_temp.grid(row=13, column=2)
 
-        detail_Activity.changer_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.changer_out_humi.grid(row=14, column=2)
+        detail_Activity.storage_inner_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b', width=7)
+        detail_Activity.storage_inner_flux.grid(row=14, column=2)
 
-        detail_Activity.heat_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_in_wtemp.grid(row=15, column=2)
+        detail_Activity.storage_outer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b', width=7)
+        detail_Activity.storage_outer_flux.grid(row=15, column=2)
 
-        detail_Activity.heat_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_out_wtemp.grid(row=16, column=2)
+        detail_Activity.dhw_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
+        detail_Activity.dhw_temp.grid(row=16, column=2)
 
-        detail_Activity.heat_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_out_flux.grid(row=17, column=2)
+        detail_Activity.dhw_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.dhw_inner_temp.grid(row=17, column=2)
 
-        detail_Activity.heat_in_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_in_smart_wtemp.grid(row=18, column=2)
+        detail_Activity.dhw_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.dhw_outer_temp.grid(row=18, column=2)
 
-        detail_Activity.heat_out_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_out_smart_wtemp.grid(row=19, column=2)
+        detail_Activity.dhw_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
+        detail_Activity.dhw_flux.grid(row=19, column=2)
 
-        detail_Activity.heat_out_smart_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_out_smart_flux.grid(row=20, column=2)
+        detail_Activity.heatpump_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.heatpump_power.grid(row=20, column=2)
 
-        detail_Activity.heat_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_inside_temp.grid(row=21, column=2)
+        detail_Activity.buffer_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.buffer_power.grid(row=21, column=2)
 
-        detail_Activity.storage_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.storage_inside_temp.grid(row=22, column=2)
+        detail_Activity.storage_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.storage_power.grid(row=22, column=2)
 
-        detail_Activity.smart_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.smart_inside_temp.grid(row=23, column=2)
+        detail_Activity.dhw_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                          width=7)
+        detail_Activity.dhw_power.grid(row=23, column=2)
 
-        detail_Activity.heat_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.heat_power.grid(row=24, column=2)
+        detail_Activity.heatline_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.heatline_power.grid(row=24, column=2)
 
-        detail_Activity.inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.inside_temp.grid(row=25, column=2)
+        detail_Activity.outside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.outside_temp.grid(row=25, column=2)
 
-        detail_Activity.inside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.inside_wtemp.grid(row=26, column=2)
+        detail_Activity.outside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.outside_humi.grid(row=26, column=2)
 
-        detail_Activity.outside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.outside_wtemp.grid(row=27, column=2)
+        detail_Activity.insolation = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                           width=7)
+        detail_Activity.insolation.grid(row=27, column=2)
 
-        detail_Activity.outside_flux = Label(data_header_frame, text='4678.456', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.outside_flux.grid(row=28, column=2)
+        detail_Activity.wind_speed = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                           width=7)
+        detail_Activity.wind_speed.grid(row=28, column=2)
+
+        # detail_Activity.pressure = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+        #                                  width=7)
+        # detail_Activity.pressure.grid(row=29, column=2)
+
+        detail_Activity.rainfall = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                         width=7)
+        detail_Activity.rainfall.grid(row=29, column=2)
+
+        detail_Activity.inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                            bg='#2f323b', width=7)
+        detail_Activity.inside_temp.grid(row=30, column=2)
+
+        detail_Activity.inside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                            bg='#2f323b', width=7)
+        detail_Activity.inside_humi.grid(row=31, column=2)
 
         # 최대 데이터
-        detail_Activity.max_pvt_in_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_in_temp.grid(row=1, column=2)
+        detail_Activity.max_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.max_pvt_power.grid(row=1, column=3)
 
-        detail_Activity.max_pvt_in_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_in_humi.grid(row=2, column=3)
+        detail_Activity.max_pvt_inside_temp1 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.max_pvt_inside_temp1.grid(row=2, column=3)
 
-        detail_Activity.max_pvt_in_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_in_flux.grid(row=3, column=3)
+        detail_Activity.max_pvt_inside_temp2 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.max_pvt_inside_temp2.grid(row=3, column=3)
 
-        detail_Activity.max_pvt_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_out_temp.grid(row=4, column=3)
+        detail_Activity.max_pvt_inside_temp3 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.max_pvt_inside_temp3.grid(row=4, column=3)
 
-        detail_Activity.max_pvt_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_out_humi.grid(row=5, column=3)
+        detail_Activity.max_pvt_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_pvt_inner_temp.grid(row=5, column=3)
 
-        detail_Activity.max_pvt_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_inside_temp.grid(row=6, column=3)
+        detail_Activity.max_pvt_inner_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_pvt_inner_humi.grid(row=6, column=3)
 
-        detail_Activity.max_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_power.grid(row=7, column=3)
+        detail_Activity.max_pvt_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_pvt_outer_temp.grid(row=7, column=3)
 
-        detail_Activity.max_pvt_voltage = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_voltage.grid(row=8, column=3)
+        detail_Activity.max_pvt_outer_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_pvt_outer_humi.grid(row=8, column=3)
 
-        detail_Activity.max_pvt_current = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_pvt_current.grid(row=9, column=3)
+        detail_Activity.max_buffer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.max_buffer_temp.grid(row=9, column=3)
 
-        detail_Activity.max_changer_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_changer_in_wtemp.grid(row=10, column=3)
+        detail_Activity.max_buffer_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                      bg='#2f323b',
+                                                      width=7)
+        detail_Activity.max_buffer_inner_temp.grid(row=10, column=3)
 
-        detail_Activity.max_changer_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_changer_out_wtemp.grid(row=11, column=3)
+        detail_Activity.max_buffer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.max_buffer_flux.grid(row=11, column=3)
 
-        detail_Activity.max_changer_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_changer_out_flux.grid(row=12, column=3)
+        detail_Activity.max_storage_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.max_storage_inner_temp.grid(row=12, column=3)
 
-        detail_Activity.max_changer_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_changer_out_temp.grid(row=13, column=3)
+        detail_Activity.max_storage_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.max_storage_outer_temp.grid(row=13, column=3)
 
-        detail_Activity.max_changer_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_changer_out_humi.grid(row=14, column=3)
+        detail_Activity.max_storage_inner_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.max_storage_inner_flux.grid(row=14, column=3)
 
-        detail_Activity.max_heat_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_in_wtemp.grid(row=15, column=3)
+        detail_Activity.max_storage_outer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.max_storage_outer_flux.grid(row=15, column=3)
 
-        detail_Activity.max_heat_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_out_wtemp.grid(row=16, column=3)
+        detail_Activity.max_dhw_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.max_dhw_temp.grid(row=16, column=3)
 
-        detail_Activity.max_heat_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_out_flux.grid(row=17, column=3)
+        detail_Activity.max_dhw_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_dhw_inner_temp.grid(row=17, column=3)
 
-        detail_Activity.max_heat_in_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_in_smart_wtemp.grid(row=18, column=3)
+        detail_Activity.max_dhw_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_dhw_outer_temp.grid(row=18, column=3)
 
-        detail_Activity.max_heat_out_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_out_smart_wtemp.grid(row=19, column=3)
+        detail_Activity.max_dhw_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.max_dhw_flux.grid(row=19, column=3)
 
-        detail_Activity.max_heat_out_smart_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_out_smart_flux.grid(row=20, column=3)
+        detail_Activity.max_heatpump_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_heatpump_power.grid(row=20, column=3)
 
-        detail_Activity.max_heat_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_inside_temp.grid(row=21, column=3)
+        detail_Activity.max_buffer_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.max_buffer_power.grid(row=21, column=3)
 
-        detail_Activity.max_storage_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_storage_inside_temp.grid(row=22, column=3)
+        detail_Activity.max_storage_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                  width=7)
+        detail_Activity.max_storage_power.grid(row=22, column=3)
 
-        detail_Activity.max_smart_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_smart_inside_temp.grid(row=23, column=3)
+        detail_Activity.max_dhw_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.max_dhw_power.grid(row=23, column=3)
 
-        detail_Activity.max_heat_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_heat_power.grid(row=24, column=3)
+        detail_Activity.max_heatline_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.max_heatline_power.grid(row=24, column=3)
 
-        detail_Activity.max_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_inside_temp.grid(row=25, column=3)
+        detail_Activity.max_outside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.max_outside_temp.grid(row=25, column=3)
 
-        detail_Activity.max_inside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_inside_wtemp.grid(row=26, column=3)
+        detail_Activity.max_outside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.max_outside_humi.grid(row=26, column=3)
 
-        detail_Activity.max_outside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_outside_wtemp.grid(row=27, column=3)
+        detail_Activity.max_insolation = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.max_insolation.grid(row=27, column=3)
 
-        detail_Activity.max_outside_flux = Label(data_header_frame, text='4678.456', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.max_outside_flux.grid(row=28, column=3)
+        detail_Activity.max_wind_speed = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.max_wind_speed.grid(row=28, column=3)
+
+        detail_Activity.max_rainfall = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                             bg='#2f323b', width=7)
+        detail_Activity.max_rainfall.grid(row=29, column=3)
+
+        detail_Activity.max_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.max_inside_temp.grid(row=30, column=3)
+
+        detail_Activity.max_inside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.max_inside_humi.grid(row=31, column=3)
 
         # 최소 데이터
-        detail_Activity.min_pvt_in_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_in_temp.grid(row=1, column=4)
+        detail_Activity.min_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.min_pvt_power.grid(row=1, column=4)
 
-        detail_Activity.min_pvt_in_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_in_humi.grid(row=2, column=4)
+        detail_Activity.min_pvt_inside_temp1 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.min_pvt_inside_temp1.grid(row=2, column=4)
 
-        detail_Activity.min_pvt_in_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_in_flux.grid(row=3, column=4)
+        detail_Activity.min_pvt_inside_temp2 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.min_pvt_inside_temp2.grid(row=3, column=4)
 
-        detail_Activity.min_pvt_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_out_temp.grid(row=4, column=4)
+        detail_Activity.min_pvt_inside_temp3 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.min_pvt_inside_temp3.grid(row=4, column=4)
 
-        detail_Activity.min_pvt_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_out_humi.grid(row=5, column=4)
+        detail_Activity.min_pvt_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_pvt_inner_temp.grid(row=5, column=4)
 
-        detail_Activity.min_pvt_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_inside_temp.grid(row=6, column=4)
+        detail_Activity.min_pvt_inner_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_pvt_inner_humi.grid(row=6, column=4)
 
-        detail_Activity.min_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_power.grid(row=7, column=4)
+        detail_Activity.min_pvt_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_pvt_outer_temp.grid(row=7, column=4)
 
-        detail_Activity.min_pvt_voltage = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_voltage.grid(row=8, column=4)
+        detail_Activity.min_pvt_outer_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_pvt_outer_humi.grid(row=8, column=4)
 
-        detail_Activity.min_pvt_current = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_pvt_current.grid(row=9, column=4)
+        detail_Activity.min_buffer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.min_buffer_temp.grid(row=9, column=4)
 
-        detail_Activity.min_changer_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_changer_in_wtemp.grid(row=10, column=4)
+        detail_Activity.min_buffer_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                      bg='#2f323b',
+                                                      width=7)
+        detail_Activity.min_buffer_inner_temp.grid(row=10, column=4)
 
-        detail_Activity.min_changer_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_changer_out_wtemp.grid(row=11, column=4)
+        detail_Activity.min_buffer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.min_buffer_flux.grid(row=11, column=4)
 
-        detail_Activity.min_changer_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_changer_out_flux.grid(row=12, column=4)
+        detail_Activity.min_storage_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.min_storage_inner_temp.grid(row=12, column=4)
 
-        detail_Activity.min_changer_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_changer_out_temp.grid(row=13, column=4)
+        detail_Activity.min_storage_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.min_storage_outer_temp.grid(row=13, column=4)
 
-        detail_Activity.min_changer_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_changer_out_humi.grid(row=14, column=4)
+        detail_Activity.min_storage_inner_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.min_storage_inner_flux.grid(row=14, column=4)
 
-        detail_Activity.min_heat_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_in_wtemp.grid(row=15, column=4)
+        detail_Activity.min_storage_outer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.min_storage_outer_flux.grid(row=15, column=4)
 
-        detail_Activity.min_heat_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_out_wtemp.grid(row=16, column=4)
+        detail_Activity.min_dhw_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.min_dhw_temp.grid(row=16, column=4)
 
-        detail_Activity.min_heat_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_out_flux.grid(row=17, column=4)
+        detail_Activity.min_dhw_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_dhw_inner_temp.grid(row=17, column=4)
 
-        detail_Activity.min_heat_in_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_in_smart_wtemp.grid(row=18, column=4)
+        detail_Activity.min_dhw_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_dhw_outer_temp.grid(row=18, column=4)
 
-        detail_Activity.min_heat_out_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_out_smart_wtemp.grid(row=19, column=4)
+        detail_Activity.min_dhw_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.min_dhw_flux.grid(row=19, column=4)
 
-        detail_Activity.min_heat_out_smart_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_out_smart_flux.grid(row=20, column=4)
+        detail_Activity.min_heatpump_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_heatpump_power.grid(row=20, column=4)
 
-        detail_Activity.min_heat_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_inside_temp.grid(row=21, column=4)
+        detail_Activity.min_buffer_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.min_buffer_power.grid(row=21, column=4)
 
-        detail_Activity.min_storage_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_storage_inside_temp.grid(row=22, column=4)
+        detail_Activity.min_storage_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                  width=7)
+        detail_Activity.min_storage_power.grid(row=22, column=4)
 
-        detail_Activity.min_smart_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_smart_inside_temp.grid(row=23, column=4)
+        detail_Activity.min_dhw_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.min_dhw_power.grid(row=23, column=4)
 
-        detail_Activity.min_heat_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_heat_power.grid(row=24, column=4)
+        detail_Activity.min_heatline_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.min_heatline_power.grid(row=24, column=4)
 
-        detail_Activity.min_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_inside_temp.grid(row=25, column=4)
+        detail_Activity.min_outside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.min_outside_temp.grid(row=25, column=4)
 
-        detail_Activity.min_inside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_inside_wtemp.grid(row=26, column=4)
+        detail_Activity.min_outside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.min_outside_humi.grid(row=26, column=4)
 
-        detail_Activity.min_outside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_outside_wtemp.grid(row=27, column=4)
+        detail_Activity.min_insolation = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.min_insolation.grid(row=27, column=4)
 
-        detail_Activity.min_outside_flux = Label(data_header_frame, text='4678.456', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.min_outside_flux.grid(row=28, column=4)
+        detail_Activity.min_wind_speed = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.min_wind_speed.grid(row=28, column=4)
+
+        detail_Activity.min_rainfall = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                             bg='#2f323b', width=7)
+        detail_Activity.min_rainfall.grid(row=29, column=4)
+
+        detail_Activity.min_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.min_inside_temp.grid(row=30, column=4)
+
+        detail_Activity.min_inside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.min_inside_humi.grid(row=31, column=4)
 
         # 평균 데이터
-        detail_Activity.avg_pvt_in_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_in_temp.grid(row=1, column=5)
+        detail_Activity.avg_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.avg_pvt_power.grid(row=1, column=5)
 
-        detail_Activity.avg_pvt_in_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_in_humi.grid(row=2, column=5)
+        detail_Activity.avg_pvt_inside_temp1 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.avg_pvt_inside_temp1.grid(row=2, column=5)
 
-        detail_Activity.avg_pvt_in_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_in_flux.grid(row=3, column=5)
+        detail_Activity.avg_pvt_inside_temp2 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.avg_pvt_inside_temp2.grid(row=3, column=5)
 
-        detail_Activity.avg_pvt_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_out_temp.grid(row=4, column=5)
+        detail_Activity.avg_pvt_inside_temp3 = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                     bg='#2f323b',
+                                                     width=7)
+        detail_Activity.avg_pvt_inside_temp3.grid(row=4, column=5)
 
-        detail_Activity.avg_pvt_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_out_humi.grid(row=5, column=5)
+        detail_Activity.avg_pvt_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_pvt_inner_temp.grid(row=5, column=5)
 
-        detail_Activity.avg_pvt_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_inside_temp.grid(row=6, column=5)
+        detail_Activity.avg_pvt_inner_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_pvt_inner_humi.grid(row=6, column=5)
 
-        detail_Activity.avg_pvt_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_power.grid(row=7, column=5)
+        detail_Activity.avg_pvt_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_pvt_outer_temp.grid(row=7, column=5)
 
-        detail_Activity.avg_pvt_voltage = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_voltage.grid(row=8, column=5)
+        detail_Activity.avg_pvt_outer_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_pvt_outer_humi.grid(row=8, column=5)
 
-        detail_Activity.avg_pvt_current = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_pvt_current.grid(row=9, column=5)
+        detail_Activity.avg_buffer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.avg_buffer_temp.grid(row=9, column=5)
 
-        detail_Activity.avg_changer_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_changer_in_wtemp.grid(row=10, column=5)
+        detail_Activity.avg_buffer_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                      bg='#2f323b',
+                                                      width=7)
+        detail_Activity.avg_buffer_inner_temp.grid(row=10, column=5)
 
-        detail_Activity.avg_changer_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_changer_out_wtemp.grid(row=11, column=5)
+        detail_Activity.avg_buffer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                width=7)
+        detail_Activity.avg_buffer_flux.grid(row=11, column=5)
 
-        detail_Activity.avg_changer_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_changer_out_flux.grid(row=12, column=5)
+        detail_Activity.avg_storage_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.avg_storage_inner_temp.grid(row=12, column=5)
 
-        detail_Activity.avg_changer_out_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_changer_out_temp.grid(row=13, column=5)
+        detail_Activity.avg_storage_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.avg_storage_outer_temp.grid(row=13, column=5)
 
-        detail_Activity.avg_changer_out_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_changer_out_humi.grid(row=14, column=5)
+        detail_Activity.avg_storage_inner_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.avg_storage_inner_flux.grid(row=14, column=5)
 
-        detail_Activity.avg_heat_in_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_in_wtemp.grid(row=15, column=5)
+        detail_Activity.avg_storage_outer_flux = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                       bg='#2f323b', width=7)
+        detail_Activity.avg_storage_outer_flux.grid(row=15, column=5)
 
-        detail_Activity.avg_heat_out_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_out_wtemp.grid(row=16, column=5)
+        detail_Activity.avg_dhw_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.avg_dhw_temp.grid(row=16, column=5)
 
-        detail_Activity.avg_heat_out_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_out_flux.grid(row=17, column=5)
+        detail_Activity.avg_dhw_inner_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_dhw_inner_temp.grid(row=17, column=5)
 
-        detail_Activity.avg_heat_in_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_in_smart_wtemp.grid(row=18, column=5)
+        detail_Activity.avg_dhw_outer_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_dhw_outer_temp.grid(row=18, column=5)
 
-        detail_Activity.avg_heat_out_smart_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_out_smart_wtemp.grid(row=19, column=5)
+        detail_Activity.avg_dhw_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                             width=7)
+        detail_Activity.avg_dhw_flux.grid(row=19, column=5)
 
-        detail_Activity.avg_heat_out_smart_flux = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_out_smart_flux.grid(row=20, column=5)
+        detail_Activity.avg_heatpump_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_heatpump_power.grid(row=20, column=5)
 
-        detail_Activity.avg_heat_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_inside_temp.grid(row=21, column=5)
+        detail_Activity.avg_buffer_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.avg_buffer_power.grid(row=21, column=5)
 
-        detail_Activity.avg_storage_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_storage_inside_temp.grid(row=22, column=5)
+        detail_Activity.avg_storage_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                  width=7)
+        detail_Activity.avg_storage_power.grid(row=22, column=5)
 
-        detail_Activity.avg_smart_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_smart_inside_temp.grid(row=23, column=5)
+        detail_Activity.avg_dhw_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                              width=7)
+        detail_Activity.avg_dhw_power.grid(row=23, column=5)
 
-        detail_Activity.avg_heat_power = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_heat_power.grid(row=24, column=5)
+        detail_Activity.avg_heatline_power = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                   bg='#2f323b',
+                                                   width=7)
+        detail_Activity.avg_heatline_power.grid(row=24, column=5)
 
-        detail_Activity.avg_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_inside_temp.grid(row=25, column=5)
+        detail_Activity.avg_outside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.avg_outside_temp.grid(row=25, column=5)
 
-        detail_Activity.avg_inside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_inside_wtemp.grid(row=26, column=5)
+        detail_Activity.avg_outside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                                 width=7)
+        detail_Activity.avg_outside_humi.grid(row=26, column=5)
 
-        detail_Activity.avg_outside_wtemp = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_outside_wtemp.grid(row=27, column=5)
+        detail_Activity.avg_insolation = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.avg_insolation.grid(row=27, column=5)
 
-        detail_Activity.avg_outside_flux = Label(data_header_frame, text='4678.456', font=setFont(), fg='white', bg='#2f323b', width=7)
-        detail_Activity.avg_outside_flux.grid(row=28, column=5)
+        detail_Activity.avg_wind_speed = Label(data_header_frame, text='-', font=setFont(), fg='white', bg='#2f323b',
+                                               width=7)
+        detail_Activity.avg_wind_speed.grid(row=28, column=5)
+
+        detail_Activity.avg_rainfall = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                             bg='#2f323b', width=7)
+        detail_Activity.avg_rainfall.grid(row=29, column=5)
+
+        detail_Activity.avg_inside_temp = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.avg_inside_temp.grid(row=30, column=5)
+
+        detail_Activity.avg_inside_humi = Label(data_header_frame, text='-', font=setFont(), fg='white',
+                                                bg='#2f323b', width=7)
+        detail_Activity.avg_inside_humi.grid(row=31, column=5)
 
         # 단위 데이터
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=1, column=6)
-        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=2, column=6)
-        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=3, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=1, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=2, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=3, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=4, column=6)
-        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=5, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=6, column=6)
-        Label(data_header_frame, text='kW', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=7, column=6)
-        Label(data_header_frame, text='V', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=8, column=6)
-        Label(data_header_frame, text='A', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=9, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=5, column=6)
+        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=6, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=7, column=6)
+        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=8, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=9, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=10, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=11, column=6)
-        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=12, column=6)
+        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=11, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=12, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=13, column=6)
-        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=14, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=15, column=6)
+        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=14, column=6)
+        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=15, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=16, column=6)
-        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=17, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=17, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=18, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=19, column=6)
-        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=20, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=21, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=22, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=23, column=6)
-        Label(data_header_frame, text='kW', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=24, column=6)
+        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=19, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=20, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=21, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=22, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=23, column=6)
+        Label(data_header_frame, text='W', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=24, column=6)
         Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=25, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=26, column=6)
-        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=27, column=6)
-        Label(data_header_frame, text='LPM', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=28, column=6)
-
+        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=26, column=6)
+        Label(data_header_frame, text='W/m²', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=27, column=6)
+        Label(data_header_frame, text='m/s', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=28, column=6)
+        Label(data_header_frame, text='mm/h', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=29, column=6)
+        Label(data_header_frame, text='℃', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=30, column=6)
+        Label(data_header_frame, text='%', font=setFont(), fg='white', bg='#2f323b', width=8).grid(row=31, column=6)
