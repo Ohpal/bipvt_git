@@ -580,14 +580,14 @@ def set_detail_heatpump_ui():
 
 
 def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, heatpump_dhwcool_getTemp,heatpump_dhwhot_getTemp):
-    ui.control_Activity.control_Activity.heatpump_cool_temp_entry(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_cool_temp_entry('end', int(heatpump_cool_getTemp))
+    ui.control_Activity.control_Activity.heatpump_cool_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_cool_temp_entry.insert('end', int(heatpump_cool_getTemp))
 
-    ui.control_Activity.control_Activity.heatpump_hot_temp_entry(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_hot_temp_entry('end', int(heatpump_hot_getTemp))
+    ui.control_Activity.control_Activity.heatpump_hot_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_hot_temp_entry.insert('end', int(heatpump_hot_getTemp))
 
-    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry('end', int(heatpump_dhwcool_getTemp))
+    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry.insert('end', int(heatpump_dhwcool_getTemp))
 
-    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry('end', int(heatpump_dhwhot_getTemp))
+    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry.insert('end', int(heatpump_dhwhot_getTemp))

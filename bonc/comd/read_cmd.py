@@ -62,21 +62,6 @@ def heatpump_serial_client():
         comd.var.heatpump_connect_status = False
 
 
-def fcu_client():
-    global fcu_client
-    try:
-        hosting = comd.var.fcu_ip
-        porting = int(comd.var.fcu_port)
-
-        fcu_client = ModbusTcpClient(hosting, porting)
-        fcu_client.inter_char_timeout = 3
-
-        return fcu_client
-    except Exception as ex:
-        print('fcu_client() Exception -> ', ex)
-        comd.var.fcu_connect_status = False
-
-
 # Modbus Connection Function
 def connect_bipvt():
     global bipvt_client
@@ -96,16 +81,6 @@ def connect_heatpump():
     except Exception as ex:
         # print('connect_heatpump() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
-
-
-def connect_fcu():
-    global fcu_client
-    try:
-        fcu_connection = fcu_client.connect()
-        return fcu_connection
-    except Exception as ex:
-        print('connect_fcu() Exception -> ', ex)
-        comd.var.fcu_connect_status = False
 
 
 # BIPVT Data Read and Write Function
@@ -128,72 +103,6 @@ def bipvt_read_status():
         return bipvt_read_status
     except Exception as ex:
         print('bipvt_read_status() Exception -> ', ex)
-
-
-def damper_on():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(0, 1, unit=1)
-    except Exception as ex:
-        print('damper_on() Exception -> ', ex)
-
-
-def damper_off():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(0, 0, unit=1)
-    except Exception as ex:
-        print('damper_off() Exception -> ', ex)
-
-
-def fan_on():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(1, 1, unit=1)
-        comd.var.fan_state = True
-    except Exception as ex:
-        print('fan_on() Exception -> ', ex)
-
-
-def fan_off():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(1, 0, unit=1)
-        comd.var.fan_state = False
-    except Exception as ex:
-        print('fan_off() Exception -> ', ex)
-
-
-def exchanger_on():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(2, 1, unit=1)
-    except Exception as ex:
-        print('water_heat_on() Exception -> ', ex)
-
-
-def exchanger_off():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(2, 0, unit=1)
-    except Exception as ex:
-        print('water_heat_off() Exception -> ', ex)
-
-
-def buffer_on():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(3, 1, unit=1)
-    except Exception as ex:
-        print('buffer_on() Exception -> ', ex)
-
-
-def buffer_off():
-    global bipvt_client
-    try:
-        bipvt_client.write_coil(3, 0, unit=1)
-    except Exception as ex:
-        print('buffer_off() Exception -> ', ex)
 
 
 # Heatpump Read and Write Function
@@ -238,12 +147,14 @@ def heatpump_temp_setting():
     except Exception as ex:
         print('heatpump_temp_setting() Exception -> ', ex)
 
+
 def heatpump_cool_setTemp(val):
     global heatpump_client
     try:
         heatpump_client.write_registers(11, val * 10, unit=1)
     except Exception as ex:
         print('heatpump_cool_setTemp() Exception -> ', ex)
+
 
 def heatpump_hot_setTemp(val):
     global heatpump_client
@@ -252,12 +163,14 @@ def heatpump_hot_setTemp(val):
     except Exception as ex:
         print('heatpump_hot_setTemp() Exception -> ', ex)
 
+
 def heatpump_dhwcool_setTemp(val):
     global heatpump_client
     try:
         heatpump_client.write_registers(14, val * 10, unit=1)
     except Exception as ex:
         print('heatpump_dhwcool_setTemp() Exception -> ', ex)
+
 
 def heatpump_dhwhot_setTemp(val):
     global heatpump_client
@@ -266,10 +179,11 @@ def heatpump_dhwhot_setTemp(val):
     except Exception as ex:
         print('heatpump_dhwhot_setTemp() Exception -> ', ex)
 
+
 def heatpump_on():
     global heatpump_client
     try:
-        heatpump_client.write_coil(2, 1, unit=1)
+        heatpump_client.write_coil(3, 1, unit=1)
     except Exception as ex:
         print('heatpump_on() Exception -> ', ex)
 
@@ -277,57 +191,9 @@ def heatpump_on():
 def heatpump_off():
     global heatpump_client
     try:
-        heatpump_client.write_coil(2, 0, unit=1)
-    except Exception as ex:
-        print('heatpump_off() Exception -> ', ex)
-
-
-def doublecoil_on():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(0, 1, unit=1)
-    except Exception as ex:
-        print('doublecoil_on() Exception -> ', ex)
-
-
-def doublecoil_off():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(0, 0, unit=1)
-    except Exception as ex:
-        print('doublecoil_off() Exception -> ', ex)
-
-
-def dhw_on():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(2, 1, unit=1)
-    except Exception as ex:
-        print('doublecoil_on() Exception -> ', ex)
-
-
-def dhw_off():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(2, 0, unit=1)
-    except Exception as ex:
-        print('dhw_off() Exception -> ', ex)
-
-
-def storage_on():
-    global heatpump_client
-    try:
-        heatpump_client.write_coil(3, 1, unit=1)
-    except Exception as ex:
-        print('storage_on() Exception -> ', ex)
-
-
-def storage_off():
-    global heatpump_client
-    try:
         heatpump_client.write_coil(3, 0, unit=1)
     except Exception as ex:
-        print('storage_off() Exception -> ', ex)
+        print('heatpump_off() Exception -> ', ex)
 
 
 def drive_on():
@@ -352,145 +218,6 @@ def mode_control(val):
         heatpump_client.write_registers(1, val, unit=1)
     except Exception as ex:
         print('mode_control() Exception -> ', ex)
-
-
-# FCU Read and Write Function
-def fcu_read_data():
-    global fcu_client
-    try:
-        fcu_read_data = fcu_client.read_coils(0, 24, unit=1)
-        assert (fcu_read_data.function_code <= 0x84)
-        return fcu_read_data
-    except Exception as ex:
-        print('fcu_read_data() Exception -> ', ex)
-
-
-def fcu_drive_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(16, 1, unit=1)
-    except Exception as ex:
-        print('fcu_drive_on() Exception -> ', ex)
-
-
-def fcu_drive_off():
-    global fcu_client
-    try:
-        fcu_client.write_register(16, 0, unit=1)
-    except Exception as ex:
-        print('fcu_drive_off() Exception -> ', ex)
-
-
-def fcu_turbo_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(12, 1, unit=1)
-    except Exception as ex:
-        print('fcu_turbo_on() Exception -> ', ex)
-
-
-def fcu_turbo_off():
-    global fcu_client
-    try:
-        fcu_client.write_register(12, 0, unit=1)
-    except Exception as ex:
-        print('fcu_turbo_off() Exception -> ', ex)
-
-
-def fcu_auto_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(8, 1, unit=1)
-    except Exception as ex:
-        print('fcu_auto_on() Exception -> ', ex)
-
-
-def fcu_auto_off():
-    global fcu_client
-    try:
-        fcu_client.write_register(8, 0, unit=1)
-    except Exception as ex:
-        print('fcu_auto_off() Exception -> ', ex)
-
-
-def fcu_cool_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(1, 1, unit=1)
-    except Exception as ex:
-        print('fcu_cool_on() Exception -> ', ex)
-
-
-def fcu_hot_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(2, 1, unit=1)
-    except Exception as ex:
-        print('fcu_hot_on() Exception -> ', ex)
-
-
-def fcu_wind_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(3, 1, unit=1)
-    except Exception as ex:
-        print('fcu_wind_on() Exception -> ', ex)
-
-
-def fcu_blow_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(3, 1, unit=1)
-    except Exception as ex:
-        print('fcu_wind_on() Exception -> ', ex)
-
-
-def fcu_fan_off():
-    global fcu_client
-    try:
-        fcu_client.write_register(4, 1, unit=1)
-    except Exception as ex:
-        print('fcu_fan_off() Exception -> ', ex)
-
-
-def fcu_fan_low():
-    global fcu_client
-    try:
-        fcu_client.write_register(5, 1, unit=1)
-    except Exception as ex:
-        print('fcu_fan_low() Exception -> ', ex)
-
-
-def fcu_fan_middle():
-    global fcu_client
-    try:
-        fcu_client.write_register(6, 1, unit=1)
-    except Exception as ex:
-        print('fcu_fan_middle() Exception -> ', ex)
-
-
-def fcu_fan_high():
-    global fcu_client
-    try:
-        fcu_client.write_register(7, 1, unit=1)
-    except Exception as ex:
-        print('fcu_fan_high() Exception -> ', ex)
-
-
-def fcu_swing_on():
-    global fcu_client
-    try:
-        fcu_client.write_register(13, 1, unit=1)
-    except Exception as ex:
-        print('fcu_swing_on() Exception -> ', ex)
-
-
-def fcu_swing_off():
-    global fcu_client
-    try:
-        fcu_client.write_register(13, 0, unit=1)
-    except Exception as ex:
-        print('fcu_swing_off() Exception -> ', ex)
 
 
 # System Read and Write Function
@@ -521,14 +248,15 @@ def stop_mode():
     comd.var.manual_mode = False
     comd.var.stop_mode = True
 
-    if comd.var.bipvt_connect_status:
-        exchanger_off()
-        fan_off()
-        buffer_off()
-        damper_off()
-
+    # if comd.var.bipvt_connect_status:
+    #     exchanger_off()
+    #     fan_off()
+    #     buffer_off()
+    #     damper_off()
+    #
     if comd.var.heatpump_connect_status:
-        dhw_off()
-        doublecoil_off()
         heatpump_off()
-        storage_off()
+    #     dhw_off()
+    #     doublecoil_off()
+    #     heatpump_off()
+    #     storage_off()
