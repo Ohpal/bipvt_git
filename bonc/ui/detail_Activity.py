@@ -211,6 +211,9 @@ class detail_Activity(tk.Frame):
         data_title = Label(detail_canvas, text='데이터 상세정보', font=(setFont(25)), fg='white', bg='#2f323b')
         data_title.place(x=20, y=13)
 
+        data_subtitle = Label(detail_canvas, text='(데이터는 1시간 단위로 갱신됩니다)', font=(setFont(13)), fg='white', bg='#2f323b')
+        data_subtitle.place(x=300, y=30)
+
         data_header_frame = Frame(detail_canvas, bg='#2f323b')
         data_header_frame.place(x=20, y=80)
 

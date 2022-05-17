@@ -126,3 +126,7 @@ pv_pre_power = ''
 
 bipvt_packet_data = []
 heatpump_packet_data = []
+
+# 실내 온도 설정
+inner_cool_temp = 23
+inner_hot_temp = 23

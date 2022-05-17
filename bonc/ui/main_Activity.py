@@ -420,13 +420,13 @@ class main_Activity(tk.Frame):
                                                 font=('SCDream5', 15, 'bold'))
         main_Activity.buffer_temp_value.place(x=480 - x, y=655)
 
-        buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼입구온도', fg='white', bg='#2f323b',
-                                  font=('SCDream5', 15, 'bold'))
-        buffer_temp_label.place(x=350 - x, y=685)
-
-        main_Activity.buffer_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
-                                                font=('SCDream5', 15, 'bold'))
-        main_Activity.buffer_inner_temp_value.place(x=480 - x, y=685)
+        # buffer_temp_label = Label(main_Activity.main_canvas, text='버퍼입구온도', fg='white', bg='#2f323b',
+        #                           font=('SCDream5', 15, 'bold'))
+        # buffer_temp_label.place(x=350 - x, y=685)
+        #
+        # main_Activity.buffer_inner_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
+        #                                         font=('SCDream5', 15, 'bold'))
+        # main_Activity.buffer_inner_temp_value.place(x=480 - x, y=685)
 
         # dhw_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b', font=('SCDream5', 15, 'bold'))
         # dhw_status_label.place(x=185 - x, y=780)
@@ -579,7 +579,10 @@ class main_Activity(tk.Frame):
         dateTimeObj = datetime.now() + timedelta(minutes=-nb_points) + timedelta(minutes=30)
         self.x_pre_data = [dateTimeObj + timedelta(minutes=i) for i in range(int(nb_points))]
         self.y_pre_data = [0 for i in range(int(nb_points))]
-        print('LEN_pre', len(self.y_pre_data), len(self.x_pre_data))
+        # self.x_pre_data = db.pg_connect.pre_data_select()
+        # self.x_pre_data =
+        print('Y_pre', self.y_pre_data)
+        print('X_pre', self.x_pre_data)
 
         self.x_data = [dateTimeObj + timedelta(minutes=i) for i in range(int(nb_points) - 30)]
         self.y_data = [0 for i in range(int(nb_points) - 30)]

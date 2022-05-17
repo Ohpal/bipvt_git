@@ -80,8 +80,7 @@ def set_header_data(pv_power, pv_power_total, load_power, load_power_total):
     ui.setting_Activity.setting_Activity.above4_value.config(text='{:,}'.format(load_power_total))
 
 
-def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, outer_humi, wind_speed, bipvt_inside_temp1, bipvt_inside_temp2, bipvt_inside_temp3,  inside_temp, inside_humi,
-                                       damper_status, fan_status, exchanger_status, pv_power, storage_power, buffer_power, heatpump_power, dhw_power):
+def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, outer_humi, wind_speed, bipvt_inside_temp1, bipvt_inside_temp2, bipvt_inside_temp3,  inside_temp, inside_humi, pv_power, storage_power, buffer_power, heatpump_power, dhw_power):
     ui.main_Activity.main_Activity.bipvt_insolation_value.config(text=insolation)
     ui.main_Activity.main_Activity.bipvt_inside_temp_value.config(text=str(round(float(bipvt_inside_temp1+bipvt_inside_temp2+bipvt_inside_temp3)/3, 1)))
     # ui.main_Activity.main_Activity.bipvt_inside_temp_value2.config(text=str(bipvt_inside_temp2) + ' | \n')
@@ -90,9 +89,6 @@ def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, o
     # ui.main_Activity.main_Activity.bipvt_outer_temp_value.config(text=bipvt_outer_temp+'℃')
     ui.main_Activity.main_Activity.fcu_temp_value.config(text=str(inside_temp) + ' ℃')
     ui.main_Activity.main_Activity.fcu_humi_value.config(text=str(inside_humi) + ' %')
-    ui.main_Activity.main_Activity.fan_status_value.config(text=fan_status)
-    ui.main_Activity.main_Activity.damper_status_value.config(text=damper_status)
-    ui.main_Activity.main_Activity.exchanger_status_value.config(text=exchanger_status)
     # ui.main_Activity.main_Activity.buffer_status_value.config(text=buffer_status)
     ui.main_Activity.main_Activity.out_temp_value.config(text=str(outer_temp) + ' ℃')
     ui.main_Activity.main_Activity.out_humi_value.config(text=str(outer_humi) + ' %')
@@ -103,10 +99,16 @@ def set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, o
     ui.main_Activity.main_Activity.buffer_power_value.config(text=str(buffer_power) + ' W')
     ui.main_Activity.main_Activity.dhw_power_value.config(text=str(dhw_power) + ' W')
 
+def set_bipvt_facility(damper_status, fan_status, exchanger_status):
+    ui.main_Activity.main_Activity.fan_status_value.config(text=fan_status)
+    ui.main_Activity.main_Activity.damper_status_value.config(text=damper_status)
+    ui.main_Activity.main_Activity.exchanger_status_value.config(text=exchanger_status)
+
+
 
 def set_heatpump_data(storage_inner_temp, storage_outer_temp, dhw_inner_temp, dhw_outer_temp, dhw_tank_temp, buffer_inner_temp, buffer_tank_temp, heatpump_mode, heatpump_status, heatpump_fault_status, heatpump_control):
-    ui.main_Activity.main_Activity.buffer_temp_value.config(text=str(round(buffer_tank_temp, 1))+' ℃')
-    ui.main_Activity.main_Activity.buffer_inner_temp_value.config(text=str(round(buffer_inner_temp, 1))+' ℃')
+    ui.main_Activity.main_Activity.buffer_temp_value.config(text=str(round(buffer_inner_temp, 1))+' ℃')
+    # ui.main_Activity.main_Activity.buffer_inner_temp_value.config(text=str(round(buffer_inner_temp, 1))+' ℃')
     ui.main_Activity.main_Activity.dhw_temp_value.config(text=str(round(dhw_tank_temp, 1))+' ℃')
     ui.main_Activity.main_Activity.dhw_inner_temp_value.config(text=str(round(dhw_inner_temp, 1))+' ℃')
     ui.main_Activity.main_Activity.dhw_outer_temp_value.config(text=str(round(dhw_outer_temp, 1))+' ℃')
@@ -579,15 +581,15 @@ def set_detail_heatpump_ui():
     ui.detail_Activity.detail_Activity.avg_dhw_outer_temp.config(text=str(round(np.average(comd.var.dhw_outer_temp) , 2)))
 
 
-def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, heatpump_dhwcool_getTemp,heatpump_dhwhot_getTemp):
+def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, inner_cool_temp, inner_hot_temp):
     ui.control_Activity.control_Activity.heatpump_cool_temp_entry.delete(0, 'end')
     ui.control_Activity.control_Activity.heatpump_cool_temp_entry.insert('end', int(heatpump_cool_getTemp))
 
     ui.control_Activity.control_Activity.heatpump_hot_temp_entry.delete(0, 'end')
     ui.control_Activity.control_Activity.heatpump_hot_temp_entry.insert('end', int(heatpump_hot_getTemp))
 
-    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_dhwcool_temp_entry.insert('end', int(heatpump_dhwcool_getTemp))
-
-    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.heatpump_dhwhot_temp_entry.insert('end', int(heatpump_dhwhot_getTemp))
+    ui.control_Activity.control_Activity.inner_cool_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.inner_cool_temp_entry.insert('end', int(inner_cool_temp))
+    #
+    ui.control_Activity.control_Activity.inner_hot_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.inner_hot_temp_entry.insert('end', int(inner_hot_temp))

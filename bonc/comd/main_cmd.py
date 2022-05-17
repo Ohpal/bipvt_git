@@ -213,15 +213,16 @@ def mainLoop():
             buffer_tank_temp = heatpump_read_datas.getRegister(6) * 0.1
 
             heatpump_mode_datas = comd.read_cmd.heatpump_mode_data()
-
-            heatpump_modes = heatpump_mode_datas.getRegister(0)
-            heatpump_statuss = heatpump_mode_datas.getRegister(1)
+            heatpump_statuss = heatpump_mode_datas.getRegister(0)
 
             heatpump_read_setting = comd.read_cmd.heatpump_temp_setting()
             heatpump_cool_getTemp = heatpump_read_setting.getRegister(0) * 0.1
             heatpump_hot_getTemp = heatpump_read_setting.getRegister(1) * 0.1
             heatpump_dhwcool_getTemp = heatpump_read_setting.getRegister(3) * 0.1
             heatpump_dhwhot_getTemp = heatpump_read_setting.getRegister(4) * 0.1
+
+            heatpump_modes_data = comd.read_cmd.heatpump_mode_status()
+            heatpump_modes = heatpump_modes_data.getRegister(0)
 
             if heatpump_modes == 0:
                 heatpump_mode = '냉방'
@@ -261,7 +262,9 @@ def mainLoop():
 
             heatpump_read_status = comd.read_cmd.heatpump_read_status()
             heatpump_fault_status = 'Fault' if heatpump_read_status.bits[0] else 'OK'
-            heatpump_control = 'ON' if heatpump_read_status.bits[1] else 'OFF'
+
+            heatpump_remote_status = comd.read_cmd.heatpump_remote_status()
+            heatpump_control = 'ON' if heatpump_remote_status.bits[0] else 'OFF'
 
             heatpump_packet = [
                 d_time,
@@ -328,64 +331,49 @@ def mainLoop():
         schedule_check = comd.var.schedule_checking
 
         if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
+            bipvt_inner_temps = str(round(float(bipvt_inside_temp1 + bipvt_inside_temp2 + bipvt_inside_temp3) / 3, 1))
+
             if comd.var.auto_mode:
                 print('auto')
-                auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
+                # auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
+                auto_drives(comd.var.inner_cool_temp, comd.var.inner_hot_temp, insolation, bipvt_inner_temps, bipvt_outer_temp, buffer_inner_temp, heatpump_mode, inside_temp)
 
-        elif comd.var.reserve_mode:
-            for i in range(4):
-                if (start_time[i] <= control_time <= end_time[i]) and schedule_check[i] is True:
-                    print('Reserve Now', i)
-                    auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
-                    comd.var.reserve_trigger = True
-                elif start_time[i] > end_time[i] and schedule_check[i] is True:
-                    if start_time[i] <= control_time <= '23:59' or '00:00' <= control_time <= end_time[i] and schedule_check[i] is True:
-                        print('S>E Reserve Now', i)
-                        auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
+            elif comd.var.reserve_mode:
+                for i in range(4):
+                    if (start_time[i] <= control_time <= end_time[i]) and schedule_check[i] is True:
+                        print('Reserve Now', i)
+                        # auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
+                        auto_drives(comd.var.inner_cool_temp, comd.var.inner_hot_temp, insolation, bipvt_inner_temps, bipvt_outer_temp, buffer_inner_temp, heatpump_mode, inside_temp)
                         comd.var.reserve_trigger = True
+                    elif start_time[i] > end_time[i] and schedule_check[i] is True:
+                        if start_time[i] <= control_time <= '23:59' or '00:00' <= control_time <= end_time[i] and schedule_check[i] is True:
+                            print('S>E Reserve Now', i)
+                            # auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp, heatpump_out_temp, heatpump_modes, storage_temp, dhw_temp)
+                            auto_drives(comd.var.inner_cool_temp, comd.var.inner_hot_temp, insolation, bipvt_inner_temps, bipvt_outer_temp, buffer_inner_temp, heatpump_mode, inside_temp)
+                            comd.var.reserve_trigger = True
+                        else:
+                            if comd.var.reserve_trigger:
+                                print('reserve Stop')
+                                comd.var.reserve_trigger = False
+                                comd.read_cmd.stop_mode()
+                            else:
+                                print('reserve Waiting...')
                     else:
+                        if not comd.var.reserve_trigger:
+                            print('reserve Waiting...')
+        #
                         if comd.var.reserve_trigger:
                             print('reserve Stop')
+                            comd.var.reserve_trigger = False
                             comd.read_cmd.stop_mode()
-                        else:
-                            print('reserve Waiting...')
-                else:
-                    if not comd.var.reserve_trigger:
-                        print('reserve Waiting...')
-    #
-                    if comd.var.reserve_trigger:
-                        print('reserve Stop')
-                        comd.read_cmd.stop_mode()
-        elif comd.var.manual_mode:
-            print('manual')
-        else:
-            print('stop Mode')
+            elif comd.var.manual_mode:
+                print('manual')
+            else:
+                print('stop Mode')
     #
     except Exception as ex:
         print('TEMS Control ERROR >> ', ex)
     #     pass
-
-    # Damper/FAN Setting
-    try:
-        if comd.var.bipvt_read:
-            if float(insolation) >= float(comd.var.insolation_volume):
-                fan_status = 'ON'
-            else:
-                fan_status = 'OFF'
-
-            if float(bipvt_inner_temp) >= float(comd.var.damper_volume):
-                damper_status1 = 'ON'
-            else:
-                damper_status1 = 'OFF'
-
-        if comd.var.bipvt_read and comd.var.bipvt_read:
-            if bipvt_outer_temp >= buffer_inner_temp:
-                exchanger_status = 'ON'
-            else:
-                exchanger_status = 'OFF'
-
-    except Exception as ex:
-        print('Damper/Fan Err >> ', ex)
 
     try:
         if comd.var.bipvt_read:
@@ -402,9 +390,7 @@ def mainLoop():
         if comd.var.bipvt_read:
             comd.control_ui.set_bipvt_data(insolation, bipvt_inner_temp, bipvt_outer_temp, outer_temp, outer_humi,
                                            wind_speed, bipvt_inside_temp1, bipvt_inside_temp2, bipvt_inside_temp3,
-                                           inside_temp, inside_humi,
-                                           damper_status1, fan_status, exchanger_status, pv_power, storage_power,
-                                           buffer_power, heatpump_power, dhw_power)
+                                           inside_temp, inside_humi, pv_power, storage_power, buffer_power, heatpump_power, dhw_power)
     except Exception as ex:
         print('set_bipvt_ui Error >> ', ex)
 
@@ -441,9 +427,9 @@ def mainLoop():
         print('set_heatpump_control_ui Error >> ', ex)
 
     try:
-        if not comd.var.heatpump_read:
-            comd.control_ui.set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, heatpump_dhwcool_getTemp,
-                                             heatpump_dhwhot_getTemp)
+        if comd.var.heatpump_read:
+            comd.control_ui.set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, comd.var.inner_cool_temp,
+                                             comd.var.inner_hot_temp)
     except Exception as ex:
         print('set_heatpump_getTemp Error >> ', ex)
 
@@ -644,5 +630,47 @@ def auto_drive(insolation, bipvt_inner_temp, bipvt_outer_temp, buffer_tank_temp,
         else:
             comd.read_cmd.heatpump_on()
 
-def auto_drives():
-    comd.read_cmd.heatpump_on()
+
+def auto_drives(inner_cool_temp, inner_hot_temp, insolation, bipvt_inner_temps, bipvt_outer_temp, buffer_inner_temp, heatpump_mode, inner_temp):
+    # Damper/FAN Setting
+    try:
+        if comd.var.bipvt_read:
+            if float(insolation) >= float(comd.var.insolation_volume):
+                fan_status = 'ON'
+            else:
+                fan_status = 'OFF'
+
+            # bipvt_inner_temps = str(round(float(bipvt_inside_temp1+bipvt_inside_temp2+bipvt_inside_temp3)/3, 1))
+            if float(bipvt_inner_temps) >= float(comd.var.damper_volume):
+                damper_status1 = 'ON'
+            else:
+                damper_status1 = 'OFF'
+
+        if comd.var.bipvt_read and comd.var.heatpump_read:
+            if float(bipvt_outer_temp) >= float(buffer_inner_temp):
+                exchanger_status = 'ON'
+            else:
+                exchanger_status = 'OFF'
+
+        comd.control_ui.set_bipvt_facility(damper_status1, fan_status, exchanger_status)
+
+    except Exception as ex:
+        print('Damper/Fan Err >> ', ex)
+
+    try:
+        if heatpump_mode == '냉방':
+            if inner_temp < inner_cool_temp:
+                comd.read_cmd.heatpump_off()
+            else:
+                comd.read_cmd.heatpump_on()
+
+        elif heatpump_mode == '난방':
+            if inner_temp > inner_hot_temp:
+                comd.read_cmd.heatpump_off()
+            else:
+                comd.read_cmd.heatpump_on()
+
+    except Exception as ex:
+        print('HeatPump Controller Err >> ', ex)
+
+

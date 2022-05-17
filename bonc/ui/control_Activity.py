@@ -280,10 +280,10 @@ class control_Activity(tk.Frame):
         heatpump_control_frame = Frame(control_canvas, bg='#2f323b')
         heatpump_control_frame.place(x=30, y=320)
 
-        control_Activity.heatpump_on_btn = Button(heatpump_control_frame, text='운    전', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_on_btn = Button(heatpump_control_frame, text='운    전', fg='white', bg='#96c63e', width=7, font=('SCDream5', 18, 'bold'), command=lambda :self.heatpump_on_control())
         control_Activity.heatpump_on_btn.pack(side=LEFT)
 
-        control_Activity.heatpump_off_btn = Button(heatpump_control_frame, text='정    지', fg='white', bg='lightgray', width=7, font=('SCDream5', 18, 'bold'))
+        control_Activity.heatpump_off_btn = Button(heatpump_control_frame, text='정    지', fg='white', bg='lightgray', width=7, font=('SCDream5', 18, 'bold'), command=lambda :self.heatpump_off_control())
         control_Activity.heatpump_off_btn.pack(side=LEFT, padx=(10, 0))
 
         heatpump_mode_label = Label(control_canvas, text='히트펌프 모드 변경', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
@@ -348,38 +348,38 @@ class control_Activity(tk.Frame):
         control_Activity.heatpump_hot_temp_plus_btn.pack(side=LEFT, padx=10)
 
         # 히트펌프 급탕냉방온도 설정
-        heatpump_hot_temp_label = Label(control_canvas, text='히트펌프 급탕냉방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        heatpump_hot_temp_label.place(x=580, y=420)
+        inner_cool_temp_label = Label(control_canvas, text='실내 냉방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
+        inner_cool_temp_label.place(x=580, y=420)
 
-        heatpump_dhwcoolTemp_frame = Frame(control_canvas, bg='#2f323b')
-        heatpump_dhwcoolTemp_frame.place(x=580, y=470)
+        inner_cool_temp_frame = Frame(control_canvas, bg='#2f323b')
+        inner_cool_temp_frame.place(x=580, y=470)
 
-        Label(heatpump_dhwcoolTemp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        control_Activity.heatpump_dhwcool_temp_minus_btn = Button(heatpump_dhwcoolTemp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_dhwcool_temp_min())
-        control_Activity.heatpump_dhwcool_temp_minus_btn.pack(side=LEFT, padx=10)
+        Label(inner_cool_temp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
+        control_Activity.inner_cool_temp_minus_btn = Button(inner_cool_temp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_cool_temp_min())
+        control_Activity.inner_cool_temp_minus_btn.pack(side=LEFT, padx=10)
 
-        control_Activity.heatpump_dhwcool_temp_entry = Entry(heatpump_dhwcoolTemp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
-        control_Activity.heatpump_dhwcool_temp_entry.pack(side=LEFT, padx=10, ipady=5)
+        control_Activity.inner_cool_temp_entry = Entry(inner_cool_temp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
+        control_Activity.inner_cool_temp_entry.pack(side=LEFT, padx=10, ipady=5)
 
-        control_Activity.heatpump_dhwcool_temp_plus_btn = Button(heatpump_dhwcoolTemp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_dhwcool_temp_plus())
-        control_Activity.heatpump_dhwcool_temp_plus_btn.pack(side=LEFT, padx=10)
+        control_Activity.inner_cool_temp_plus_btn = Button(inner_cool_temp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_cool_temp_plus())
+        control_Activity.inner_cool_temp_plus_btn.pack(side=LEFT, padx=10)
 
         # 히트펌프 급탕난방온도 설정
-        heatpump_dhwcool_temp_label = Label(control_canvas, text='히트펌프 급탕난방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        heatpump_dhwcool_temp_label.place(x=580, y=570)
+        inner_hot_temp_label = Label(control_canvas, text='실내 난방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
+        inner_hot_temp_label.place(x=580, y=570)
 
-        heatpump_dhwhotTemp_frame = Frame(control_canvas, bg='#2f323b')
-        heatpump_dhwhotTemp_frame.place(x=580, y=620)
+        inner_hot_temp_frame = Frame(control_canvas, bg='#2f323b')
+        inner_hot_temp_frame.place(x=580, y=620)
 
-        Label(heatpump_dhwhotTemp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        control_Activity.heatpump_dhwhot_temp_minus_btn = Button(heatpump_dhwhotTemp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_dhwhot_temp_min())
-        control_Activity.heatpump_dhwhot_temp_minus_btn.pack(side=LEFT, padx=10)
+        Label(inner_hot_temp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
+        control_Activity.inner_hot_temp_minus_btn = Button(inner_hot_temp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_hot_temp_min())
+        control_Activity.inner_hot_temp_minus_btn.pack(side=LEFT, padx=10)
 
-        control_Activity.heatpump_dhwhot_temp_entry = Entry(heatpump_dhwhotTemp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
-        control_Activity.heatpump_dhwhot_temp_entry.pack(side=LEFT, padx=10, ipady=5)
+        control_Activity.inner_hot_temp_entry = Entry(inner_hot_temp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
+        control_Activity.inner_hot_temp_entry.pack(side=LEFT, padx=10, ipady=5)
 
-        control_Activity.heatpump_dhwhot_temp_plus_btn = Button(heatpump_dhwhotTemp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_dhwhot_temp_plus())
-        control_Activity.heatpump_dhwhot_temp_plus_btn.pack(side=LEFT, padx=10)
+        control_Activity.inner_hot_temp_plus_btn = Button(inner_hot_temp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_hot_temp_plus())
+        control_Activity.inner_hot_temp_plus_btn.pack(side=LEFT, padx=10)
 
 
         # fcu_mode_label = Label(control_canvas, text='에어컨(FCU) 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
@@ -754,7 +754,7 @@ class control_Activity(tk.Frame):
         control_Activity.schedule_set_btn_4 = Button(control_Activity.schedule_subframe_4, text='적  용', font=('SCDream5', 18, 'bold'), command= lambda :self.schedule_apply_4())
         control_Activity.schedule_set_btn_4.pack(side=LEFT)
 
-    def auto_contrl(self):
+    def auto_control(self):
         if comd.var.bipvt_connect_status and comd.var.heatpump_connect_status:
             comd.read_cmd.auto_mode()
             db.sqlite_connect.automode_update('auto')
@@ -782,6 +782,7 @@ class control_Activity(tk.Frame):
         except Exception as ex:
             print(ex)
 
+
     def stop_control(self):
         comd.read_cmd.stop_mode()
         db.sqlite_connect.automode_update('stop')
@@ -791,31 +792,41 @@ class control_Activity(tk.Frame):
 
     def cool_control(self):
         if comd.var.heatpump_connect_status:
-            comd.read_cmd.mode_control(0)
-            comd.var.hot_mode = False
-            db.sqlite_connect.run_insert('히트펌프모드', '냉방모드', now_time())
-            ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
-                                                         values=(now_time(), '히트펌프모드', '냉방모드'))
+            if not comd.var.stop_mode:
+                comd.read_cmd.mode_control(0)
+                comd.var.hot_mode = False
+                db.sqlite_connect.run_insert('히트펌프모드', '냉방모드', now_time())
+                ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
+                                                             values=(now_time(), '히트펌프모드', '냉방모드'))
+            else:
+                tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 모드를 변경하려면\n히트펌프 정지 후 시도해주세요')
         else:
             tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 연결 상태를 확인하세요')
 
+
     def heat_control(self):
         if comd.var.heatpump_connect_status:
-            comd.read_cmd.mode_control(1)
-            comd.var.hot_mode = True
-            db.sqlite_connect.run_insert('히트펌프모드', '난방모드', now_time())
-            ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
-                                                         values=(now_time(), '히트펌프모드', '난방모드'))
+            if not comd.var.stop_mode:
+                comd.read_cmd.mode_control(1)
+                comd.var.hot_mode = True
+                db.sqlite_connect.run_insert('히트펌프모드', '난방모드', now_time())
+                ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
+                                                             values=(now_time(), '히트펌프모드', '난방모드'))
+            else:
+                tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 모드를 변경하려면\n히트펌프 정지 후 시도해주세요')
         else:
             tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 연결 상태를 확인하세요')
 
     def boil_control(self):
         if comd.var.heatpump_connect_status:
-            comd.read_cmd.mode_control(2)
-            comd.var.hot_mode = False
-            db.sqlite_connect.run_insert('히트펌프모드', '급탕모드', now_time())
-            ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
-                                                         values=(now_time(), '히트펌프모드', '급탕모드'))
+            if not comd.var.stop_mode:
+                comd.read_cmd.mode_control(2)
+                comd.var.hot_mode = False
+                db.sqlite_connect.run_insert('히트펌프모드', '급탕모드', now_time())
+                ui.run_Activity.run_Activity.run_list.insert('', index=0, text=int(run_len()),
+                                                             values=(now_time(), '히트펌프모드', '급탕모드'))
+            else:
+                tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 모드를 변경하려면\n히트펌프 정지 후 시도해주세요')
         else:
             tk.messagebox.showwarning('히트펌프모드 제어 에러', '히트펌프 연결 상태를 확인하세요')
 
@@ -1181,42 +1192,46 @@ class control_Activity(tk.Frame):
             else:
                 comd.read_cmd.heatpump_hot_setTemp(hot_temp)
 
-    def heatpump_dhwcool_temp_min(self):
-        if comd.var.heatpump_connect_status:
-            dhwcool_temp = control_Activity.heatpump_dhwcool_temp_entry.get()
-            dhwcool_temp = int(dhwcool_temp) - 1
+    def inner_cool_temp_min(self):
+        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
+            cool_temp = control_Activity.inner_cool_temp_entry.get()
+            cool_temp = int(cool_temp) - 1
 
-            if dhwcool_temp < 45 or dhwcool_temp > 55:
-                tkinter.messagebox.showwarning('히트펌프 급탕냉방온도 설정에러', '급탕냉방온도는 45 ~ 55℃ 이내로 설정할 수 있습니다.')
+            if cool_temp < 18 or cool_temp > 28:
+                tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
             else:
-                comd.read_cmd.heatpump_dhwcool_setTemp(dhwcool_temp)
+                # comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
+                comd.var.inner_cool_temp = cool_temp
 
-    def heatpump_dhwcool_temp_plus(self):
-        if comd.var.heatpump_connect_status:
-            dhwcool_temp = control_Activity.heatpump_dhwcool_temp_entry.get()
-            dhwcool_temp = int(dhwcool_temp) + 1
+    def inner_cool_temp_plus(self):
+        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
+            cool_temp = control_Activity.inner_cool_temp_entry.get()
+            cool_temp = int(cool_temp) + 1
 
-            if dhwcool_temp < 45 or dhwcool_temp > 55:
-                tkinter.messagebox.showwarning('히트펌프 급탕냉방온도 설정에러', '급탕냉방온도는 45 ~ 55℃ 이내로 설정할 수 있습니다.')
+            if cool_temp < 18 or cool_temp > 28:
+                tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
             else:
-                comd.read_cmd.heatpump_dhwcool_setTemp(dhwcool_temp)
+                # comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
+                comd.var.inner_cool_temp = cool_temp
 
-    def heatpump_dhwhot_temp_min(self):
-        if comd.var.heatpump_connect_status:
-            dhwhot_temp = control_Activity.heatpump_dhwhot_temp_entry.get()
-            dhwhot_temp = int(dhwhot_temp) - 1
+    def inner_hot_temp_min(self):
+        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
+            hot_temp = control_Activity.inner_hot_temp_entry.get()
+            hot_temp = int(hot_temp) - 1
 
-            if dhwhot_temp < 55 or dhwhot_temp > 65:
-                tkinter.messagebox.showwarning('히트펌프 급탕난방온도 설정에러', '급탕난방온도는 55 ~ 65℃ 이내로 설정할 수 있습니다.')
+            if hot_temp < 20 or hot_temp > 30:
+                tkinter.messagebox.showwarning('실내 난방온도 설정에러', '실내 난방온도는 20 ~ 30℃ 이내로 설정할 수 있습니다.')
             else:
-                comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
+                # comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
+                comd.var.inner_hot_temp = hot_temp
 
-    def heatpump_dhwhot_temp_plus(self):
-        if comd.var.heatpump_connect_status:
-            dhwhot_temp = control_Activity.heatpump_dhwhot_temp_entry.get()
-            dhwhot_temp = int(dhwhot_temp) + 1
+    def inner_hot_temp_plus(self):
+        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
+            hot_temp = control_Activity.inner_hot_temp_entry.get()
+            hot_temp = int(hot_temp) + 1
 
-            if dhwhot_temp < 55 or dhwhot_temp > 65:
-                tkinter.messagebox.showwarning('히트펌프 급탕난방온도 설정에러', '급탕난방온도는 55 ~ 65℃ 이내로 설정할 수 있습니다.')
+            if hot_temp < 20 or hot_temp > 30:
+                tkinter.messagebox.showwarning('실내 난방온도 설정에러', '실내 난방온도는 20 ~ 30℃ 이내로 설정할 수 있습니다.')
             else:
-                comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
+                # comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
+                comd.var.inner_hot_temp = hot_temp

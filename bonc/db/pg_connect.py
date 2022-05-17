@@ -62,7 +62,7 @@ def weather_insert(value):
 def weather_select():
     try:
         cur, conn = db_conn()
-        sql = 'select weather, temp, humi, icon from weather_tb order by d_time desc'
+        sql = 'select weather, temp, humi, icon from weather_tb order by d_time desc limit 1'
         cur.execute(sql)
         row = cur.fetchone()
 
@@ -114,4 +114,24 @@ def pre_data_select():
         print('pre_data_select Error ', ex)
 
 
-# def
+def pv_data_select():
+    try:
+        cur, conn = db_conn()
+        sql = 'select * from solar_predict order by d_time desc limit 300'
+        cur.execute(sql)
+        row = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        times = []
+        pv_predict = []
+        pv_now = []
+        for i in range(len(row)):
+            times.append(row[i][0])
+            pv_predict.append(row[i][1])
+            pv_now.append(row[i][2])
+
+        return times, pv_predict, pv_now
+    except Exception as ex:
+        print('weather_select Error >>', ex)

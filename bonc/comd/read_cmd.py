@@ -120,12 +120,22 @@ def heatpump_read_data():
 def heatpump_mode_data():
     global heatpump_client
     try:
-        heatpump_read_mode = heatpump_client.read_holding_registers(9, 2, unit=1)
+        heatpump_read_mode = heatpump_client.read_holding_registers(10, 1, unit=1)
         assert(heatpump_read_mode.function_code <= 0x84)
         return heatpump_read_mode
     except Exception as ex:
         print('heatpump_mode_data() Exception -> ', ex)
         comd.var.heatpump_connect_status = False
+
+def heatpump_mode_status():
+    global heatpump_client
+    try:
+        heatpump_mode_status = heatpump_client.read_holding_registers(18, 1, unit=1)
+        assert(heatpump_mode_status.function_code <= 0x84)
+        return heatpump_mode_status
+    except Exception as ex:
+        print('heatpump_mode_status() Exception ->', ex)
+
 
 
 def heatpump_read_status():
@@ -136,6 +146,16 @@ def heatpump_read_status():
         return heatpump_read_status
     except Exception as ex:
         print('heatpump_read_status() Exception -> ', ex)
+
+
+def heatpump_remote_status():
+    global heatpump_client
+    try:
+        heatpump_remote_status = heatpump_client.read_coils(3, 1, unit=1)
+        assert(heatpump_remote_status.function_code <= 0x84)
+        return heatpump_remote_status
+    except Exception as ex:
+        print('heatpump_remote_status() Exception -> ', ex)
 
 
 def heatpump_temp_setting():
@@ -164,26 +184,27 @@ def heatpump_hot_setTemp(val):
         print('heatpump_hot_setTemp() Exception -> ', ex)
 
 
-def heatpump_dhwcool_setTemp(val):
-    global heatpump_client
-    try:
-        heatpump_client.write_registers(14, val * 10, unit=1)
-    except Exception as ex:
-        print('heatpump_dhwcool_setTemp() Exception -> ', ex)
-
-
-def heatpump_dhwhot_setTemp(val):
-    global heatpump_client
-    try:
-        heatpump_client.write_registers(15, val * 10, unit=1)
-    except Exception as ex:
-        print('heatpump_dhwhot_setTemp() Exception -> ', ex)
+# def heatpump_dhwcool_setTemp(val):
+#     global heatpump_client
+#     try:
+#         heatpump_client.write_registers(14, val * 10, unit=1)
+#     except Exception as ex:
+#         print('heatpump_dhwcool_setTemp() Exception -> ', ex)
+#
+#
+# def heatpump_dhwhot_setTemp(val):
+#     global heatpump_client
+#     try:
+#         heatpump_client.write_registers(15, val * 10, unit=1)
+#     except Exception as ex:
+#         print('heatpump_dhwhot_setTemp() Exception -> ', ex)
 
 
 def heatpump_on():
     global heatpump_client
     try:
         heatpump_client.write_coil(3, 1, unit=1)
+        print('@@@@@@@@@히트펌프 ON')
     except Exception as ex:
         print('heatpump_on() Exception -> ', ex)
 
@@ -192,6 +213,7 @@ def heatpump_off():
     global heatpump_client
     try:
         heatpump_client.write_coil(3, 0, unit=1)
+        print('@@@@@@@@히트펌프 OFF')
     except Exception as ex:
         print('heatpump_off() Exception -> ', ex)
 
@@ -215,7 +237,16 @@ def drive_off():
 def mode_control(val):
     global heatpump_client
     try:
-        heatpump_client.write_registers(1, val, unit=1)
+        if val == 0:
+            mode = '냉방'
+        elif val == 1:
+            mode ='난방'
+        elif val == 2:
+            mode = '급탕'
+        elif val == 3:
+            mode = '제상'
+        heatpump_client.write_registers(18, val, unit=1)
+        print('@@@@@@@@@@@@@',mode, '모드')
     except Exception as ex:
         print('mode_control() Exception -> ', ex)
 
