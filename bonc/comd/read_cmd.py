@@ -184,20 +184,20 @@ def heatpump_hot_setTemp(val):
         print('heatpump_hot_setTemp() Exception -> ', ex)
 
 
-# def heatpump_dhwcool_setTemp(val):
-#     global heatpump_client
-#     try:
-#         heatpump_client.write_registers(14, val * 10, unit=1)
-#     except Exception as ex:
-#         print('heatpump_dhwcool_setTemp() Exception -> ', ex)
-#
-#
-# def heatpump_dhwhot_setTemp(val):
-#     global heatpump_client
-#     try:
-#         heatpump_client.write_registers(15, val * 10, unit=1)
-#     except Exception as ex:
-#         print('heatpump_dhwhot_setTemp() Exception -> ', ex)
+def heatpump_dhwcool_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(14, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_dhwcool_setTemp() Exception -> ', ex)
+
+
+def heatpump_dhwhot_setTemp(val):
+    global heatpump_client
+    try:
+        heatpump_client.write_registers(15, val * 10, unit=1)
+    except Exception as ex:
+        print('heatpump_dhwhot_setTemp() Exception -> ', ex)
 
 
 def heatpump_on():

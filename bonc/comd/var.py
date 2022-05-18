@@ -44,7 +44,7 @@ auto_mode = False
 manual_mode = False
 stop_mode = False
 reserve_mode = False
-reserve_trigger = False
+reserve_trigger = [False, False, False, False]
 
 hot_mode = False
 hot_time = 0
@@ -62,6 +62,8 @@ damper_volume = ''
 cool_volume = ''
 heat_volume = ''
 dhw_volume = ''
+summer_volume = ''
+winter_volume = ''
 
 
 bipvt_read = False
@@ -127,6 +129,4 @@ pv_pre_power = ''
 bipvt_packet_data = []
 heatpump_packet_data = []
 
-# 실내 온도 설정
-inner_cool_temp = 23
-inner_hot_temp = 23
+heatpump_boil_mode = '급탕'

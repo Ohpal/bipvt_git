@@ -534,6 +534,32 @@ class setting_Activity(tk.Frame):
         damper_btn = Button(damper_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.damper_value_btn())
         damper_btn.pack(side=LEFT)
 
+        summer_heatpump_frame = Frame(setting_left_canvas, bg='#2f323b')
+        summer_heatpump_frame.pack(fill=X, pady=20)
+
+        summer_heatpump_title = Label(summer_heatpump_frame, text='하계 히트펌프 제어 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        summer_heatpump_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.summer_heatpump_value = Entry(summer_heatpump_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.summer_heatpump_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.summer_heatpump_value.bind('<FocusIn>', self.insert_summer_heatpump_value)
+
+        summer_heatpump_btn = Button(summer_heatpump_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.summer_heatpump_value_btn())
+        summer_heatpump_btn.pack(side=LEFT)
+
+        winter_heatpump_frame = Frame(setting_left_canvas, bg='#2f323b')
+        winter_heatpump_frame.pack(fill=X, pady=20)
+
+        winter_heatpump_title = Label(winter_heatpump_frame, text='동계 히트펌프 제어 온도설정(℃)', font=('SCDream5', 15, 'bold'), fg='white', bg='#2f323b', width=40, anchor='e')
+        winter_heatpump_title.pack(side=LEFT, padx=(15, 0))
+
+        setting_Activity.winter_heatpump_value = Entry(winter_heatpump_frame, font=('SCDream5', 20, 'bold',), justify='center', width=9)
+        setting_Activity.winter_heatpump_value.pack(side=LEFT, padx=(20, 20))
+        setting_Activity.winter_heatpump_value.bind('<FocusIn>', self.insert_winter_heatpump_value)
+
+        winter_heatpump_btn = Button(winter_heatpump_frame, text='적 용', font=('SCDream5', 15, 'bold'), command=lambda :self.winter_heatpump_value_btn())
+        winter_heatpump_btn.pack(side=LEFT)
+
         # cooling_frame = Frame(setting_right_canvas, bg='#2f323b')
         # cooling_frame.pack(fill=X, pady=20)
         #
@@ -704,6 +730,26 @@ class setting_Activity(tk.Frame):
                 get_data = self.load_value.get()
                 db.sqlite_connect.system_update('load', get_data)
 
+    def winter_heatpump_value_btn(self):
+        if self.winter_heatpump_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.winter_heatpump_value.get()
+                db.sqlite_connect.system_update('winter', get_data)
+
+    def summer_heatpump_value_btn(self):
+        if self.summer_heatpump_value.get() == '':
+            tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
+        else:
+            res_msg = tkinter.messagebox.askyesno('설정', '입력하신 내용으로 설정하시겠습니까?')
+
+            if res_msg:
+                get_data = self.summer_heatpump_value.get()
+                db.sqlite_connect.system_update('summer', get_data)
+
     # def cooling_value_btn(self):
     #     if self.cooling_value.get() == '':
     #         tkinter.messagebox.showwarning('설정오류', '설정값을 입력하세요')
@@ -774,6 +820,10 @@ class setting_Activity(tk.Frame):
         notification.insert_keypad.put_hot_value(self, '값 입력')
     def insert_dhw_value(self, event):
         notification.insert_keypad.put_dhw_value(self, '값 입력')
+    def insert_summer_heatpump_value(self, event):
+        notification.insert_keypad.put_summer_heatpump_value(self, '값 입력')
+    def insert_winter_heatpump_value(self, event):
+        notification.insert_keypad.put_winter_heatpump_value(self, '값 입력')
 
 
     def insert_bipvt_ip1(self, event):

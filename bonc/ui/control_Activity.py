@@ -301,8 +301,8 @@ class control_Activity(tk.Frame):
         control_Activity.boil_mode_btn = Button(heatpump_mode_frame, text='급    탕', fg='white', bg='lightgray', width=7, font=('SCDream5', 18, 'bold'), command=lambda :self.boil_control())
         control_Activity.boil_mode_btn.pack(side=LEFT, padx=10)
 
-        control_Activity.keep_mode_btn = Button(heatpump_mode_frame, text='제    상', fg='white', bg='lightgray', width=7, font=('SCDream5', 18, 'bold'), command=lambda :self.keep_control())
-        control_Activity.keep_mode_btn.pack(side=LEFT)
+        # control_Activity.keep_mode_btn = Button(heatpump_mode_frame, text='제    상', fg='white', bg='lightgray', width=7, font=('SCDream5', 18, 'bold'), command=lambda :self.keep_control())
+        # control_Activity.keep_mode_btn.pack(side=LEFT)
 
         # control_history_label = Label(control_canvas, text='제어 이력', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
         # control_history_label.place(x=30, y=550)
@@ -348,158 +348,21 @@ class control_Activity(tk.Frame):
         control_Activity.heatpump_hot_temp_plus_btn.pack(side=LEFT, padx=10)
 
         # 히트펌프 급탕냉방온도 설정
-        inner_cool_temp_label = Label(control_canvas, text='실내 냉방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        inner_cool_temp_label.place(x=580, y=420)
+        heatpump_boil_temp_label = Label(control_canvas, text='히트펌프 급탕온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
+        heatpump_boil_temp_label.place(x=580, y=420)
 
-        inner_cool_temp_frame = Frame(control_canvas, bg='#2f323b')
-        inner_cool_temp_frame.place(x=580, y=470)
+        heatpump_boil_temp_frame = Frame(control_canvas, bg='#2f323b')
+        heatpump_boil_temp_frame.place(x=580, y=470)
 
-        Label(inner_cool_temp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        control_Activity.inner_cool_temp_minus_btn = Button(inner_cool_temp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_cool_temp_min())
-        control_Activity.inner_cool_temp_minus_btn.pack(side=LEFT, padx=10)
+        Label(heatpump_boil_temp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
+        control_Activity.heatpump_boil_temp_minus_btn = Button(heatpump_boil_temp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_boil_temp_min())
+        control_Activity.heatpump_boil_temp_minus_btn.pack(side=LEFT, padx=10)
 
-        control_Activity.inner_cool_temp_entry = Entry(inner_cool_temp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
-        control_Activity.inner_cool_temp_entry.pack(side=LEFT, padx=10, ipady=5)
+        control_Activity.heatpump_boil_temp_entry = Entry(heatpump_boil_temp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
+        control_Activity.heatpump_boil_temp_entry.pack(side=LEFT, padx=10, ipady=5)
 
-        control_Activity.inner_cool_temp_plus_btn = Button(inner_cool_temp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_cool_temp_plus())
-        control_Activity.inner_cool_temp_plus_btn.pack(side=LEFT, padx=10)
-
-        # 히트펌프 급탕난방온도 설정
-        inner_hot_temp_label = Label(control_canvas, text='실내 난방온도 설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        inner_hot_temp_label.place(x=580, y=570)
-
-        inner_hot_temp_frame = Frame(control_canvas, bg='#2f323b')
-        inner_hot_temp_frame.place(x=580, y=620)
-
-        Label(inner_hot_temp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 16, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        control_Activity.inner_hot_temp_minus_btn = Button(inner_hot_temp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_hot_temp_min())
-        control_Activity.inner_hot_temp_minus_btn.pack(side=LEFT, padx=10)
-
-        control_Activity.inner_hot_temp_entry = Entry(inner_hot_temp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center')
-        control_Activity.inner_hot_temp_entry.pack(side=LEFT, padx=10, ipady=5)
-
-        control_Activity.inner_hot_temp_plus_btn = Button(inner_hot_temp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.inner_hot_temp_plus())
-        control_Activity.inner_hot_temp_plus_btn.pack(side=LEFT, padx=10)
-
-
-        # fcu_mode_label = Label(control_canvas, text='에어컨(FCU) 제어', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'))
-        # fcu_mode_label.place(x=580, y=120)
-        #
-
-        #
-        # # 에어컨 전원 프레임
-        # fcu_power_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_power_frame.pack(fill=X)
-        #
-        # Label(fcu_power_frame, text='전  원', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_power_on_btn = Button(fcu_power_frame, text='운  전', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_power_on_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_power_off_btn = Button(fcu_power_frame, text='정  지', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_power_off_btn.pack(side=LEFT)
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 모드 프레임
-        # fcu_mode_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_mode_frame.pack(fill=X)
-        #
-        # Label(fcu_mode_frame, text='모  드', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_cool_btn = Button(fcu_mode_frame, text='냉  방', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_cool_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_heat_btn = Button(fcu_mode_frame, text='난  방', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_heat_btn.pack(side=LEFT, padx=(0, 10))
-        #
-        # control_Activity.fcu_wind_btn = Button(fcu_mode_frame, text='송  풍', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_wind_btn.pack(side=LEFT)
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 풍속 프레임
-        # fcu_speed_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_speed_frame.pack(fill=X)
-        #
-        # Label(fcu_speed_frame, text='풍  속', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_low_btn = Button(fcu_speed_frame, text='약', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_low_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_mid_btn = Button(fcu_speed_frame, text='중', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_mid_btn.pack(side=LEFT, padx=(0, 10))
-        #
-        # control_Activity.fcu_high_btn = Button(fcu_speed_frame, text='강', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_high_btn.pack(side=LEFT, padx=(0, 10))
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 2)).pack()
-        #
-        # fcu_speed_frame2 = Frame(fcu_frame, bg='#2f323b')
-        # fcu_speed_frame2.pack(fill=X)
-        #
-        # Label(fcu_speed_frame2, text='      ', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        #
-        # control_Activity.fcu_auto_btn = Button(fcu_speed_frame2, text='자 동', fg='white', bg='lightgray',
-        #                                        font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_auto_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_stop_btn = Button(fcu_speed_frame2, text='정 지', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_stop_btn.pack(side=LEFT)
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 풍향 프레임
-        # fcu_wind_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_wind_frame.pack(fill=X)
-        #
-        # Label(fcu_wind_frame, text='풍  속', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_wind_on_btn = Button(fcu_wind_frame, text='스  윙', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_wind_on_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_wind_off_btn = Button(fcu_wind_frame, text='정  지', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_wind_off_btn.pack(side=LEFT, padx=(0, 10))
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 터보모드 프레임
-        # fcu_turbo_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_turbo_frame.pack(fill=X)
-        #
-        # Label(fcu_turbo_frame, text='터  보', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_turbo_on_btn = Button(fcu_turbo_frame, text='터  보', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_turbo_on_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_turbo_off_btn = Button(fcu_turbo_frame, text='정  지', fg='white', bg='lightgray', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_turbo_off_btn.pack(side=LEFT, padx=(0, 10))
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 설정온도 프레임
-        # fcu_setTemp_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_setTemp_frame.pack(fill=X)
-        #
-        # Label(fcu_setTemp_frame, text='온도설정', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        # control_Activity.fcu_temp_minus_btn = Button(fcu_setTemp_frame, text='▼', fg='white', bg='red', font=('SCDream5', 18, 'bold'), width=3)
-        # control_Activity.fcu_temp_minus_btn.pack(side=LEFT, padx=10)
-        #
-        # control_Activity.fcu_temp_entry = Entry(fcu_setTemp_frame, font=('SCDream5', 20, 'bold'), width=8, justify='center', state='readonly')
-        # control_Activity.fcu_temp_entry.pack(side=LEFT, padx=10, ipady=5)
-        #
-        # control_Activity.fcu_temp_plus_btn = Button(fcu_setTemp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 18, 'bold'), width=3)
-        # control_Activity.fcu_temp_plus_btn.pack(side=LEFT, padx=10)
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
-        #
-        # # 에어컨 실내온도 프레임
-        # fcu_nowTemp_frame = Frame(fcu_frame, bg='#2f323b')
-        # fcu_nowTemp_frame.pack(fill=X)
-        #
-        # Label(fcu_nowTemp_frame, text='실내온도', fg='white', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=6, anchor='w').pack(side=LEFT)
-        #
-        # control_Activity.fcu_nowTemp = Label(fcu_nowTemp_frame, text=' - ', fg='#96c63e', bg='#2f323b', font=('SCDream5', 20, 'bold'), width=5)
-        # control_Activity.fcu_nowTemp.pack(side=LEFT, padx=(10, 3))
-        #
-        # Label(fcu_nowTemp_frame, text='℃', fg='#96c63e', bg='#2f323b', font=('SCDream5', 20, 'bold')).pack(side=LEFT)
-        #
-        # Label(fcu_frame, bg='#2f323b', font=('SCDream5', 10)).pack()
+        control_Activity.heatpump_boil_temp_plus_btn = Button(heatpump_boil_temp_frame, text='▲', fg='white', bg='#96c63e', font=('SCDream5', 16, 'bold'), width=3, command=lambda :self.heatpump_boil_temp_plus())
+        control_Activity.heatpump_boil_temp_plus_btn.pack(side=LEFT, padx=10)
 
         # 스케줄 설정 프레임
         on_img = Image.open('images/on-button.png')
@@ -548,7 +411,6 @@ class control_Activity(tk.Frame):
                                                              font=('SCDream5', 18, 'bold'), justify='center')
         control_Activity.schedule_start_min_entry_1.pack(side=LEFT)
         control_Activity.schedule_start_min_entry_1.bind('<FocusIn>', self.insert_start_min_1)
-
 
         control_Activity.min_label_1 = Label(control_Activity.schedule_subframe_1, text='분',
                                               font=('SCDream5', 18, 'bold'), fg='white', bg='#2f323b')
@@ -1192,46 +1054,32 @@ class control_Activity(tk.Frame):
             else:
                 comd.read_cmd.heatpump_hot_setTemp(hot_temp)
 
-    def inner_cool_temp_min(self):
+    def heatpump_boil_temp_min(self):
         if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
-            cool_temp = control_Activity.inner_cool_temp_entry.get()
+            cool_temp = control_Activity.heatpump_boil_temp_entry.get()
             cool_temp = int(cool_temp) - 1
 
-            if cool_temp < 18 or cool_temp > 28:
-                tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
-            else:
+            if comd.var.heatpump_boil_mode == '냉방':
+                comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
+            elif comd.var.heatpump_boil_mode == '난방':
+                comd.read_cmd.heatpump_dhwhot_setTemp(cool_temp)
+            # if cool_temp < 18 or cool_temp > 28:
+            #     tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
+            # else:
                 # comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
-                comd.var.inner_cool_temp = cool_temp
+                # comd.var.heatpump_boil_temp = cool_temp
 
-    def inner_cool_temp_plus(self):
+    def heatpump_boil_temp_plus(self):
         if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
-            cool_temp = control_Activity.inner_cool_temp_entry.get()
+            cool_temp = control_Activity.heatpump_boil_temp_entry.get()
             cool_temp = int(cool_temp) + 1
 
-            if cool_temp < 18 or cool_temp > 28:
-                tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
-            else:
-                # comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
-                comd.var.inner_cool_temp = cool_temp
-
-    def inner_hot_temp_min(self):
-        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
-            hot_temp = control_Activity.inner_hot_temp_entry.get()
-            hot_temp = int(hot_temp) - 1
-
-            if hot_temp < 20 or hot_temp > 30:
-                tkinter.messagebox.showwarning('실내 난방온도 설정에러', '실내 난방온도는 20 ~ 30℃ 이내로 설정할 수 있습니다.')
-            else:
-                # comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
-                comd.var.inner_hot_temp = hot_temp
-
-    def inner_hot_temp_plus(self):
-        if comd.var.heatpump_connect_status and comd.var.bipvt_connect_status:
-            hot_temp = control_Activity.inner_hot_temp_entry.get()
-            hot_temp = int(hot_temp) + 1
-
-            if hot_temp < 20 or hot_temp > 30:
-                tkinter.messagebox.showwarning('실내 난방온도 설정에러', '실내 난방온도는 20 ~ 30℃ 이내로 설정할 수 있습니다.')
-            else:
-                # comd.read_cmd.heatpump_dhwhot_setTemp(dhwhot_temp)
-                comd.var.inner_hot_temp = hot_temp
+            # if cool_temp < 18 or cool_temp > 28:
+            #     tkinter.messagebox.showwarning('실내 냉방온도 설정에러', '실내 냉방온도는 18 ~ 28℃ 이내로 설정할 수 있습니다.')
+            # else:
+            #     # comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
+            #     comd.var.heatpump_boil_temp = cool_temp
+            if comd.var.heatpump_boil_mode == '냉방':
+                comd.read_cmd.heatpump_dhwcool_setTemp(cool_temp)
+            elif comd.var.heatpump_boil_mode == '난방':
+                comd.read_cmd.heatpump_dhwhot_setTemp(cool_temp)

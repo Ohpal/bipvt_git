@@ -491,6 +491,8 @@ def select_system():
     comd.var.load_volume = system_rows[2]
     comd.var.insolation_volume = system_rows[3]
     comd.var.damper_volume = system_rows[4]
+    comd.var.summer_volume = system_rows[8]
+    comd.var.winter_volume = system_rows[9]
     # comd.var.cool_volume = system_rows[5]
     # comd.var.heat_volume = system_rows[6]
     # comd.var.dhw_volume = system_rows[7]
@@ -510,11 +512,15 @@ def setting_system():
     # ui.setting_Activity.setting_Activity.cooling_value.insert('end', system_rows[5])
     # ui.setting_Activity.setting_Activity.heating_value.insert('end', system_rows[6])
     # ui.setting_Activity.setting_Activity.dhw_value.insert('end', system_rows[7])
+    ui.setting_Activity.setting_Activity.summer_heatpump_value.insert('end', system_rows[8])
+    ui.setting_Activity.setting_Activity.winter_heatpump_value.insert('end', system_rows[9])
 
     comd.var.pv_volume = system_rows[1]
     comd.var.load_volume = system_rows[2]
     comd.var.insolation_volume = system_rows[3]
     comd.var.damper_volume = system_rows[4]
+    comd.var.summer_volume = system_rows[8]
+    comd.var.winter_volume = system_rows[9]
     # comd.var.cool_volume = system_rows[5]
     # comd.var.heat_volume = system_rows[6]
     # comd.var.dhw_volume = system_rows[7]
@@ -560,6 +566,16 @@ def system_update(volume, value):
         ui.setting_Activity.setting_Activity.dhw_value.delete(0, 'end')
         ui.setting_Activity.setting_Activity.dhw_value.insert('end', value)
         comd.var.dhw_volume = value
+    elif volume == 'summer':
+        sql = 'Update setting SET summer_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.summer_heatpump_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.summer_heatpump_value.insert('end', value)
+        comd.var.summer_volume = value
+    elif volume == 'winter':
+        sql = 'Update setting SET winter_volume=? where id=1'
+        ui.setting_Activity.setting_Activity.winter_heatpump_value.delete(0, 'end')
+        ui.setting_Activity.setting_Activity.winter_heatpump_value.insert('end', value)
+        comd.var.winter_volume = value
 
     cur.execute(sql, (value,))
     conn.commit()

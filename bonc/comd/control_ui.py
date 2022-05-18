@@ -153,32 +153,42 @@ def set_control_mode():
         ui.control_Activity.control_Activity.stop_mode_btn.config(bg='red', activebackground='red')
 
 
-def set_heatpump_mode(val):
+def set_heatpump_mode(val, status):
     if val == '냉방':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='#007ad1', activebackground='#007ad1')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
-        ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
     elif val == '난방':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='red', activebackground='red')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
-        ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
     elif val == '급탕':
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='orange', activebackground='orange')
-        ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
-    elif val == '제상':
-        ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
+    # elif val == '제상':
+    #     ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
+    #     ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
+    #     ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
+    #     ui.control_Activity.control_Activity.keep_mode_btn.config(bg='#96c63e', activebackground='#96c63e')
+    elif val == '냉방' and '급탕' in status:
+        ui.control_Activity.control_Activity.cool_mode_btn.config(bg='#007ad1', activebackground='#007ad1')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
-        ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
-        ui.control_Activity.control_Activity.keep_mode_btn.config(bg='#96c63e', activebackground='#96c63e')
+        ui.control_Activity.control_Activity.boil_mode_btn.config(bg='orange', activebackground='orange')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
+    elif val == '난방' and '급탕' in status:
+        ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
+        ui.control_Activity.control_Activity.heat_mode_btn.config(bg='red', activebackground='red')
+        ui.control_Activity.control_Activity.boil_mode_btn.config(bg='orange', activebackground='orange')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
     else:
         ui.control_Activity.control_Activity.cool_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.heat_mode_btn.config(bg='lightgray', activebackground='lightgray')
         ui.control_Activity.control_Activity.boil_mode_btn.config(bg='lightgray', activebackground='lightgray')
-        ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
+        # ui.control_Activity.control_Activity.keep_mode_btn.config(bg='lightgray', activebackground='lightgray')
 
 
 def set_manual_mode(damper_status, fan_status, exchanger_status, buffer_status, doublecoil_status, dhw_status, storage_status, heatpump_status, mode):
@@ -453,7 +463,7 @@ def set_detail_bipvt_ui():
     ui.detail_Activity.detail_Activity.pvt_inner_temp.config(text=str(round(comd.var.pv_inner_temp[-1] , 2)))
     ui.detail_Activity.detail_Activity.pvt_inner_humi.config(text=str(round(comd.var.pv_inner_humi[-1] , 2)))
     ui.detail_Activity.detail_Activity.pvt_outer_temp.config(text=str(round(comd.var.pv_outer_temp[-1] , 2)))
-    ui.detail_Activity.detail_Activity.pvt_outer_humi.config(text=str(round(comd.var.pv_outer_humi[-1] , 2)))
+    # ui.detail_Activity.detail_Activity.pvt_outer_humi.config(text=str(round(comd.var.pv_outer_humi[-1] , 2)))
     ui.detail_Activity.detail_Activity.buffer_flux.config(text=str(round(comd.var.buffer_flux[-1] , 2)))
     ui.detail_Activity.detail_Activity.storage_inner_flux.config(text=str(round(comd.var.storage_inner_flux[-1] , 2)))
     ui.detail_Activity.detail_Activity.storage_outer_flux.config(text=str(round(comd.var.storage_outer_flux[-1] , 2)))
@@ -478,7 +488,7 @@ def set_detail_bipvt_ui():
     ui.detail_Activity.detail_Activity.max_pvt_inner_temp.config(text=str(round(np.max(comd.var.pv_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.max_pvt_inner_humi.config(text=str(round(np.max(comd.var.pv_inner_humi) , 2)))
     ui.detail_Activity.detail_Activity.max_pvt_outer_temp.config(text=str(round(np.max(comd.var.pv_outer_temp) , 2)))
-    ui.detail_Activity.detail_Activity.max_pvt_outer_humi.config(text=str(round(np.max(comd.var.pv_outer_humi) , 2)))
+    # ui.detail_Activity.detail_Activity.max_pvt_outer_humi.config(text=str(round(np.max(comd.var.pv_outer_humi) , 2)))
     ui.detail_Activity.detail_Activity.max_buffer_flux.config(text=str(round(np.max(comd.var.buffer_flux) , 2)))
     ui.detail_Activity.detail_Activity.max_storage_inner_flux.config(text=str(round(np.max(comd.var.storage_inner_flux) , 2)))
     ui.detail_Activity.detail_Activity.max_storage_outer_flux.config(text=str(round(np.max(comd.var.storage_outer_flux) , 2)))
@@ -503,7 +513,7 @@ def set_detail_bipvt_ui():
     ui.detail_Activity.detail_Activity.min_pvt_inner_temp.config(text=str(round(np.min(comd.var.pv_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.min_pvt_inner_humi.config(text=str(round(np.min(comd.var.pv_inner_humi) , 2)))
     ui.detail_Activity.detail_Activity.min_pvt_outer_temp.config(text=str(round(np.min(comd.var.pv_outer_temp) , 2)))
-    ui.detail_Activity.detail_Activity.min_pvt_outer_humi.config(text=str(round(np.min(comd.var.pv_outer_humi) , 2)))
+    # ui.detail_Activity.detail_Activity.min_pvt_outer_humi.config(text=str(round(np.min(comd.var.pv_outer_humi) , 2)))
     ui.detail_Activity.detail_Activity.min_buffer_flux.config(text=str(round(np.min(comd.var.buffer_flux) , 2)))
     ui.detail_Activity.detail_Activity.min_storage_inner_flux.config(text=str(round(np.min(comd.var.storage_inner_flux) , 2)))
     ui.detail_Activity.detail_Activity.min_storage_outer_flux.config(text=str(round(np.min(comd.var.storage_outer_flux) , 2)))
@@ -528,7 +538,7 @@ def set_detail_bipvt_ui():
     ui.detail_Activity.detail_Activity.avg_pvt_inner_temp.config(text=str(round(np.average(comd.var.pv_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.avg_pvt_inner_humi.config(text=str(round(np.average(comd.var.pv_inner_humi) , 2)))
     ui.detail_Activity.detail_Activity.avg_pvt_outer_temp.config(text=str(round(np.average(comd.var.pv_outer_temp) , 2)))
-    ui.detail_Activity.detail_Activity.avg_pvt_outer_humi.config(text=str(round(np.average(comd.var.pv_outer_humi) , 2)))
+    # ui.detail_Activity.detail_Activity.avg_pvt_outer_humi.config(text=str(round(np.average(comd.var.pv_outer_humi) , 2)))
     ui.detail_Activity.detail_Activity.avg_buffer_flux.config(text=str(round(np.average(comd.var.buffer_flux) , 2)))
     ui.detail_Activity.detail_Activity.avg_storage_inner_flux.config(text=str(round(np.average(comd.var.storage_inner_flux) , 2)))
     ui.detail_Activity.detail_Activity.avg_storage_outer_flux.config(text=str(round(np.average(comd.var.storage_outer_flux) , 2)))
@@ -548,7 +558,7 @@ def set_detail_bipvt_ui():
 
 
 def set_detail_heatpump_ui():
-    ui.detail_Activity.detail_Activity.buffer_temp.config(text=str(round(comd.var.buffer_temp[-1] , 2)))
+    # ui.detail_Activity.detail_Activity.buffer_temp.config(text=str(round(comd.var.buffer_temp[-1] , 2)))
     ui.detail_Activity.detail_Activity.buffer_inner_temp.config(text=str(round(comd.var.buffer_inner_temp[-1] , 2)))
     ui.detail_Activity.detail_Activity.storage_inner_temp.config(text=str(round(comd.var.storage_inner_temp[-1] , 2)))
     ui.detail_Activity.detail_Activity.storage_outer_temp.config(text=str(round(comd.var.storage_outer_temp[-1] , 2)))
@@ -556,7 +566,7 @@ def set_detail_heatpump_ui():
     ui.detail_Activity.detail_Activity.dhw_inner_temp.config(text=str(round(comd.var.dhw_inner_temp[-1] , 2)))
     ui.detail_Activity.detail_Activity.dhw_outer_temp.config(text=str(round(comd.var.dhw_outer_temp[-1] , 2)))
 
-    ui.detail_Activity.detail_Activity.max_buffer_temp.config(text=str(round(np.max(comd.var.buffer_temp) , 2)))
+    # ui.detail_Activity.detail_Activity.max_buffer_temp.config(text=str(round(np.max(comd.var.buffer_temp) , 2)))
     ui.detail_Activity.detail_Activity.max_buffer_inner_temp.config(text=str(round(np.max(comd.var.buffer_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.max_storage_inner_temp.config(text=str(round(np.max(comd.var.storage_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.max_storage_outer_temp.config(text=str(round(np.max(comd.var.storage_outer_temp) , 2)))
@@ -564,7 +574,7 @@ def set_detail_heatpump_ui():
     ui.detail_Activity.detail_Activity.max_dhw_inner_temp.config(text=str(round(np.max(comd.var.dhw_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.max_dhw_outer_temp.config(text=str(round(np.max(comd.var.dhw_outer_temp) , 2)))
 
-    ui.detail_Activity.detail_Activity.min_buffer_temp.config(text=str(round(np.min(comd.var.buffer_temp) , 2)))
+    # ui.detail_Activity.detail_Activity.min_buffer_temp.config(text=str(round(np.min(comd.var.buffer_temp) , 2)))
     ui.detail_Activity.detail_Activity.min_buffer_inner_temp.config(text=str(round(np.min(comd.var.buffer_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.min_storage_inner_temp.config(text=str(round(np.min(comd.var.storage_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.min_storage_outer_temp.config(text=str(round(np.min(comd.var.storage_outer_temp) , 2)))
@@ -572,7 +582,7 @@ def set_detail_heatpump_ui():
     ui.detail_Activity.detail_Activity.min_dhw_inner_temp.config(text=str(round(np.min(comd.var.dhw_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.min_dhw_outer_temp.config(text=str(round(np.min(comd.var.dhw_outer_temp) , 2)))
 
-    ui.detail_Activity.detail_Activity.avg_buffer_temp.config(text=str(round(np.average(comd.var.buffer_temp) , 2)))
+    # ui.detail_Activity.detail_Activity.avg_buffer_temp.config(text=str(round(np.average(comd.var.buffer_temp) , 2)))
     ui.detail_Activity.detail_Activity.avg_buffer_inner_temp.config(text=str(round(np.average(comd.var.buffer_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.avg_storage_inner_temp.config(text=str(round(np.average(comd.var.storage_inner_temp) , 2)))
     ui.detail_Activity.detail_Activity.avg_storage_outer_temp.config(text=str(round(np.average(comd.var.storage_outer_temp) , 2)))
@@ -581,15 +591,13 @@ def set_detail_heatpump_ui():
     ui.detail_Activity.detail_Activity.avg_dhw_outer_temp.config(text=str(round(np.average(comd.var.dhw_outer_temp) , 2)))
 
 
-def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, inner_cool_temp, inner_hot_temp):
+def set_heatpump_getTemp(heatpump_cool_getTemp, heatpump_hot_getTemp, heatpump_boil_mode, heatpump_dhw_temp):
     ui.control_Activity.control_Activity.heatpump_cool_temp_entry.delete(0, 'end')
     ui.control_Activity.control_Activity.heatpump_cool_temp_entry.insert('end', int(heatpump_cool_getTemp))
 
     ui.control_Activity.control_Activity.heatpump_hot_temp_entry.delete(0, 'end')
     ui.control_Activity.control_Activity.heatpump_hot_temp_entry.insert('end', int(heatpump_hot_getTemp))
 
-    ui.control_Activity.control_Activity.inner_cool_temp_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.inner_cool_temp_entry.insert('end', int(inner_cool_temp))
+    ui.control_Activity.control_Activity.heatpump_boil_temp_entry.delete(0, 'end')
+    ui.control_Activity.control_Activity.heatpump_boil_temp_entry.insert('end', int(heatpump_dhw_temp))
     #
-    ui.control_Activity.control_Activity.inner_hot_temp_entry.delete(0, 'end')
-    ui.control_Activity.control_Activity.inner_hot_temp_entry.insert('end', int(inner_hot_temp))

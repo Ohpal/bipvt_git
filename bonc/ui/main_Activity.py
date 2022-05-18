@@ -503,21 +503,21 @@ class main_Activity(tk.Frame):
                                                   font=('SCDream5', 15, 'bold',))
         main_Activity.storage_power_value.place(x=290 - x, y=1010)
 
-        storage_temp_label = Label(main_Activity.main_canvas, text='부하입구온도', fg='white', bg='#2f323b',
+        storage_temp_label = Label(main_Activity.main_canvas, text='저장탱크출구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_temp_label.place(x=350 - x, y=1055)
+        storage_temp_label.place(x=330 - x, y=1085)
 
         main_Activity.storage_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_temp_value.place(x=480 - x, y=1055)
+        main_Activity.storage_temp_value.place(x=490 - x, y=1085)
 
-        storage_outer_temp_label = Label(main_Activity.main_canvas, text='부하출구온도', fg='white', bg='#2f323b',
+        storage_outer_temp_label = Label(main_Activity.main_canvas, text='저장탱크입구온도', fg='white', bg='#2f323b',
                                    font=('SCDream5', 15, 'bold'))
-        storage_outer_temp_label.place(x=350 - x, y=1085)
+        storage_outer_temp_label.place(x=330 - x, y=1055)
 
         main_Activity.storage_outer_temp_value = Label(main_Activity.main_canvas, text=' - ', fg='#96c63e', bg='#2f323b',
                                                  font=('SCDream5', 15, 'bold'))
-        main_Activity.storage_outer_temp_value.place(x=480 - x, y=1085)
+        main_Activity.storage_outer_temp_value.place(x=490 - x, y=1055)
 
         doublecoil_status_label = Label(main_Activity.main_canvas, text='상태', fg='white', bg='#2f323b',
                                         font=('SCDream5', 15, 'bold'))
@@ -581,12 +581,12 @@ class main_Activity(tk.Frame):
         self.y_pre_data = [0 for i in range(int(nb_points))]
         # self.x_pre_data = db.pg_connect.pre_data_select()
         # self.x_pre_data =
-        print('Y_pre', self.y_pre_data)
-        print('X_pre', self.x_pre_data)
+        # print('Y_pre', self.y_pre_data)
+        # print('X_pre', self.x_pre_data)
 
         self.x_data = [dateTimeObj + timedelta(minutes=i) for i in range(int(nb_points) - 30)]
         self.y_data = [0 for i in range(int(nb_points) - 30)]
-        print('LEN', len(self.y_data))
+        # print('LEN', len(self.y_data))
 
         # create the plot(c:line color, markerfacecolor:marker color
         self.pre_plot = self.ax.plot(self.x_pre_data, self.y_pre_data, c='red', markerfacecolor='red', markersize=8, marker='o', linewidth=2, label='예측 발전량')[0]
